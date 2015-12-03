@@ -5,58 +5,31 @@ error.log = console.log.bind(console)
 //var socket = require('socket.io')(require('../../config.js').socket.port);
 
 var es = require('../es')
-var express = require('express')
-
-app.post('/login', function (req, res) {
-
-  // TODO: validate the actual user user
-  var profile = {
-    first_name: 'John',
-    last_name: 'Doe',
-    email: 'john@doe.com',
-    id: 123
-  };
-
-  // we are sending the profile in the token
-  var token = jwt.sign(profile, jwtSecret, { expiresInMinutes: 60*5 });
-
-  res.json({token: token});
-});
 
 /**
  *@param nick
  *@param email
  */
 
-module.exports = function(params, io, socket) {
+module.exports = function(params, res) {
   if (!params.email) {
-    //c-user.error: {message: 'Email not specified', code: 400});
-    error('email not specified', params)
-    socket.emit('c-user.error', {
-      message: 'Email not specified',
-      code: 400
-    })
 
+    error('email not specified', params)
+
+    res.status(400).send('Email not specified')
     return
 
   } else if (!isValidEmail(params.email)) {
-    //c-user.error: {message: 'Invalid email address', code: 400}
     error('email not valid', params)
-    socket.emit('c-user.error', {
-      message: 'Invalid email address',
-      code: 400
-    })
 
+    res.status(400).send('Invalid email address')
     return
   }
 
   if (!params.nick) {
-    //c-user.error: {message: 'Nick not specified', code: 400}
     error('email not specified', params)
-    socket.emit('c-user.error', {
-      message: 'Nick not specified',
-      code: 400
-    })
+
+    res.status(400).send('Nick not specified')
 
     return
   }
@@ -71,22 +44,16 @@ module.exports = function(params, io, socket) {
         return
       } 
       error('Error in finding user with given nick', err, params.nick)
-      socket.emit('c-user.error', {
-        message: 'Database read error',
-        code: 500,
-        err: err
-      })
+
+      res.status(500).send('Database read error')
       throw err
     })
-    .then(function(res) {
+    .then(function(response) {
 
-      if (res && res.found) {
-        socket.emit('c-user.error', {
-          message: 'user exists!',
-          code: '400',
-          params: params
-        })
-        debug('nick exists', params.nick, res)
+      if (response && response.found) {
+
+        res.status(400).send('user exists!')
+        debug('nick exists', params.nick, response)
 
       } else { //create user
         var user = {
@@ -109,22 +76,16 @@ module.exports = function(params, io, socket) {
           id: params.nick,
           body: user
         })
-        .then(function(res) {
+        .then(function(response) {
           debug('registered', params.nick)
-          socket.emit('c-user.done', {
-            message: 'Successfully created user',
-            code: 201,
-            params: user
-          })
+
+          res.cookie('user', params.nick , { maxAge: 900000, httpOnly: true });
+          res.status(201).json({user: user, message: 'Successfully created user'})
         })
         .catch(function(err) {
           error('Error in indexing user', err)
-          socket.emit('c-user.error', {
-            message: 'DB error in registering',
-            code: 500,
-            err: err,
-            params: params
-          })
+
+          res.status(500).send('DB error in registering')
         })
         .done()
       }
