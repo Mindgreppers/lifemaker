@@ -6,7 +6,8 @@ error.log = console.log.bind(console)
 
 var es = require('../es')
 
-module.exports = function(params, io, socket) {
+module.exports = function(params, socket, io) {
+console.log(params)
   es.update({
       index: 'users',
       type: 'user',
@@ -18,7 +19,7 @@ module.exports = function(params, io, socket) {
       }
     })
     .then(function(res) {
-      socket.emit(params.nick, {
+      socket.emit('u-user.done', {
         message: 'Profile Updated',
         code: 201,
         result: {
@@ -28,7 +29,7 @@ module.exports = function(params, io, socket) {
     })
     .catch(function(err) {
       error('Error in updating user', err)
-      socket.emit(params.nick + '.error', {
+      socket.emit('u-user.error' + '.error', {
         message: 'Database error',
         code: 500,
         err: err
