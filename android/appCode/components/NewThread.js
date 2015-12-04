@@ -4,12 +4,15 @@ var React = require('react-native')
 
 window.navigator.userAgent = 'react-native'
 
-var RCTUIManager = require('NativeModules').UIManager;
 var moment = require('moment')
-var SmokeStore = require('../Stores/SmokeStore')
 var Reflux = require('reflux')
-var UserStore = require('../Stores/UserStore')
 var socket = require('../socket')
+var styles = require('../styles/styles.js')
+var SmokeStore = require('../Stores/SmokeStore')
+var { Icon, } = require('react-native-icons');
+var ApplicationHeader = require('./ApplicationHeader.js')
+var ScreenHeight = Dimensions.get('window').height
+
 var {
   AppRegistry,
   StyleSheet,
@@ -25,17 +28,6 @@ var {
   ToastAndroid,
 } = React
 
-var styles = require('../styles/styles.js')
-var SmokeStore = require('../Stores/SmokeStore')
-var UserStore = require('../Stores/UserStore')
-var { Icon, } = require('react-native-icons');
-var Radio = require('./radioButton/radio-buttons.js')
-var ApplicationHeader = require('./ApplicationHeader.js')
-var Option = Radio.Option
-var ScreenHeight = Dimensions.get('window').height
-var Overlay = require('../../node_modules/react-native-modalbox/node_modules/react-native-overlay')
-
-
 var Durations = [
   'Hours',
   'Minutes',
@@ -44,6 +36,7 @@ var Durations = [
   'Weeks',
   'Months',
 ]
+
 var Tags = ['pankaj', '42', 'hb', 'network', 'nature', 'ghoomakad']
 var ThreadPage = React.createClass({
   getInitialState: function(){
