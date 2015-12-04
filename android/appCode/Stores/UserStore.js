@@ -1,9 +1,9 @@
 var Reflux = require('reflux')
 
 window.navigator.userAgent = 'react-native'; //or any other string value
-var socket = require('../socket')
 var UserActions = require('../Actions/UserActions')
 var _ = require('lodash')
+var socket = require('../socket')
 
 var UserStore = Reflux.createStore({
 
@@ -20,9 +20,10 @@ var UserStore = Reflux.createStore({
   //Store userData in Store
   storeUserData : function(userData) {
     this.data = userData
-    socket.on(this.data.nick, function(data) {
-      console.log(data.result.user)
+    console.log(this.data)
+    socket.on('u-user.done', function(data) {
       _.merge(this.data , data.result.user)
+      console.log(this.data)
       this.trigger()
     }.bind(this))
     this.trigger()

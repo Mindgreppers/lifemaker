@@ -1,11 +1,10 @@
 window.navigator.userAgent = 'react-native'
 
-var socket = require('../socket')
 var Reflux = require('reflux')
 var SmokeActions = require('../Actions/SmokeActions')
 var UserStore = require('./UserStore')
 var _ = require('lodash')
-
+var socket = require('../socket')
 var SmokeStore = Reflux.createStore({
 
   data: {smokeSignals: [], interestsMatches: []},

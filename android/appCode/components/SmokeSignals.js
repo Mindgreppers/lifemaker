@@ -5,10 +5,11 @@ var React = require('react-native')
 window.navigator.userAgent = 'react-native'
 
 var Reflux =  require('reflux')
-var socket =  require('../socket')
+var connect =  require('../socket')
 
 var SmokeStore = require('../Stores/SmokeStore')
 var UserStore = require('../Stores/UserStore')
+var socket = require('../socket')
 var {
   AppRegistry,
   StyleSheet,

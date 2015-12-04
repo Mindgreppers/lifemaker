@@ -4,11 +4,12 @@ var React = require('react-native')
 
 window.navigator.userAgent = 'react-native'
 
-var socket = require('../socket')
 var RCTUIManager = require('NativeModules').UIManager;
 var moment = require('moment')
 var SmokeStore = require('../Stores/SmokeStore')
 var Reflux = require('reflux')
+var UserStore = require('../Stores/UserStore')
+var socket = require('../socket')
 var {
   AppRegistry,
   StyleSheet,
@@ -59,7 +60,7 @@ var ThreadPage = React.createClass({
     }
   },
   componentDidMount: function() {
-    socket.on('c-smokesignal-result', function(result) {
+    socket.on('c-smokesignal.result', function(result) {
       ToastAndroid.show(result.message, ToastAndroid.SHORT) 
       this.props.navigator.push({id : 1}) 
     })

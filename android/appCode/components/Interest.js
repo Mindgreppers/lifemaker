@@ -21,13 +21,13 @@ var {
 } = React;
 
 var { Icon, } = require('react-native-icons')
-var socket = require('../socket')
 var styles = require('../styles/styles')
 var UserStore = require('../Stores/UserStore')
 var ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 var ScreenHeight = Dimensions.get('window').height
 var ScreenWidth = Dimensions.get('window').width
-
+console.log(UserStore.getUserData())
+var socket = require('../socket')
 var InterestPage = React.createClass({
 
   mixins: [
