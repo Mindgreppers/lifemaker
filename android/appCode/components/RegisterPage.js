@@ -4,11 +4,10 @@ var React = require('react-native')
 
 window.navigator.userAgent = 'react-native'
 
-var socket = require('../socket')
-//var connect = require('../socket').connect
+var connect = require('../socket')
 var Modal   = require('react-native-modalbox')
-var UserStore =  require('../Stores/UserStore')
 var params = require('../../config')
+var UserStore = require('../Stores/UserStore')
 
 var {
   AppRegistry,
@@ -46,27 +45,31 @@ var RegisterPage = React.createClass({
       woods: 65,
       karma: 42
     }
-
-    /*fetch(params.ipAddress + '/login', {method: "POST", body: JSON.stringify({nick: user.nickname, email: user.email})})
-      .then((response) => response.json())
-      .then((responseData) => {
-        connect(token)
+   
+    fetch(params.ipAddress + '/signup', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }, 
+      body: JSON.stringify(user)
     })
-    .done()*/ 
-    socket.emit('c-user', user)
-
-    socket.on('c-user.done', function(data) {
-      ToastAndroid.show(data.message, ToastAndroid.SHORT)
-      UserStore.storeUserData(data.params)
-      that.props.navigator.push({id : 9,}) 
-    })
-
-    socket.on('c-user.error', function(err) {
-      ToastAndroid.show(err.message, ToastAndroid.SHORT)
-    })
-
-    AsyncStorage.setItem('user', user.nick);
-    console.log(user.nick)
+    .then(function(response) {
+      console.log(response)
+      if(response.status === 201) {
+        return response.json()
+      }
+      else if (response.status === 400) {
+        ToastAndroid.show(response._bodyText, ToastAndroid.SHORT)
+        return {}
+      }
+    }).then(function(response) {
+      if(response.message) {
+        ToastAndroid.show(response.message, ToastAndroid.SHORT)
+        UserStore.storeUserData(response.user)
+        that.props.navigator.push({id: 9})
+      }
+     }).done()
   },
 
   render: function() {

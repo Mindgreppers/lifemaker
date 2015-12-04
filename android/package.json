@@ -9,6 +9,7 @@
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "react-native": "^0.15.0",
+    "react-native-gcm-android": "0.0.7",
     "react-native-icons": "^0.6.3",
     "react-native-modalbox": "^1.2.2",
     "react-native-scrollable-tab-view": "^0.1.10",
