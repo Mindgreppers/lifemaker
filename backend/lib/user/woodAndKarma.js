@@ -22,7 +22,7 @@ module.exports = function(params, socket) {
     if (!res) {
       return
     }
-
+    console.log(res.docs[0]._source)
     var thanker = res.docs[0]._source
     var thankee = res.docs[1]._source
 
@@ -49,7 +49,7 @@ module.exports = function(params, socket) {
 
     var thankeesThankers = thankee[params.action + 'Received'].givers
     if (!_.find(thankeesThankers, params.thankerId)) {
-      thankeesThankers.push(thankerId)
+      thankeesThankers.push(params.thankerId)
     }
 
     //Update thanker
@@ -59,7 +59,7 @@ module.exports = function(params, socket) {
 
     var thankersThankees = thanker[params.action + 'Given'].receivers
     if (!_.find(thankersThankees, params.thankeeId)) {
-      thankersThankees.push(thankeeId)
+      thankersThankees.push(params.thankeeId)
     }
 
     es.bulk_index({

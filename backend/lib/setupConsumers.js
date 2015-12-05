@@ -53,7 +53,7 @@ var consumers = {
   'u-smokesignal.thanks': ['smokesignal/thanks', 'user/woodAndKarma']
 }
 
-  io.on('connection', function(socket) {
+io.on('connection', function(socket) {
     _.keys(consumers).forEach(function(ev, i) {
       var eventConsumers = consumers[ev]
       if (!_.isArray(eventConsumers)) {
@@ -69,4 +69,4 @@ var consumers = {
       })
     })
 
-  })
+})

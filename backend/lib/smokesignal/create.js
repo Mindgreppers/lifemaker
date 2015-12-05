@@ -5,7 +5,7 @@ error.log = console.log.bind(console)
 //var socket = require('socket.io')(require('../../config.js').socket.port);
 var es = require('../es')
 
-module.exports = function(params, io, socket) {
+module.exports = function(params, socket, io) {
   debug('error')
   es.index({
       index: 'smokesignals',
