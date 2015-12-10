@@ -6,7 +6,7 @@ error.log = console.log.bind(console)
 
 var es = require('../es')
 
-module.exports = function(params, socket) {
+module.exports = function(params, socket, io) {
   debug(params)
   console.log('kdjgfjkdshgjkhdskgjk', params, params.match_all)
 

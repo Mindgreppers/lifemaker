@@ -67,7 +67,7 @@ module.exports = function(params, res) {
           },
           thanksGiven: {
             count: 0,
-            received: []
+            receivers: []
           }
         }
         es.index({

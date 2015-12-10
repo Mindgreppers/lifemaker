@@ -22,7 +22,7 @@ module.exports = function(params, socket) {
     if (!res) {
       return
     }
-    console.log(res.docs[0]._source)
+    debug(params)
     var thanker = res.docs[0]._source
     var thankee = res.docs[1]._source
 
@@ -62,30 +62,41 @@ module.exports = function(params, socket) {
       thankersThankees.push(params.thankeeId)
     }
 
-    es.bulk_index({
-      index: 'users',
-      type: 'user',
-      docs: [thanker, thankee]
-    }).then(function(res) {
-      socket.emit(params.thankeeId, {
-        message: 'Thanks! Your Karma = ' + thankee.karma + ' Wood = ' + thankee.wood,
-        code: '201',
-        result: {
-          user: thankee
+    var userObjects = [thanker, thankee]
+
+    userObjects.forEach(function(user) {
+
+      es.update({
+        index: 'users',
+        type: 'user',
+        id: user.nick,
+        body: {
+          doc: user
         }
-      })
-      socket.emit(params.thankerId, {
-        message: 'Thanks! Your Karma = ' + thanker.karma + ' Wood = ' + thanker.wood,
-        code: '201',
-        result: {
-          user: thanker
-        }
-      })
-    }).catch(function(err) {
-      error('Error in updating woodsAndKarma', err)
-      socket.emit(params.thankerId + '.error', {
-        message: 'Error in processing your ' + params.action,
-        code: '201'
+      }).then(function(res) {
+
+        socket.emit(params.thankeeId, {
+          message: 'Thanks! Your Karma = ' + thankee.karma + ' Wood = ' + thankee.wood,
+          code: '201',
+          result: {
+            user: thankee
+          }
+        })
+        socket.emit(params.thankerId, {
+
+          message: 'Thanks! Your Karma = ' + thanker.karma + ' Wood = ' + thanker.wood,
+          code: '201',
+          result: {
+            user: thanker
+          }
+        })
+      }).catch(function(err) {
+
+        error('Error in updating woodsAndKarma', err)
+        socket.emit(params.thankerId + '.error', {
+          message: 'Error in processing your ' + params.action,
+          code: '201'
+        })
       })
     })
   })
