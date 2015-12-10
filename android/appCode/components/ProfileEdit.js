@@ -2,6 +2,7 @@
 var React = require('react-native');
 
 window.navigator.userAgent = 'react-native'
+var Icon = require('react-native-vector-icons/Ionicons');
 
 var {
   AppRegistry,
@@ -21,7 +22,6 @@ var styles = require('../styles/styles.js')
 var ApplicationHeader = require('./ApplicationHeader')
 var ScreenHeight = Dimensions.get('window').height
 var socket = require('../socket') 
-var { Icon, } = require('react-native-icons');
 var CreateSmokeSignal = require('./CreateSmokeSignal')
 var UserStore = require('../Stores/UserStore')
 
@@ -32,7 +32,7 @@ var ProfileEditPage = React.createClass({
     return {
       optionSelected: 1,
       name: UserData.name || '',
-      interests: UserData.interests.join(',') || '',
+      interests:  UserData.interests.join(',') || '',
       whatburnsyou: UserData.whatburnsyou || '',
       email: UserData.email || '',
     }
@@ -42,7 +42,7 @@ var ProfileEditPage = React.createClass({
     socket.on('u-user.done', function(result){
       UserStore.updateInfo(result.params)
       ToastAndroid.show(result.message, ToastAndroid.SHORT)
-      this.props.navigator.push({id: 4 ,})
+      this.props.navigator.push({id: 1,})
     }.bind(this))  
   },
 
@@ -87,7 +87,7 @@ var ProfileEditPage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|bonfire'
+            name='bonfire'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -96,7 +96,7 @@ var ProfileEditPage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|person'
+            name='person'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -125,7 +125,7 @@ var ProfileEditPage = React.createClass({
                   source={{uri: 'http://www.caretofun.net/wp-content/uploads/2015/07/beautiful-girl-profile-caretofun.net-6.jpg'}}
                 /> 
                 <Icon
-                  name='ion|camera'
+                  name='camera'
                   size={25}
                   color='#000000'
                   style={{width:25,height:25,position:'absolute',top:35,left:35}}
@@ -156,9 +156,11 @@ var ProfileEditPage = React.createClass({
               onChangeText={(whatburnsyou) => this.setState({whatburnsyou})}
               value={this.state.whatburnsyou}
             /> 
-            <TouchableOpacity style={styles.profileEditButton} onPress={this.submitEdits}>
-              <Text style={styles.sumitButton}>Submit</Text>
-            </TouchableOpacity>
+            <View style={styles.tagView}>
+              <TouchableOpacity style={styles.profileEditButton} onPress={this.submitEdits}>
+                <Text style={styles.sumitButton}>Submit</Text>
+              </TouchableOpacity>
+            </View>
 
           </View>
         </ScrollView>

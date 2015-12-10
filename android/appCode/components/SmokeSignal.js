@@ -2,12 +2,10 @@ var React = require('react-native')
 
 window.navigator.userAgent = 'react-native'
 
-var socket = require('../socket')
 var Reflux = require('reflux')
 var moment = require('moment')
+var Icon = require('react-native-vector-icons/Ionicons');
 var {
-  AppRegistry,
-  StyleSheet,
   Text,
   View,
   DrawerLayoutAndroid,
@@ -15,15 +13,14 @@ var {
   ListView,
   ScrollView,
   Image,
-  Navigator,
   ToolbarAndroid,
   Dimensions,
   TextInput,
   ToastAndroid,
 } = React
 
-var { Icon, } = require('react-native-icons')
 var SmokeStore = require('../Stores/SmokeStore')
+var socket = require('../socket')
 var styles = require('../styles/styles.js')
 var ApplicationHeader = require('./ApplicationHeader')
 var CreateSmokeSignal = require('./CreateSmokeSignal')
@@ -33,27 +30,13 @@ var ScreenHeight = Dimensions.get('window').height
 var ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
 var ThreadPage = React.createClass({
+
   mixins: [
     Reflux.ListenerMixin 
   ],
-  componentDidMount: function() {
 
+  componentDidMount: function() {
     this.listenTo(SmokeStore, this.refreshList) 
-    
-    /*socket.on('u-smokesignal.' + this.state.smokeSignal._id + '.done', function(result) {
-      SmokeStore.updateSmokeSignal(result)
-      ToastAndroid.show(result.message, ToastAndroid.SHORT)
-    }.bind(this))
-  
-    socket.on('u-smokesignal.' + this.state.smokeSignal._id + '.commentAction.done', function(result){
-      SmokeStore.updateCommentAction(result.params)
-      ToastAndroid.show(result.message, ToastAndroid.SHORT)
-    })
-    
-    socket.on('u-smokesignal.' + this.state.smokeSignal._id + '.action.done', function(result) {
-      SmokeStore.updatessAction(result.params)
-      ToastAndroid.show(result.message, ToastAndroid.SHORT)
-    })*/
   },
 
   getInitialState: function() {
@@ -144,7 +127,7 @@ var ThreadPage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|bonfire'
+            name='bonfire'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -153,7 +136,7 @@ var ThreadPage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|person'
+            name='person'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -175,7 +158,7 @@ var ThreadPage = React.createClass({
           >
           <View style={styles.container}>
             <Text style={styles.title}>{this.state.smokeSignal._source.title}</Text>
-            <Text style={styles.tags}>{this.state.smokeSignal._source.tags}</Text>
+            <Text style={styles.tags}>{this.state.smokeSignal._source.tags.toString()}</Text>
             <Text style={styles.description}>{this.state.smokeSignal._source.description}</Text>
 
             <Text style={styles.timeInfoText}>Burning Since 5 minutes ago</Text> 
@@ -190,7 +173,7 @@ var ThreadPage = React.createClass({
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.author} onPress={this.handleProfilePage}>
-              <Text style={styles.author}>written by Pankaj Thakur</Text> 
+              <Text style={styles.author}>written by {this.state.smokeSignal._source.userId}</Text> 
             </TouchableOpacity>
             <View style={styles.commentStyle}>
               <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comments</Text>
@@ -214,7 +197,7 @@ var ThreadPage = React.createClass({
             />
             <TouchableOpacity style={styles.submitComment} onPress={this.submitComment}>
               <Icon
-                name='ion|android-send'
+                name='android-send'
                 size={25}
                 color='#000000'
                 style={{width:25,height:25}}

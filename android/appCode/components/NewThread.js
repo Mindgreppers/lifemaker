@@ -3,13 +3,9 @@
 var React = require('react-native')
 
 window.navigator.userAgent = 'react-native'
-
-var RCTUIManager = require('NativeModules').UIManager;
 var moment = require('moment')
-var SmokeStore = require('../Stores/SmokeStore')
 var Reflux = require('reflux')
-var UserStore = require('../Stores/UserStore')
-var socket = require('../socket')
+var Icon = require('react-native-vector-icons/Ionicons');
 var {
   AppRegistry,
   StyleSheet,
@@ -25,16 +21,13 @@ var {
   ToastAndroid,
 } = React
 
+
+var socket = require('../socket')
 var styles = require('../styles/styles.js')
 var SmokeStore = require('../Stores/SmokeStore')
 var UserStore = require('../Stores/UserStore')
-var { Icon, } = require('react-native-icons');
-var Radio = require('./radioButton/radio-buttons.js')
-var ApplicationHeader = require('./ApplicationHeader.js')
-var Option = Radio.Option
+var ApplicationHeader = require('./ApplicationHeader')
 var ScreenHeight = Dimensions.get('window').height
-var Overlay = require('../../node_modules/react-native-modalbox/node_modules/react-native-overlay')
-
 
 var Durations = [
   'Hours',
@@ -44,6 +37,7 @@ var Durations = [
   'Weeks',
   'Months',
 ]
+
 var Tags = ['pankaj', '42', 'hb', 'network', 'nature', 'ghoomakad']
 var ThreadPage = React.createClass({
   getInitialState: function(){
@@ -63,7 +57,7 @@ var ThreadPage = React.createClass({
     socket.on('c-smokesignal.result', function(result) {
       ToastAndroid.show(result.message, ToastAndroid.SHORT) 
       this.props.navigator.push({id : 1}) 
-    })
+    }.bind(this))
   },
 
   goNextPage: function(message) {
@@ -77,7 +71,7 @@ var ThreadPage = React.createClass({
       id: +moment() + '_'+ Math.random(),
       type: this.props.type,
       title: this.state.title,
-      tags: this.state.selectedTags.toString(),
+      tags: this.state.selectedTags,
       description: this.state.description,
       createdAt: +moment(),
       burningTill: this.state.time + ' ' + this.state.duration,
@@ -122,7 +116,7 @@ var ThreadPage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|bonfire'
+            name='bonfire'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -131,7 +125,7 @@ var ThreadPage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|person'
+            name='person'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -160,12 +154,16 @@ var ThreadPage = React.createClass({
             /> 
             <Text style={{marginTop:20}}>Tags</Text>
             <View style={{flexDirection: 'row', marginLeft:30}}>
-            { that.state.selectedTags.length && this.state.selectedTags.map(function(tag){
-              return <TouchableOpacity style={[styles.tagButton,{width:  PixelRatio.getPixelSizeForLayoutSize(25)}]} onPress={that.onTag}>
-                <Text style={styles.tag} ref='text'>
-                  {tag}
-                </Text>
-              </TouchableOpacity>
+            { that.state.selectedTags.length && this.state.selectedTags.map(function(tag, i){
+              return (
+                <View style={styles.tagView} key={i}>
+                  <TouchableOpacity style={styles.tagButton} onPress={that.onTag}>
+                    <Text style={styles.tag} ref='text'>
+                      {tag}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )
             })}
             </View>
             <TextInput
@@ -176,7 +174,7 @@ var ThreadPage = React.createClass({
             <View style={{flexDirection: 'row'}}>
               { this.state.tag != '' && this.state.searchTags.map(function(val, i){
                 if(i < 4) {
-                  return <InterestField tag={val} getTag={that.getTag}/>               
+                  return <InterestField key={i} tag={val} getTag={that.getTag}/>               
                 }
               })}
             </View>
@@ -202,8 +200,8 @@ var ThreadPage = React.createClass({
                   <Text style={styles.selectButtonText}>{this.state.duration}</Text>
                 </TouchableOpacity>
                 <View style={{borderColor: 'gray',borderWidth: 0.5}}> 
-                  {this.state.showTimeMenu && Durations.map(function(val) {
-                    return <TouchableOpacity style={styles.selectBox} onPress={that.selectDuration.bind(null, val)}>
+                  {this.state.showTimeMenu && Durations.map(function(val, i) {
+                    return <TouchableOpacity key={i} style={styles.selectBox} onPress={that.selectDuration.bind(null, val)}>
                       <Text>{val}</Text>
                     </TouchableOpacity>
                   }) }
@@ -220,14 +218,13 @@ var ThreadPage = React.createClass({
       </DrawerLayoutAndroid>
     )
   },
+
   getTag: function(tag) {
-    console.log(tag)
-    var that= this
-    ToastAndroid.show(tag+'sadf' , ToastAndroid.SHORT)
     var newArray = this.state.selectedTags.slice();
     newArray.push(tag);
     this.setState({selectedTags: newArray})
   },
+
   selectDuration: function(timeInfoText , e) {
     this.setState({duration: timeInfoText, showTimeMenu: false})
   },
@@ -242,20 +239,6 @@ var ThreadPage = React.createClass({
 
 })
 
-var Item = React.createClass({
-  render: function() {
-    var { title } = this.props;
-
-    return (
-      <View style={{ paddingTop: 20, paddingLeft: 40,justifyContent: 'center',
- }}>
-        <Text style={{marginLeft:-200}}>{ title }</Text>
-      </View>
-    )
-
-  }
-
-})
 var InterestField = React.createClass({
   onTag: function() {
     ToastAndroid.show(this.props.tag , ToastAndroid.SHORT)
@@ -264,11 +247,13 @@ var InterestField = React.createClass({
 
   render: function() {
     return (
-       <TouchableOpacity style={[styles.tagButton,{width:  PixelRatio.getPixelSizeForLayoutSize(25)}]} onPress={this.onTag}>
-        <Text style={styles.tag} ref='text'>
-          {this.props.tag}
-        </Text>
-       </TouchableOpacity>
+      <View style={styles.tagView}>
+        <TouchableOpacity style={styles.tagButton} onPress={this.onTag}>
+          <Text style={styles.tag} ref='text'>
+            {this.props.tag}
+          </Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 })

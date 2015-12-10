@@ -1,54 +1,41 @@
 'use strict';
 
 var React = require('react-native');
+var ActionButton = require('react-native-action-button');
+var Icon = require('react-native-vector-icons/Ionicons');
 var {
-  Text,
   View,
-  TouchableOpacity,
-  ToolbarAndroid,
-  SwitchAndroid,
+  StyleSheet,
 } = React
-
-var { Icon, } = require('react-native-icons');
-var styles = require('../styles/styles.js')
-var ActionButton = require('./actionButton/ActionButton.js')
-var NewThreadPage = require('./NewThread')
 
 var CreateSmokeSignal = React.createClass({
 
   render: function() {
     return (
-      <ActionButton bgColor="rgba(23, 9, 107, 0.75)" buttonColor="rgba(63,159,107,1)">
-          <ActionButton.Item title="I Need" buttonColor='#9DC5BB' onPress={this.props._addNeed}>
-            <Icon name="ion|help" size={20} color='white' style={{width:25,height:25}} />
-          </ActionButton.Item>
-          <ActionButton.Item title="I Offer" buttonColor='#EF476F' onPress={this.props._addOffer}>
-            <Icon name="ion|pricetag" size={20} color='white' style={{width:25,height:25}} />
-          </ActionButton.Item>
-          <ActionButton.Item title="General" buttonColor='#151E3F' onPress={this.props._addGeneral}>
-            <Icon name="ion|pricetag" size={20} color='white' style={{width:25,height:25}} />
-          </ActionButton.Item>
-        </ActionButton>
-
+      <ActionButton buttonColor="rgba(231,76,60,1)">
+        <ActionButton.Item buttonColor='#9b59b6' title="I Need" onPress={this.props._addNeed}>
+          <Icon name="help" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
+        <ActionButton.Item buttonColor='#3498db' title="I Offer" onPress={this.props._addOffer}>
+          <Icon name="android-notifications-none" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
+        <ActionButton.Item buttonColor='#1abc9c' title="General" onPress={this.props._addGeneral}>
+          <Icon name="android-done-all" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
+      </ActionButton>
     )
-   /* return (
-      <TouchableOpacity style={styles.addSmoke} onPress={this.props._addSmoke}>
-        <View style={{justifyContent: 'center',alignItems:'center',}}>
-          <Icon
-            name='ion|plus'
-            size={30}
-            color='#000000'
-            style={{height:30,width:30, marginTop:15}}
-          />
-        </View>
-      </TouchableOpacity>
-    )*/
   }
 })
 
 module.exports = CreateSmokeSignal
 
-
+var styles = StyleSheet.create({
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
+});
 
 
 

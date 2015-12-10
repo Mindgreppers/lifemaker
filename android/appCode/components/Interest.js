@@ -6,6 +6,7 @@
 
 var React = require('react-native');
 var Reflux = require('reflux')
+var Icon = require('react-native-vector-icons/Ionicons');
 var {
   AppRegistry,
   StyleSheet,
@@ -20,14 +21,13 @@ var {
   Dimensions,
 } = React;
 
-var { Icon, } = require('react-native-icons')
 var styles = require('../styles/styles')
 var UserStore = require('../Stores/UserStore')
 var ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 var ScreenHeight = Dimensions.get('window').height
 var ScreenWidth = Dimensions.get('window').width
-console.log(UserStore.getUserData())
 var socket = require('../socket')
+
 var InterestPage = React.createClass({
 
   mixins: [
@@ -111,7 +111,7 @@ var InterestPage = React.createClass({
           <Text style={{flex:1}}>{interest}</Text>
           <TouchableOpacity style={styles.deleteInterest} onPress={() => that._pressInterest(rowId)}>
             <Icon
-              name='ion|close-round'
+              name='close-round'
               size={15}
               color='#887700'
               style={styles.close}
@@ -120,6 +120,7 @@ var InterestPage = React.createClass({
       </View>
     )
   },
+
   _pressInterest:function(rowId){
      this.state.interestsArray.splice(rowId, 1)
      console.log(this.state.interestsArray)

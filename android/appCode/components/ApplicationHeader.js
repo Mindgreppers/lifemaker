@@ -12,8 +12,8 @@ var {
   ToastAndroid,  
 } = React
 
-var { Icon, } = require('react-native-icons');
 var styles = require('../styles/styles.js')
+var Icon = require('react-native-vector-icons/Ionicons');
 
 var ApplicationHeader = React.createClass({
   getInitialState: function(){
@@ -57,11 +57,11 @@ var ApplicationHeader = React.createClass({
     return (
       <View>
       <ToolbarAndroid
-        style={{backgroundColor:'rgba(63, 159,107, 1)', height:56, color:'#000000', fontSize:10,}}>
+        style={{backgroundColor:'rgba(63, 159,107, 1)', height:56,}}>
         <View style={styles.headerBar}>
           <TouchableOpacity style={styles.menuButton} onPress={this.props.openDrawer}>
             <Icon
-              name='ion|android-menu'
+              name='android-menu'
               size={20}
               color='#ffffff'
               style={styles.icon}
@@ -77,7 +77,7 @@ var ApplicationHeader = React.createClass({
           />}
           <TouchableOpacity style={styles.searchButton} onPress={this.showSearchBar}>
             <Icon
-              name='ion|android-search'
+              name='android-search'
               size={20}
               color='#ffffff'
               style={styles.icon}
@@ -85,7 +85,7 @@ var ApplicationHeader = React.createClass({
           </TouchableOpacity>
           <TouchableOpacity style={styles.notificationButton}>
             <Icon
-              name='ion|android-notifications'
+              name='android-notifications'
               size={20}
               color='#ffffff'
               style={styles.icon}
@@ -93,7 +93,7 @@ var ApplicationHeader = React.createClass({
           </TouchableOpacity>
           <TouchableOpacity style={styles.notificationButton} onPress={this.showFilters}>
             <Icon
-              name='ion|funnel'
+              name='funnel'
               size={20}
               color='#ffffff'
               style={styles.icon}

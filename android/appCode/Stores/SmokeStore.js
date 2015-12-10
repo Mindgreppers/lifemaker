@@ -13,6 +13,12 @@ var SmokeStore = Reflux.createStore({
      
     socket.on('r-smokesignal.forall.done', function(smokesignals) {
       this.data.smokeSignals = smokesignals.message
+      var interests = UserStore.getUserData().interests
+      this.data.interestsMatches = this.data.smokeSignals.filter(function(smokesignal){
+        var tags = smokesignal._source.tags
+        return _.some(interests, function(e){ return _.include(tags, e); } )
+      })
+      console.log(this.data.smokeSignals)
       this.data.smokeSignals.forEach(function(smokeSignal) {
         socket.on('u-smokesignal.' + smokeSignal._id + '.commentAction.done', function(result){
           this.updateCommentAction(result.params, result.message)
@@ -24,11 +30,11 @@ var SmokeStore = Reflux.createStore({
     
           
         socket.on('u-smokesignal.' + smokeSignal._id + '.action.done', function(result) {
+          console.log(result)
           this.updatessAction(result.params, result.message)
         }.bind(this))
       }.bind(this))
-
-      this.trigger()
+        this.trigger()
     }.bind(this))
 
     socket.on('c-smokesignal.done', function(smokesignal) { 
@@ -50,7 +56,7 @@ var SmokeStore = Reflux.createStore({
 
   request: function() {
     socket.emit('r-smokesignal.forall', {match_all: {}})
-    return this.data.smokeSignals
+    return [this.data.smokeSignals, this.data.interestsMatches]
   },
 
   getInterestsMatches: function() {

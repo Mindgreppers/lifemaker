@@ -10,10 +10,7 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.oney.gcm.GcmPackage;    
-import com.smixx.reactnativeicons.ReactNativeIcons;  // <--- import
-import java.util.Arrays; // <--- import this if you want to specify which fonts to load
-import com.smixx.reactnativeicons.IconFont; // <--- import this if you want to specify which fonts to load
+import com.oblador.vectoricons.VectorIconsPackage;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
 
@@ -30,13 +27,12 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModuleName("index.android")
                 .addPackage(new MainReactPackage())
-                .addPackage(new GcmPackage()) 
-                .addPackage(new ReactNativeIcons())   
+                .addPackage(new VectorIconsPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
-        mReactRootView.startReactApplication(mReactInstanceManager, "lifemaker", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, "LifeMaker", null);
 
         setContentView(mReactRootView);
     }

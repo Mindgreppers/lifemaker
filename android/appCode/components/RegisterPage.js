@@ -5,7 +5,6 @@ var React = require('react-native')
 window.navigator.userAgent = 'react-native'
 
 var connect = require('../socket')
-var Modal   = require('react-native-modalbox')
 var params = require('../../config')
 var UserStore = require('../Stores/UserStore')
 
@@ -19,9 +18,12 @@ var {
   TextInput,
   ToastAndroid,
   AsyncStorage,
+  Dimensions,
 } = React
 
-var styles = require('../styles/styles.js')
+var styles = require('../styles/styles')
+var screenWidth = Dimensions.get('window').width
+var screenHeight = Dimensions.get('window').height
 
 var RegisterPage = React.createClass({
   getInitialState: function(){
@@ -67,14 +69,13 @@ var RegisterPage = React.createClass({
       if(response.message) {
         ToastAndroid.show(response.message, ToastAndroid.SHORT)
         UserStore.storeUserData(response.user)
-        that.props.navigator.push({id: 9})
+        that.props.navigator.push({id: 6})
       }
      }).done()
   },
 
   render: function() {
     return (
-      <View>
       <View style={styles.container}>
         <Text style={styles.interestPageTitle}>Signup</Text>
         <Text style={styles.loginField}>Nickname</Text>
@@ -95,14 +96,13 @@ var RegisterPage = React.createClass({
               <Text>Submit</Text>
           </TouchableOpacity>
          </View>
-      </View>
-        <Modal style={[{justifyContent: 'center', alignItems: 'center'}, styles.modal4]} position={"bottom"} ref={"modal4"}>
-          <Text style={{color:'rgb(15, 119, 119)',fontSize:20}}>{this.state.error}</Text>
-        </Modal>
+         {this.state.progress &&
+            <View style={{height: screenHeight,width: screenWidth, position: 'absolute', backgroundColor: 'trasperant'}}>
+            </View>
+         } 
       </View>
     )
   },
-
 })
 
 module.exports = RegisterPage

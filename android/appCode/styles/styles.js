@@ -6,6 +6,10 @@ var {
 } = React
 
 var styles = StyleSheet.create({
+  tagView : {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   loading: {
     position: 'absolute',
   },
@@ -28,7 +32,7 @@ var styles = StyleSheet.create({
     fontSize: 10,
   },
   tagButton: {
-    padding: 2,
+    padding: 4,
     backgroundColor: '#A2A3A1',
     borderRadius: 10,
     alignItems: 'center',
@@ -245,8 +249,7 @@ var styles = StyleSheet.create({
   profileEditButton:  {
     backgroundColor: '#26a69a',
     borderRadius: 28,
-    marginTop: 40,
-    width: 90,
+    marginTop: 20,
     paddingLeft: 20,
     paddingTop: 10,
     paddingRight: 20,
@@ -299,13 +302,11 @@ var styles = StyleSheet.create({
     width:  100,
     height:  100,
     borderRadius: 50,
-    textAlign: 'center',
   },
   editImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    textAlign: 'center',
     opacity: 0.5,
   },
   appName:  {

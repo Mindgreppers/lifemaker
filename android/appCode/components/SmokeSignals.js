@@ -5,34 +5,28 @@ var React = require('react-native')
 window.navigator.userAgent = 'react-native'
 
 var Reflux =  require('reflux')
-var connect =  require('../socket')
+var ScrollableTabView = require('react-native-scrollable-tab-view');
+var Icon = require('react-native-vector-icons/Ionicons');
 
-var SmokeStore = require('../Stores/SmokeStore')
-var UserStore = require('../Stores/UserStore')
-var socket = require('../socket')
 var {
-  AppRegistry,
-  StyleSheet,
   Text,
   View,
   DrawerLayoutAndroid,
   TouchableOpacity,
   ListView,
   ScrollView,
-  Image,
-  Navigator,
   Dimensions,
-  ToolbarAndroid,
   ToastAndroid,
   ProgressBar,
 } = React
 
 var styles = require('../styles/styles.js')
-var { Icon, } = require('react-native-icons');
+var SmokeStore = require('../Stores/SmokeStore')
+var UserStore = require('../Stores/UserStore')
+var socket = require('../socket')
 var CreateSmokeSignal = require('./CreateSmokeSignal')
 var screenWidth = Dimensions.get('window').width
 var ScreenHeight = Dimensions.get('window').height
-var ScrollableTabView = require('./index');
 var ApplicationHeader = require('./ApplicationHeader')
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
@@ -64,8 +58,8 @@ var SmokeSignalsPage = React.createClass({
       Need: true,
       Offer: true,
       General: true,
-      interestsMatches: SmokeStore.getInterestsMatches(),
-      smokeSignals: SmokeStore.request(),
+      interestsMatches: [],
+      smokeSignals: SmokeStore.request()[0],
       searchResults: [],
       searchText: '',
       dataSource: ds.cloneWithRows([]),
@@ -74,7 +68,7 @@ var SmokeSignalsPage = React.createClass({
   },
 
   _handleSubmit: function(id, e) {
-    this.props.navigator.push({id : 2 , smokeId: id}) 
+    this.props.navigator.push({id : 3 , smokeId: id}) 
   },
 
   onActionSelected: function(position) {
@@ -152,15 +146,15 @@ var SmokeSignalsPage = React.createClass({
   },
   
   _addNeed: function() {
-    this.props.navigator.push({id : 6, type : 'Need'})
+    this.props.navigator.push({id : 2, type : 'Need'})
   },
 
   _addOffer: function() {
-    this.props.navigator.push({id : 6, type : 'Offer'})
+    this.props.navigator.push({id : 2, type : 'Offer'})
   },
       
   _addGeneral: function() {
-    this.props.navigator.push({id : 6, type : 'General'})
+    this.props.navigator.push({id : 2, type : 'General'})
   }, 
 
   changeSearchText: function(searchText) {
@@ -179,7 +173,7 @@ var SmokeSignalsPage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|bonfire'
+            name='bonfire'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -188,7 +182,7 @@ var SmokeSignalsPage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|person'
+            name='person'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -235,7 +229,7 @@ var SmokeSignalsPage = React.createClass({
           <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
             <Text style={styles.title}>{smokeSignal._source.title}</Text>
           </TouchableOpacity>
-          <Text style={styles.tags}>{smokeSignal._source.tags}</Text>
+          <Text style={styles.tags}>{smokeSignal._source.tags.toString()}</Text>
           <TouchableOpacity>
             <Text style={styles.description}>{description || smokeSignal._source.description}.....</Text>
           </TouchableOpacity>

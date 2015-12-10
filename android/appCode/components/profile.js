@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Icon = require('react-native-vector-icons/Ionicons');
 
 var {
   AppRegistry,
@@ -20,7 +21,6 @@ var {
 
 var styles = require('../styles/styles.js')
 var socket = require('../socket')
-var { Icon, } = require('react-native-icons');
 var CreateSmokeSignal = require('./CreateSmokeSignal')
 var ScreenHeight = Dimensions.get('window').height
 var ApplicationHeader =  require('./ApplicationHeader')
@@ -32,10 +32,9 @@ var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 var data = [
   { id: 1, title: "Life is strange", tags: "Life, journary", description: "If you live long enough, you ll make mistakes. But if you learn from them, you ll be a better person. It s how you handle adversity, not how it affects you. The main thing is never quit, never quit, never quit."
  },
- { id: 2,title:"I need help to learn about the Life", tags: "amazing", description: "Throughout life people will make you mad, disrespect you and treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."},
+ { id: 2,title:"I need help to learn about the Life", tags: "amazing", description: "Throughout life people will make you mad, disrespect you and     treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."},
 {id: 3, title : "Do you want to learn about the Life", tags: "great", description:"Throughout life people will make you mad, disrespect you and treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."}
 ]
-
 
 var ProfilePage = React.createClass({
 
@@ -90,7 +89,7 @@ var ProfilePage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|bonfire'
+            name='bonfire'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -99,7 +98,7 @@ var ProfilePage = React.createClass({
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
-            name='ion|person'
+            name='person'
             size={25}
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
@@ -124,7 +123,7 @@ var ProfilePage = React.createClass({
         <View style={styles.container}>
           <TouchableOpacity  onPress={this.profileEdit}>
             <Icon
-              name='ion|edit'
+              name='edit'
               size={25}
               color='#000000'
               style={styles.edit}
@@ -140,17 +139,17 @@ var ProfilePage = React.createClass({
           <Text style={styles.profileText}>{this.state.user.nick}</Text>
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
-              name='ion|plus'
+              name='plus'
               size={15}
               color='#26a69a'
               style={{width:15,height:15,marginTop:2,marginRight:5}}
            />
-          <Text style={styles.profileButtonText}>{this.state.user.thanksGiven} Thanks Givens</Text>
+          <Text style={styles.profileButtonText}>{this.state.user.thanksGiven.count} Thanks Givens</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
-              name='ion|plus'
+              name='plus'
               size={15}
               color='#26a69a'
               style={{width:15,height:15,marginTop:2,marginRight:5}}
@@ -159,7 +158,7 @@ var ProfilePage = React.createClass({
           </TouchableOpacity>
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
-              name='ion|plus'
+              name='plus'
               size={15}
               color='#26a69a'
               style={{width:15,height:15,marginTop:2,marginRight:5}}
@@ -168,7 +167,7 @@ var ProfilePage = React.createClass({
           </TouchableOpacity>
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
-              name='ion|plus'
+              name='plus'
               size={15}
               color='#26a69a'
               style={{width:15,height:15,marginTop:2,marginRight:5}}
@@ -199,7 +198,7 @@ var ProfilePage = React.createClass({
           <Text style={styles.title}>{smokeSignal.title}</Text>
           <TouchableOpacity>
             <Icon
-              name='ion|power'
+              name='power'
               size={25}
               color='#000000'
               style={styles.edit}
