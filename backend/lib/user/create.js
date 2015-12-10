@@ -79,7 +79,7 @@ module.exports = function(params, res) {
         .then(function(response) {
           debug('registered', params.nick)
 
-          res.cookie('user', params.nick , { maxAge: 900000, httpOnly: true });
+          res.cookie('user', params.nick , { maxAge: 9000000000, httpOnly: true });
           res.status(201).json({user: user, message: 'Successfully created user'})
         })
         .catch(function(err) {
