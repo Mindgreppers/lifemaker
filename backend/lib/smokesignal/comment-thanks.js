@@ -7,7 +7,7 @@ error.log = console.log.bind(console)
 var es = require('../es')
 
 
-module.exports = function(params, socket) {
+module.exports = function(params, socket, io) {
 
   var commentAction = _.pick(params, ['count', 'commentId', 'action'])//where action is thanks or nothanks and count is number of times action is done
 
@@ -21,7 +21,7 @@ module.exports = function(params, socket) {
       }
     })
     .then(function(res) {
-      socket.emit('u-smokesignal.' + params._id + '.commentAction.done', {
+      io.to(params._id).emit('u-smokesignal.commentAction.done', {
         code: 200,
         message: params.action + ' +' + params.count,
         params: params
@@ -29,7 +29,7 @@ module.exports = function(params, socket) {
     })
     .catch(function(err) {
       error('Error in indexing user', err)
-      socket.emit('u-smokesignal.' + params._id + '.commentAction.error', {
+      io.to(params._id).emit('u-smokesignal.commentAction.error', {
         message: 'Error in ' + params.action,
         code: 500,
         err: err,

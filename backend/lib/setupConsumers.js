@@ -49,8 +49,8 @@ var consumers = {
   //'u-smokesignal': 'smokesignal/update',
 
   'u-smokesignal.comment': 'smokesignal/comment',
-  'u-smokesignal.comment.thanks': ['smokesignal/comment-thanks', 'user/woodAndKarma'],
-  'u-smokesignal.thanks': ['smokesignal/thanks', 'user/woodAndKarma']
+  'u-smokesignal.comment.thanks': 'smokesignal/comment-thanks',
+  'u-smokesignal.thanks': 'smokesignal/thanks'
 }
 
 io.on('connection', function(socket) {
