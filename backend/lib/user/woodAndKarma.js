@@ -5,7 +5,7 @@ error.log = console.error.bind(console)
 
 var es = require('../es')
 
-module.exports = function(params, socket) {
+module.exports = function(params, socket, io) {
 
   es.mget({
     index: 'users',
@@ -61,7 +61,7 @@ module.exports = function(params, socket) {
     if (!_.find(thankersThankees, params.thankeeId)) {
       thankersThankees.push(params.thankeeId)
     }
-
+    debug(thanker, thankee, 'user Objects')
     var userObjects = [thanker, thankee]
 
     userObjects.forEach(function(user) {
@@ -75,6 +75,7 @@ module.exports = function(params, socket) {
         }
       }).then(function(res) {
 
+        debug(res)
         socket.emit(params.thankeeId, {
           message: 'Thanks! Your Karma = ' + thankee.karma + ' Wood = ' + thankee.wood,
           code: '201',

@@ -25,7 +25,12 @@ module.exports = function(params, socket, io) {
 
       }
     }).then(function(resp) {
-      console.log(resp.hits.hits)
+   
+      var smokesignals = resp.hits.hits
+      smokesignals.forEach(function(smokesignal){
+        //console.log(smokesignal._id)
+        socket.join(smokesignal._id)
+      })
       socket.emit('r-smokesignal.forall.done', {
         message: resp.hits.hits,
         code: 200

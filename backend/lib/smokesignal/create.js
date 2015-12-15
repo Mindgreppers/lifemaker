@@ -27,6 +27,11 @@ module.exports = function(params, socket, io) {
         message: 'Smokesignal Created',
         code: 201,
       })
+      console.log(io.sockets.sockets)     
+      io.sockets.sockets.forEach(function(socket) {
+        socket.join(params._id)  
+      })
+
     })
     .catch(function(err) {
       error('Error in indexing user', err)

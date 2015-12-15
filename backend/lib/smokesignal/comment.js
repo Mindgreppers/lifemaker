@@ -7,13 +7,13 @@ error.log = console.log.bind(console)
 var es = require('../es')
 
 
-module.exports = function(params, socket) {
+module.exports = function(params, socket, io) {
   console.log(params)
 
   var pickComment = _.pick(params, ['userId',
     'commentId', 'text', 'thanks', 'nothanks'
   ])
-  debug('poakjshdksjd')
+
   es.update({
       index: 'smokesignals',
       type: 'smokesignal',
@@ -26,7 +26,7 @@ module.exports = function(params, socket) {
       }
     })
     .then(function(res) {
-      socket.emit('u-smokesignal.' + params._id + '.done', {
+      io.to(params._id).emit('u-smokesignal.done', {
         _id: params._id,
         comment: pickComment,
         message: 'comment Added',
@@ -37,7 +37,7 @@ module.exports = function(params, socket) {
     .catch(function(err) {
       error('Error in indexing user', err)
         // c-smokesignal.error: {message: 'Error in creating user in database', code: 500, err: err}
-      socket.emit('u-smokesignal.comment.error', {
+      io.to(params._id).emit('u-smokesignal.comment.error', {
         message: 'Error in creating smokesignal in database',
         code: 500,
         err: err

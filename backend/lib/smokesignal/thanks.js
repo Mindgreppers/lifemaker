@@ -12,7 +12,7 @@ var es = require('../es')
  *@param thankerId _id of the user who thanked or nothanked
  *
  * */
-module.exports = function(params, io, socket) {
+module.exports = function(params, socket, io) {
 
   es.update({
     index: 'smokesignals',
@@ -27,11 +27,17 @@ module.exports = function(params, io, socket) {
     }
   })
   .then(function(res) {
-    io.emit('u-smokesignal.' + params._id + '.action.done', {
+    console.log(params._id)
+    io.to(params._id).emit('u-smokesignal.action.done', {
       code: 200,
       message: params.action + ' +' + params.count,
       params: params
     })
+    /*io.emit('u-smokesignal.' + params._id + '.action.done', {
+      code: 200,
+      message: params.action + ' +' + params.count,
+      params: params
+    })*/
   })
   .catch(function(err) {
     error('Error in ss action', err)
