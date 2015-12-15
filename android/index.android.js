@@ -13,6 +13,7 @@ var {
   ProgressBarAndroid,
   Dimensions,
   Navigator,
+  BackAndroid,
 } = React;
 
 var screenWidth = Dimensions.get('window').width
@@ -20,6 +21,7 @@ var screenHeight = Dimensions.get('window').height
 var params = require('./config')
 var styles = require('./appCode/styles/styles')
 var UserStore = require('./appCode/Stores/UserStore')
+var _navigator;
 
 var LifeMaker = React.createClass({
 
@@ -34,13 +36,13 @@ var LifeMaker = React.createClass({
         that.setState({user: 7})
       }
     }).then(function(response){
-      console.log(response)
+
       if(response.nick){
         UserStore.storeUserData(response)
         that.setState({user: 1})
       }
-    })
 
+    })
   },
   getInitialState: function() {
     return {
@@ -49,6 +51,7 @@ var LifeMaker = React.createClass({
   },
 
   _renderScene: function(route, navigator){
+    _navigator = navigator
     if (route.id === 1) {
       var SmokeSignalsPage = require('./appCode/components/SmokeSignals')
       return <SmokeSignalsPage navigator={navigator}/>
@@ -105,6 +108,14 @@ var LifeMaker = React.createClass({
       )
     }
   }
+});
+
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator.getCurrentRoutes() === 1  ) {
+       return false;
+    }
+  _navigator.pop();
+  return true;
 });
 
 AppRegistry.registerComponent('LifeMaker', () => LifeMaker);
