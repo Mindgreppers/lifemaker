@@ -242,15 +242,15 @@ var ThreadPage = React.createClass({
   },
   
   _addNeed: function() {
-    this.props.navigator.push({id : 6, type : 'Need'})
+    this.props.navigator.push({id : 2, type : 'Need'})
   },
 
   _addOffer: function() {
-    this.props.navigator.push({id : 6, type : 'Offer'})
+    this.props.navigator.push({id : 2, type : 'Offer'})
   },
       
   _addGeneral: function() {
-    this.props.navigator.push({id : 6, type : 'General'})
+    this.props.navigator.push({id : 2, type : 'General'})
   },
 
 });

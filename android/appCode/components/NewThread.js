@@ -68,7 +68,7 @@ var ThreadPage = React.createClass({
   _handleSubmit: function() {
     var smokeSignal = {
       userId: UserStore.getUserData().nick,
-      id: +moment() + '_'+ Math.random(),
+      _id: +moment() + '_'+ Math.random(),
       type: this.props.type,
       title: this.state.title,
       tags: this.state.selectedTags,
