@@ -98,7 +98,7 @@ var LifeMaker = React.createClass({
               if (route.sceneConfig) {
                 return route.sceneConfig;
               }
-              return Navigator.SceneConfigs.FloatFromRight;
+              return Navigator.SceneConfigs.FloatFromBottom;
           }}
 
         />

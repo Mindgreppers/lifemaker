@@ -10,7 +10,20 @@ var SmokeStore = Reflux.createStore({
   data: {smokeSignals: [], interestsMatches: []},
   
   init: function() {
-     
+
+    socket.on('u-smokesignal.action.done', function(result) {
+      console.log(result)
+      this.updatessAction(result.params, result.message)
+    }.bind(this))
+
+    socket.on('u-smokesignal.commentAction.done', function(result){
+      this.updateCommentAction(result.params, result.message)
+    }.bind(this))
+
+    socket.on('u-smokesignal.done', function(result) {
+      this.updateSmokeSignal(result)
+    }.bind(this))
+
     socket.on('r-smokesignal.forall.done', function(smokesignals) {
       this.data.smokeSignals = smokesignals.message
       var interests = UserStore.getUserData().interests
@@ -20,19 +33,8 @@ var SmokeStore = Reflux.createStore({
       })
       console.log(this.data.smokeSignals)
       this.data.smokeSignals.forEach(function(smokeSignal) {
-        socket.on('u-smokesignal.' + smokeSignal._id + '.commentAction.done', function(result){
-          this.updateCommentAction(result.params, result.message)
-        }.bind(this))
-
-        socket.on('u-smokesignal.' + smokeSignal._id + '.done', function(result) {
-          this.updateSmokeSignal(result)
-        }.bind(this))
-    
-          
-        socket.on('u-smokesignal.' + smokeSignal._id + '.action.done', function(result) {
-          console.log(result)
-          this.updatessAction(result.params, result.message)
-        }.bind(this))
+        
+            
       }.bind(this))
         this.trigger()
     }.bind(this))
