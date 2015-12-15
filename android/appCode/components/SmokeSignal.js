@@ -217,7 +217,7 @@ var ThreadPage = React.createClass({
       <View style={styles.comment} key={i}>
         <Text style={styles.description}>{comment.text}</Text>
         <View style={{flexDirection: 'row'}}>
-         <TouchableOpacity onPress={that.addCommentAction.bind(that, {commentId: comment.commentId, action: "thanks"})}>
+         <TouchableOpacity onPress={that.addCommentAction.bind(that, {userId: comment.userId, commentId: comment.commentId, action: "thanks"})}>
             <View>
               <Text style={styles.thanks}>{comment.thanks} Thanks</Text>
             </View>
