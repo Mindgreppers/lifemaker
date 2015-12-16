@@ -8,6 +8,7 @@ var socket = require('../socket')
 var SmokeStore = Reflux.createStore({
 
   data: {smokeSignals: [], interestsMatches: []},
+  smokeSignals: {smokeSignals: {}, forMe: [], forAll: []},
   
   init: function() {
 
@@ -28,11 +29,27 @@ var SmokeStore = Reflux.createStore({
 
     socket.on('r-user.interest-matches.done', function(res) {
       this.data.interestsMatches = res.results
+
+      this.forMe = res.results.map(function(signal) {
+        return signal._id
+      })
+
       this.trigger()
     }.bind(this)) 
 
     socket.on('r-smokesignal.forall.done', function(smokesignals) {
       this.data.smokeSignals = smokesignals.message
+
+      this.forAll = smokesignals.message.map(function(signal) {
+        return signal._id
+      })
+
+      this.smokeSignals.smokeSignals = smokesignals.message.reduce(function(result, smokesignal) {
+        result[smokesignal._id] = smokesignal
+        return result
+      },{})
+
+      console.log(this.smokeSignals.smokeSignals, this.forAll)
       this.trigger()
     }.bind(this))
 

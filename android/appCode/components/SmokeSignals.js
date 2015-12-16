@@ -46,8 +46,8 @@ var SmokeSignalsPage = React.createClass({
 
   refreshList: function() {
       this.setState({
-        smokeSignals: SmokeStore.getSmokeSignals()[0],
-        interestsMatches: SmokeStore.getSmokeSignals()[1]
+        forAll: SmokeStore.getSmokeSignals()[0],
+        forMe: SmokeStore.getSmokeSignals()[1]
       })
   },
 
@@ -56,8 +56,8 @@ var SmokeSignalsPage = React.createClass({
       Need: true,
       Offer: true,
       General: true,
-      interestsMatches: SmokeStore.getInterestsMatches(),
-      smokeSignals: SmokeStore.request()[0],
+      forMe: SmokeStore.getInterestsMatches(),
+      forAll: SmokeStore.request()[0],
       searchResults: [],
       searchText: '',
       dataSource: ds.cloneWithRows([]),
@@ -79,19 +79,19 @@ var SmokeSignalsPage = React.createClass({
     if(!this.state.Need) {
       this.setState({
         Need: true,
-        smokeSignals: SmokeStore.request()
+        forAll: SmokeStore.request()
       })
     }
     else {
       this.setState({Need: false})
     }
-    var smokeSignals = this.state.smokeSignals.filter(function(smokeSignal) {
+    var forAll = this.state.forAll.filter(function(smokeSignal) {
      if(this.state[smokeSignal._source.type]) {
         return smokeSignal
      }
     }.bind(this))
     this.setState({
-      smokeSignals: smokeSignals,
+      forAll: forAll,
     }) 
   }, 
 
@@ -99,7 +99,7 @@ var SmokeSignalsPage = React.createClass({
     if(!this.state.Offer) {
       this.setState({
         Offer: true,
-        smokeSignals: SmokeStore.request()
+        forAll: SmokeStore.request()
       })
     }
     else {
@@ -107,13 +107,13 @@ var SmokeSignalsPage = React.createClass({
         Offer: false,
       })
     }
-    var smokeSignals = this.state.smokeSignals.filter(function(smokeSignal) {
+    var forAll = this.state.forAll.filter(function(smokeSignal) {
      if(this.state[smokeSignal._source.type]) {
         return smokeSignal
      }
     }.bind(this))
     this.setState({
-      smokeSignals: smokeSignals,
+      forAll: forAll,
     }) 
   }, 
 
@@ -121,7 +121,7 @@ var SmokeSignalsPage = React.createClass({
     if(!this.state.General) {
       this.setState({
         General: true,
-        smokeSignals: SmokeStore.request()
+        forAll: SmokeStore.request()
       })
     }
     else {
@@ -129,13 +129,13 @@ var SmokeSignalsPage = React.createClass({
         General: false,
       })
     }
-    var smokeSignals = this.state.smokeSignals.filter(function(smokeSignal) {
+    var forAll = this.state.forAll.filter(function(smokeSignal) {
      if(this.state[smokeSignal._source.type]) {
         return smokeSignal
      }
     }.bind(this))
     this.setState({
-      smokeSignals: smokeSignals,
+      forAll: forAll,
     }) 
   }, 
 
@@ -202,8 +202,8 @@ var SmokeSignalsPage = React.createClass({
 
           { !this.state.showSearchResults ? ( 
             <ScrollableTabView>
-              <TabsView tabLabel="For Me"  _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.interestsMatches} style={styles.tabsView} style={{width: screenWidth}}/>
-              <TabsView initialPage={0} tabLabel="For All" _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.smokeSignals} style={{width: screenWidth}}/>
+              <TabsView tabLabel="For Me"  _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.forMe} style={styles.tabsView} style={{width: screenWidth}}/>
+              <TabsView initialPage={0} tabLabel="For All" _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.forAll} style={{width: screenWidth}}/>
             </ScrollableTabView>
              )
             : (
