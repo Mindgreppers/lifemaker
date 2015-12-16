@@ -40,6 +40,7 @@ var consumers = {
   // user
  // 'c-user': 'user/create',
   'u-user': 'user/update',
+  'joinUser': 'user/joinUser',
   // smokesignal
   'c-smokesignal': 'smokesignal/create',
   'r-smokesignal.forall': 'smokesignal/read',

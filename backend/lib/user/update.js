@@ -19,7 +19,8 @@ console.log(params)
       }
     })
     .then(function(res) {
-      socket.emit('u-user.done', {
+      debug(params.nick)
+      io.to(params.nick).emit('u-user.done', {
         message: 'Profile Updated',
         code: 201,
         result: {
@@ -29,7 +30,7 @@ console.log(params)
     })
     .catch(function(err) {
       error('Error in updating user', err)
-      socket.emit('u-user.error' + '.error', {
+      io.to(params.nick).emit('u-user.error', {
         message: 'Database error',
         code: 500,
         err: err
