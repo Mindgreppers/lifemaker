@@ -1,5 +1,3 @@
-//'use strict';
-
 var React = require('react-native')
 
 window.navigator.userAgent = 'react-native'
@@ -58,7 +56,7 @@ var SmokeSignalsPage = React.createClass({
       Need: true,
       Offer: true,
       General: true,
-      interestsMatches: [],
+      interestsMatches: SmokeStore.getInterestsMatches(),
       smokeSignals: SmokeStore.request()[0],
       searchResults: [],
       searchText: '',
@@ -230,9 +228,6 @@ var SmokeSignalsPage = React.createClass({
             <Text style={styles.title}>{smokeSignal._source.title}</Text>
           </TouchableOpacity>
           <Text style={styles.tags}>{smokeSignal._source.tags.toString()}</Text>
-          <TouchableOpacity>
-            <Text style={styles.description}>{description || smokeSignal._source.description}.....</Text>
-          </TouchableOpacity>
             <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
             <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
             <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>
