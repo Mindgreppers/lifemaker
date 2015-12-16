@@ -39,6 +39,7 @@ var data = [
 var ProfilePage = React.createClass({
 
   getInitialState: function() {
+    console.log(UserStore.getUserData())
     return {
       dataSource: ds.cloneWithRows(data),
       user: UserStore.getUserData(),
@@ -135,7 +136,6 @@ var ProfilePage = React.createClass({
               source={{uri: 'http://www.caretofun.net/wp-content/uploads/2015/07/beautiful-girl-profile-caretofun.net-6.jpg'}}
             />
           </View>
-          { this.state.user.name && <Text style={styles.profileText}>{this.state.user.name}</Text> }
           <Text style={styles.profileText}>{this.state.user.nick}</Text>
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
@@ -176,7 +176,6 @@ var ProfilePage = React.createClass({
           </TouchableOpacity>
 
           <Text style={styles.profileText}>{this.state.user.interests.join(', ')}</Text>
-          { this.state.user.whatburnsyou !== "" && <Text style={styles.profileText}>{this.state.user.whatburnsyou}</Text>}
           <TouchableOpacity style={styles.thanksButton} onPress={this.showSmokeSignals}>
             <Text style={styles.profileButtonText}>223 Lives SmokeSignal</Text>
           </TouchableOpacity>

@@ -59,7 +59,7 @@ var ThreadPage = React.createClass({
   },
 
   handleProfilePage: function() {
-    this.props.navigator.push({id : 4,})
+    this.props.navigator.push({id : 4})
   },
 
   onActionSelected: function(position) {
