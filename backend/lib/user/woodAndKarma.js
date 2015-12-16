@@ -76,19 +76,11 @@ module.exports = function(params, socket, io) {
       }).then(function(res) {
 
         debug(res)
-        socket.emit(params.thankeeId, {
+        socket.emit(user.nick, {
           message: 'Thanks! Your Karma = ' + thankee.karma + ' Wood = ' + thankee.wood,
           code: '201',
           result: {
-            user: thankee
-          }
-        })
-        socket.emit(params.thankerId, {
-
-          message: 'Thanks! Your Karma = ' + thanker.karma + ' Wood = ' + thanker.wood,
-          code: '201',
-          result: {
-            user: thanker
+            user: user
           }
         })
       }).catch(function(err) {
