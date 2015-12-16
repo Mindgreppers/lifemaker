@@ -17,6 +17,34 @@ module.exports = function(params, socket, io) {
       ])
     })
     .then(function(res) {
+      es.search({
+        index: 'users',
+        type: 'user',
+        body: {
+          query: {
+            bool: {
+              should: params.tags.map(function(tag){
+                return {match_phrase: {interests: tag}}
+              })
+            }
+          }
+        }
+      }).then(function(res) {
+
+        res.hits.hits.forEach(function(user) {
+          io.to(user._id).emit('interestsSmokeSignal', {
+            result: {
+              _source: params,
+              _id: params._id
+            }
+         }) 
+        }) 
+
+      }).catch(function(err) {
+        
+        error('Error in Getting Users', err )
+
+      })
       io.emit('c-smokesignal.done', {
         result: {
           _source : params,

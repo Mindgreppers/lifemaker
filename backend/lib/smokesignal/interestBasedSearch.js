@@ -10,7 +10,7 @@ var es = require('../es')
  *@param size number of smoke signals wanted in response
  *@param from what is the offset wanted in response
  */
-module.exports = function(params, socket) {
+module.exports = function(params, socket, io) {
 
   es.get({
     index: 'users',
@@ -22,7 +22,7 @@ module.exports = function(params, socket) {
   .catch(function(err) {
     error('Error in getting user by id ', params.userId, err)
 
-    emit('r-user.' + params.userId + '.interest-matches.error', {
+    io.to(params.userId).emit('r-user.interest-matches.error', {
       status: err.status,
       message: err.status == 404? 'User not found ' + params.userId : 'Error in reading Interests from DB',
       err: err
@@ -51,7 +51,7 @@ module.exports = function(params, socket) {
         }]
       }
     }).then(function(res) {
-      socket.emit('r-user.' + params.userId + '.interest-matches.done', {
+      io.to(params.userId).emit('r-user.interest-matches.done', {
         message: 'Matched ' + res.hits.total + ' Smoke Signals',
         code: '200',
         results: res.hits.hits
@@ -60,7 +60,7 @@ module.exports = function(params, socket) {
     .catch(function(err) {
       error('Error in interest based search ', interests, err)
 
-      socket.emit('r-user.' + params.userId + '.interest-matches.error', {
+      io.to(params.userId).emit('r-user.' + params.userId + '.interest-matches.error', {
         status: err.status,
         message: 'DB Error in getting Smoke Signals',
         err: err

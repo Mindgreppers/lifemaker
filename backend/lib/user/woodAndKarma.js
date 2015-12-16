@@ -76,7 +76,7 @@ module.exports = function(params, socket, io) {
       }).then(function(res) {
 
         debug(res)
-        socket.emit(user.nick, {
+        io.to(user.nick).emit('woodKarma', {
           message: 'Thanks! Your Karma = ' + thankee.karma + ' Wood = ' + thankee.wood,
           code: '201',
           result: {
@@ -86,7 +86,7 @@ module.exports = function(params, socket, io) {
       }).catch(function(err) {
 
         error('Error in updating woodsAndKarma', err)
-        socket.emit(params.thankerId + '.error', {
+        io.to(user.nick).emit('woodKarma' + '.error', {
           message: 'Error in processing your ' + params.action,
           code: '201'
         })
