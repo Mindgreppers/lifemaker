@@ -7,12 +7,15 @@ var socket = require('../socket')
 
 var UserStore = Reflux.createStore({
 
-  init: function() {
-
-    
-  },
-
   data: {},
+
+  init: function() {
+    socket.on('woodKarma', function(data) {
+      _.merge(this.data , data.result.user)
+      console.log(this.data)
+      this.trigger()
+    }.bind(this))
+  },
 
   getInitialState: function() {
     return this.data
