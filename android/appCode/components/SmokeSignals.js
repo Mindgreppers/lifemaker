@@ -34,7 +34,7 @@ var SmokeSignalsPage = React.createClass({
 
   componentDidMount: function() {
     this.listenTo(SmokeStore, this.refreshList);
-    
+    console.log(this.state.forMe) 
     socket.on('r-user.' + UserStore.getUserData().nick  + '.search.done', function(data) {
       ToastAndroid.show(data.message, ToastAndroid.SHORT) 
       this.setState({
@@ -239,24 +239,22 @@ var SmokeSignalsPage = React.createClass({
 var TabsView = React.createClass({
   getInitialState: function() {
     return {
-      dataSource: ds.cloneWithRows([]),
+      dataSource: this.props.smokeSignalsData,
     }
   },
 
-  componentDidMount: function() {
-    this.setState({
-      dataSource: ds.cloneWithRows(this.props.smokeSignalsData),
-    })  
-  },
-
   componentWillReceiveProps: function(nextProps) {
-    this.setState({dataSource: ds.cloneWithRows(nextProps.smokeSignalsData)})
+    this.setState({dataSource: nextProps.smokeSignalsData})
   },
   render() {
+    var smokeSignals = this.state.dataSource.map(function(id){
+      return SmokeStore.getSmokeSignal(id)
+    })
+
     return (
       <ListView
         style={{width:screenWidth}}
-        dataSource={this.state.dataSource}
+        dataSource={ds.cloneWithRows(smokeSignals)}
         renderRow={this.props._renderSmokeSignals}
       />
     )

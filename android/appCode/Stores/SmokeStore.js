@@ -7,7 +7,6 @@ var _ = require('lodash')
 var socket = require('../socket')
 var SmokeStore = Reflux.createStore({
 
-  data: {smokeSignals: [], interestsMatches: []},
   smokeSignals: {smokeSignals: {}, forMe: [], forAll: []},
   
   init: function() {
@@ -15,22 +14,26 @@ var SmokeStore = Reflux.createStore({
     socket.emit('joinUser', {nick: UserStore.getUserData().nick})
     
     socket.on('u-smokesignal.action.done', function(result) {
-      console.log(result)
+
       this.updatessAction(result.params, result.message)
+
     }.bind(this))
 
     socket.on('u-smokesignal.commentAction.done', function(result){
+
       this.updateCommentAction(result.params, result.message)
+
     }.bind(this))
 
     socket.on('u-smokesignal.done', function(result) {
+
       this.updateSmokeSignal(result)
+
     }.bind(this))
 
     socket.on('r-user.interest-matches.done', function(res) {
-      this.data.interestsMatches = res.results
 
-      this.forMe = res.results.map(function(signal) {
+      this.smokeSignals.forMe = res.results.map(function(signal) {
         return signal._id
       })
 
@@ -38,9 +41,8 @@ var SmokeStore = Reflux.createStore({
     }.bind(this)) 
 
     socket.on('r-smokesignal.forall.done', function(smokesignals) {
-      this.data.smokeSignals = smokesignals.message
 
-      this.forAll = smokesignals.message.map(function(signal) {
+      this.smokeSignals.forAll = smokesignals.message.map(function(signal) {
         return signal._id
       })
 
@@ -49,13 +51,15 @@ var SmokeStore = Reflux.createStore({
         return result
       },{})
 
-      console.log(this.smokeSignals.smokeSignals, this.forAll)
       this.trigger()
+
     }.bind(this))
 
     socket.on('c-smokesignal.done', function(smokesignal) { 
-      this.data.smokeSignals.unshift(smokesignal.result)
+
+      this.smokeSignals.smokeSignals[smokeSignal._id] = smokesignal.result
       this.trigger()
+
     }.bind(this))
 
 
@@ -64,25 +68,27 @@ var SmokeStore = Reflux.createStore({
     this.listenTo(SmokeActions.smokeSignal_NoThanks, this.smokeSignal_NoThanks)
     this.listenTo(SmokeActions.smokeSignal_PutOff, this.smokeSignal_PutOff)
     this.listenTo(SmokeActions.smokeSignal_Restart, this.smokeSignal_Restart)
+
   },
+
   //get all smokeSignals
   getSmokeSignals: function() {
-    return [this.data.smokeSignals, this.data.interestsMatches]
+    return [this.smokeSignals.forAll, this.smokeSignals.forMe]
   },
 
   request: function() {
     socket.emit('r-smokesignal.forall', {match_all: {}})
-    return [this.data.smokeSignals, this.data.interestsMatches]
+    return [this.smokeSignals.forAll, this.smokeSignals.forMe]
   },
 
   getInterestsMatches: function() {
     var userData = UserStore.getUserData()
     socket.emit('r-user.interest-matches', {userId: userData.nick, size: 20, from: 0}) 
-    return this.data.interestsMatches
+    return this.smokeSignals.forMe
   },
 
   updateSmokeSignal: function(smokeSignal) {
-    var ss = _.find(this.data.smokeSignals, {_id: smokeSignal._id}) 
+    var ss = _.find(this.smokeSignals.smokeSignals, {_id: smokeSignal._id}) 
     if(!ss) {
       return
     }
@@ -97,7 +103,7 @@ var SmokeStore = Reflux.createStore({
   },
   
   updateCommentAction: function(params, message) {
-    var ss = _.find(this.data.smokeSignals, {_id: params._id})
+    var ss = _.find(this.smokeSignals.smokeSignals, {_id: params._id})
     var comment = _.find(ss._source.comments, {commentId: params.commentId})
     if(!comment) {
       return
@@ -107,7 +113,7 @@ var SmokeStore = Reflux.createStore({
   },
   
   updatessAction: function(params, message) {
-    var ss = _.find(this.data.smokeSignals, {_id: params._id})
+    var ss = _.find(this.smokeSignals.smokeSignals, {_id: params._id})
 
     if(!ss) {
       return
@@ -119,8 +125,7 @@ var SmokeStore = Reflux.createStore({
 
   //get Smoke with id
   getSmokeSignal: function(smokeId) {
-    
-    var smokeSignal =  _.find(this.data.smokeSignals, {'_id': smokeId})
+    var smokeSignal =  _.find(this.smokeSignals.smokeSignals, {'_id': smokeId})
     
     return smokeSignal
   },
