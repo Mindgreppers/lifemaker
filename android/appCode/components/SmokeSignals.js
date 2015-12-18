@@ -219,20 +219,22 @@ var SmokeSignalsPage = React.createClass({
      )
    },
     _renderSmokeSignals: function(smokeSignal) {
-      if(smokeSignal._source.description > 70) {
-        var description = smokeSignal.description.slice(0,70) 
+      if(smokeSignal._source) {
+        if(smokeSignal._source.description > 70) {
+          var description = smokeSignal.description.slice(0,70) 
+        }
+        return (
+          <View style={styles.smokeSignal}>
+            <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
+              <Text style={styles.title}>{smokeSignal._source.title}</Text>
+            </TouchableOpacity>
+            <Text style={styles.tags}>{smokeSignal._source.tags.toString()}</Text>
+              <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
+              <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
+              <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>
+          </View>
+        )
       }
-      return (
-        <View style={styles.smokeSignal}>
-          <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
-            <Text style={styles.title}>{smokeSignal._source.title}</Text>
-          </TouchableOpacity>
-          <Text style={styles.tags}>{smokeSignal._source.tags.toString()}</Text>
-            <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
-            <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
-            <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>
-        </View>
-      )
     },
 });
 
@@ -250,7 +252,7 @@ var TabsView = React.createClass({
     var smokeSignals = this.state.dataSource.map(function(id){
       return SmokeStore.getSmokeSignal(id)
     })
-
+    console.log(this.state.dataSource)
     return (
       <ListView
         style={{width:screenWidth}}

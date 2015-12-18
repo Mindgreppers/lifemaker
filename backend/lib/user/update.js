@@ -19,7 +19,7 @@ console.log(params)
       }
     })
     .then(function(res) {
-      debug(params.nick)
+      socket.join(params.nick)
       io.to(params.nick).emit('u-user.done', {
         message: 'Profile Updated',
         code: 201,

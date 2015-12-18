@@ -32,6 +32,7 @@ module.exports = function(params, socket, io) {
       }).then(function(res) {
 
         res.hits.hits.forEach(function(user) {
+            debug(user._id)
           io.to(user._id).emit('interestsSmokeSignal', {
             result: {
               _source: params,
