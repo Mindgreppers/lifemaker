@@ -6,23 +6,36 @@ var Icon = require('react-native-vector-icons/Ionicons');
 var {
   View,
   StyleSheet,
+  TouchableOpacity,
+  Text,
 } = React
 
 var CreateSmokeSignal = React.createClass({
-
+  getInitialState: function() {
+    return {}
+  },
+  createss: function() {
+    this.props.navigator.push({id : 2})
+  },
   render: function() {
     return (
-      <ActionButton buttonColor="rgba(231,76,60,1)">
-        <ActionButton.Item buttonColor='#9b59b6' title="I Need" onPress={this.props._addNeed}>
-          <Icon name="help" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item buttonColor='#3498db' title="I Offer" onPress={this.props._addOffer}>
-          <Icon name="android-notifications-none" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item buttonColor='#1abc9c' title="General" onPress={this.props._addGeneral}>
-          <Icon name="android-done-all" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-      </ActionButton>
+        <TouchableOpacity style={
+        {width: 60,
+          height: 60,
+          borderRadius: 30,
+          backgroundColor: '#ee6e73',
+          position: 'absolute',
+          bottom: 18,
+          alignItems: 'center',
+          justifyContent: 'center',
+          right: 18}} onPress={this.createss}> 
+          <Icon
+            name='plus'
+            size={18}
+            color="#ffffff"
+            style={{width: 18,height: 18, textAlign: 'center'}}
+         /> 
+        </TouchableOpacity>
     )
   }
 })

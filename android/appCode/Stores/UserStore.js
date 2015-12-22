@@ -48,6 +48,12 @@ var UserStore = Reflux.createStore({
     console.log(this.data)  
   },
 
+  getOtherUserProfile: function(userId) {
+    
+      socket.emit('r-user', {nick: userId})
+
+  },
+
 })
 
 module.exports = UserStore

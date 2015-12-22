@@ -6,13 +6,18 @@ var io = require('socket.io')(server)
 var cookieParser = require('cookie-parser')
 
 var _ = require('lodash')
+var debug = require('debug')('register')
+
+var error = debug
+error.log = console.log.bind(console)
+
 
 app.use(bodyParser.json()); 
 app.use(cookieParser({secret: 'asdfasasdkj3d'}))
 //app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.get('/login', function (req, res) {
+app.get('/checkCookie', function (req, res) {
 
   if(req.cookies.user != '') {
     var readUser = require('../lib/user/read')
@@ -23,10 +28,23 @@ app.get('/login', function (req, res) {
   }
   else {
 
-    res.status(404).send({message: 'pankaj'})
-    testSocketConnection()
+    res.status(404).send({message: 'not found'})
 
   }
+})
+
+app.post('/login', function(req, res){
+
+  if(req.body.nick) {
+    var readUser = require('../lib/user/read')
+    debug(req.body, 'all user information')
+    readUser(req.body, res)
+    res.cookie('user', req.body.nick , { maxAge: 9000000000, httpOnly: true });
+  }
+  else {
+    res.status(404).send({message: 'not found'})
+  }
+
 })
 
 app.post('/signup', function(req, res) {
@@ -36,11 +54,19 @@ app.post('/signup', function(req, res) {
 
 })
 
+app.post('/logout', function(req, res){
+  if(req.cookies.user) {
+    res.clearCookie('user')
+    res.status(200).json({message: 'logout'})
+  }
+})
+
 var consumers = {
   // user
  // 'c-user': 'user/create',
   'u-user': 'user/update',
   'joinUser': 'user/joinUser',
+  'r-user': 'user/socketRead',
   // smokesignal
   'c-smokesignal': 'smokesignal/create',
   'r-smokesignal.forall': 'smokesignal/read',

@@ -54,7 +54,8 @@ module.exports = function(params, socket, io) {
       io.to(params.userId).emit('r-user.interest-matches.done', {
         message: 'Matched ' + res.hits.total + ' Smoke Signals',
         code: '200',
-        results: res.hits.hits
+        results: res.hits.hits,
+        counts: res.hits.total
       })
     })
     .catch(function(err) {

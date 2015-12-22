@@ -59,8 +59,13 @@ var ThreadPage = React.createClass({
     this.props.navigator.push({id : 3 ,}) 
   },
 
-  handleProfilePage: function() {
-    this.props.navigator.push({id : 4})
+  handleProfilePage: function(userId) {
+    if(userId === UserStore.getUserData().nick) {
+      this.props.navigator.push({id : 4})
+    }
+    else {
+      this.props.navigator.push({id : 9, userId: userId})
+    }
   },
 
   onActionSelected: function(position) {
@@ -173,7 +178,7 @@ var ThreadPage = React.createClass({
                 <Text style={styles.labelText}>{this.state.smokeSignal._source.nothanks}  NoThanks</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.author} onPress={this.handleProfilePage}>
+            <TouchableOpacity style={styles.author} onPress={this.handleProfilePage.bind(this, this.state.smokeSignal._source.userId)}>
               <Text style={styles.author}>written by {this.state.smokeSignal._source.userId}</Text> 
             </TouchableOpacity>
             <View style={styles.commentStyle}>
@@ -208,7 +213,7 @@ var ThreadPage = React.createClass({
           }
           </View>
         </ScrollView>
-        { !this.state.showCommentBox && <CreateSmokeSignal _addNeed={this._addNeed} _addOffer={this._addOffer} _addGeneral={this._addGeneral}/>}
+        { !this.state.showCommentBox && <CreateSmokeSignal navigator={this.props.navigator}/>}
       </DrawerLayoutAndroid>
     );
   },
@@ -236,22 +241,6 @@ var ThreadPage = React.createClass({
         </View>
       </View>
     )
-  },
-
-  _handlePress(event) {
-      console.log('Pressed!');
-  },
-  
-  _addNeed: function() {
-    this.props.navigator.push({id : 2, type : 'Need'})
-  },
-
-  _addOffer: function() {
-    this.props.navigator.push({id : 2, type : 'Offer'})
-  },
-      
-  _addGeneral: function() {
-    this.props.navigator.push({id : 2, type : 'General'})
   },
 
 });

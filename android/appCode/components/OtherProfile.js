@@ -1,7 +1,9 @@
 'use strict';
 
 var React = require('react-native');
+var Reflux = require('reflux')
 var Icon = require('react-native-vector-icons/Ionicons');
+var _ = require('lodash')
 
 var {
   AppRegistry,
@@ -29,33 +31,37 @@ var SmokeStore = require('../Stores/SmokeStore')
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
-var data = [
-  { id: 1, title: "Life is strange", tags: "Life, journary", description: "If you live long enough, you ll make mistakes. But if you learn from them, you ll be a better person. It s how you handle adversity, not how it affects you. The main thing is never quit, never quit, never quit."
- },
- { id: 2,title:"I need help to learn about the Life", tags: "amazing", description: "Throughout life people will make you mad, disrespect you and     treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."},
-{id: 3, title : "Do you want to learn about the Life", tags: "great", description:"Throughout life people will make you mad, disrespect you and treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."}
-]
+var OtherProfilePage = React.createClass({
 
-var ProfilePage = React.createClass({
+  mixins: [
+    Reflux.ListenerMixin 
+  ],
 
   getInitialState: function() {
-    console.log(UserStore.getUserData())
     return {
-      dataSource: ds.cloneWithRows(data),
-      user: UserStore.getUserData(),
-      smokeSignals: SmokeStore.getSmokeSignals()
+      dataSource: ds.cloneWithRows([]),
+      user: {}
     }
-    console.log(this.state.user)
   },
  
   componentDidMount: function() {
-    socket.on(UserStore.getUserData(), function(results) {
-      ToastAndroid.show(results.message, ToastAndroid.SHORT)
-    })
+    this.listenTo(UserStore, this.refreshList) 
+
+    UserStore.getOtherUserProfile(this.props.userId)
+    socket.on('r-user.done', function(data) {
+
+      this.setState({
+        user: data.result 
+      })  
+
+    }.bind(this))
+
   },
 
-  profileEdit: function(){
-    this.props.navigator.push({id: 5 ,})
+  refreshList: function() {
+
+    this.setState({smokeSignal: SmokeStore.getOtherUserProfile(this.props.id)})
+
   },
 
   showSmokeSignals: function(){
@@ -108,21 +114,7 @@ var ProfilePage = React.createClass({
           automaticallyAdjustContentInsets={false}
           style = {styles.scrollView}
         >
-        <View style={styles.container}>
-          <TouchableOpacity  onPress={this.profileEdit}>
-            <Icon
-              name='edit'
-              size={25}
-              color='#000000'
-              style={styles.edit}
-            /> 
-          </TouchableOpacity>
-          <View style={styles.profileImageContainer}>
-            <Image
-              style={styles.profileImage}
-              source={{uri: 'http://www.caretofun.net/wp-content/uploads/2015/07/beautiful-girl-profile-caretofun.net-6.jpg'}}
-            />
-          </View>
+        { !_.isEmpty(this.state.user) && <View style={styles.container}>
           <Text style={styles.profileText}>{this.state.user.nick}</Text>
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
@@ -150,15 +142,6 @@ var ProfilePage = React.createClass({
               color='#26a69a'
               style={{width:15,height:15,marginTop:2,marginRight:5}}
            />
-          <Text style={styles.profileButtonText}>{this.state.user.woods} woods</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
           <Text style={styles.profileButtonText}>{this.state.user.karma} Karma</Text>
           </TouchableOpacity>
 
@@ -170,7 +153,7 @@ var ProfilePage = React.createClass({
             <Text style={styles.profileButtonText}>223 Close SmokeSignal</Text>
           </TouchableOpacity>
 
-        </View>
+        </View>}
         </ScrollView>
          <CreateSmokeSignal navigator={this.props.navigator}/>
       </DrawerLayoutAndroid>
@@ -232,4 +215,4 @@ var CloseSSList = React.createClass({
   }
 })
 
-module.exports = ProfilePage
+module.exports = OtherProfilePage

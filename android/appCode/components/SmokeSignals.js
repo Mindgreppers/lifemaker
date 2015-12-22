@@ -5,6 +5,7 @@ window.navigator.userAgent = 'react-native'
 var Reflux =  require('reflux')
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 var Icon = require('react-native-vector-icons/Ionicons');
+var params = require('../../config')
 
 var {
   Text,
@@ -47,7 +48,9 @@ var SmokeSignalsPage = React.createClass({
   refreshList: function() {
       this.setState({
         forAll: SmokeStore.getSmokeSignals()[0],
-        forMe: SmokeStore.getSmokeSignals()[1]
+        forMe: SmokeStore.getSmokeSignals()[1],
+        forMeCount: 'For Me | ' + SmokeStore.getCount()[0],
+        forAllCount: 'For All | ' + SmokeStore.getCount()[1],
       })
   },
 
@@ -58,6 +61,8 @@ var SmokeSignalsPage = React.createClass({
       General: true,
       forMe: SmokeStore.getInterestsMatches(),
       forAll: SmokeStore.request()[0],
+      forMeCount: 'For Me | ' + SmokeStore.getCount()[0],
+      forAllCount: 'For All | ' + SmokeStore.getCount()[1],
       searchResults: [],
       searchText: '',
       dataSource: ds.cloneWithRows([]),
@@ -143,17 +148,9 @@ var SmokeSignalsPage = React.createClass({
     this.refs['DRAWER'].openDrawer()
   },
   
-  _addNeed: function() {
-    this.props.navigator.push({id : 2, type : 'Need'})
+  createss: function() {
+    this.props.navigator.push({id : 2,})
   },
-
-  _addOffer: function() {
-    this.props.navigator.push({id : 2, type : 'Offer'})
-  },
-      
-  _addGeneral: function() {
-    this.props.navigator.push({id : 2, type : 'General'})
-  }, 
 
   changeSearchText: function(searchText) {
     this.setState({searchText: searchText})
@@ -161,6 +158,28 @@ var SmokeSignalsPage = React.createClass({
 
   submitSearch: function() {
    socket.emit('r-user.search', {userId: UserStore.getUserData().nick, searchText: this.state.searchText, from: 0, size: 10})  
+  },
+
+  logout: function() {
+    var that = this
+    fetch(params.ipAddress + '/logout', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }, 
+      body: JSON.stringify({nick: UserStore.getUserData.nick})
+    })
+    .then(function(response) {
+      console.log(response)
+      if(response.status === 200) {
+        that.props.navigator.push({id: 7})
+      }
+      else if (response.status === 400) {
+        ToastAndroid.show(response._bodyText, ToastAndroid.SHORT)
+        return {}
+      }
+    }).done()
   },
 
   render: function() {
@@ -187,6 +206,15 @@ var SmokeSignalsPage = React.createClass({
           />
           <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text> 
         </View>
+        <TouchableOpacity style={styles.DrawerSmokeSignals} onPress={this.logout}>
+          <Icon
+            name='log-out'
+            size={25}
+            color='#000000'
+            style={{width:25,height:25,marginLeft:5}}
+          />
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text> 
+        </TouchableOpacity>
       </View>
     )
 
@@ -202,8 +230,8 @@ var SmokeSignalsPage = React.createClass({
 
           { !this.state.showSearchResults ? ( 
             <ScrollableTabView>
-              <TabsView tabLabel="For Me"  _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.forMe} style={styles.tabsView} style={{width: screenWidth}}/>
-              <TabsView initialPage={0} tabLabel="For All" _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.forAll} style={{width: screenWidth}}/>
+              <TabsView tabLabel={this.state.forMeCount}  _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.forMe} style={styles.tabsView} style={{width: screenWidth}}/>
+              <TabsView initialPage={0} tabLabel={this.state.forAllCount} _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.forAll} style={{width: screenWidth}}/>
             </ScrollableTabView>
              )
             : (
@@ -214,7 +242,7 @@ var SmokeSignalsPage = React.createClass({
               />
             )  
           }
-          <CreateSmokeSignal _addNeed={this._addNeed} _addOffer={this._addOffer} _addGeneral={this._addGeneral}/>
+          <CreateSmokeSignal navigator={this.props.navigator}/>
        </DrawerLayoutAndroid>
      )
    },
@@ -226,7 +254,7 @@ var SmokeSignalsPage = React.createClass({
         return (
           <View style={styles.smokeSignal}>
             <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
-              <Text style={styles.title}>{smokeSignal._source.title}</Text>
+              <Text style={styles.title}>{smokeSignal._source.description}</Text>
             </TouchableOpacity>
             <Text style={styles.tags}>{smokeSignal._source.tags.toString()}</Text>
               <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>

@@ -27,13 +27,13 @@ var LifeMaker = React.createClass({
 
   componentDidMount: function() {
     var that = this  
-    fetch(params.ipAddress + '/login', {credentials: 'same-origin'})
+    fetch(params.ipAddress + '/checkCookie', {credentials: 'same-origin'})
     .then(function(res) {
       if(res.status === 200) {
         return res.json()
       }
       else {
-        that.setState({user: 7})
+        that.setState({user: 8})
       }
     }).then(function(response){
 
@@ -79,6 +79,14 @@ var LifeMaker = React.createClass({
     else if (route.id === 7) {
       var SignUpPage = require('./appCode/components/RegisterPage')
       return <SignUpPage navigator={navigator}/>
+    }
+    else if(route.id === 8) {
+      var Login = require('./appCode/components/Login')
+      return <Login navigator={navigator}/>
+    }
+    else if(route.id === 9) {
+      var OtherProfile = require('./appCode/components/OtherProfile')
+      return <OtherProfile userId={route.userId} navigator={navigator}/>
     }
   }, 
     

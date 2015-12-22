@@ -33,6 +33,7 @@ module.exports = function(params, socket, io) {
       })
       socket.emit('r-smokesignal.forall.done', {
         message: resp.hits.hits,
+        counts: resp.hits.total,
         code: 200
       })
 

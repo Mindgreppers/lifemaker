@@ -57,18 +57,6 @@ var ProfileEditPage = React.createClass({
     this.refs['DRAWER'].openDrawer()
   },
 
-  _addNeed: function() {
-    this.props.navigator.push({id : 2, type : 'Need'})
-  },
-
-  _addOffer: function() {
-    this.props.navigator.push({id : 2, type : 'Offer'})
-  },
-      
-  _addGeneral: function() {
-    this.props.navigator.push({id : 2, type : 'General'})
-  },
-
   submitEdits: function() {
     var profileEdits = {
       nick: UserStore.getUserData().nick,
@@ -165,7 +153,7 @@ var ProfileEditPage = React.createClass({
 
           </View>
         </ScrollView>
-        <CreateSmokeSignal _addNeed={this._addNeed} _addOffer={this._addOffer} _addGeneral={this._addGeneral}/>
+        <CreateSmokeSignal navigator={this.props.navigator}/>
       </DrawerLayoutAndroid>
     )
   },

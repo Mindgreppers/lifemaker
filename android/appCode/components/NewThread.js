@@ -43,7 +43,6 @@ var ThreadPage = React.createClass({
   getInitialState: function(){
     return {
       tag:'',
-      title:'',
       description:'',
       optionSelected: 1,
       time:'',
@@ -69,8 +68,6 @@ var ThreadPage = React.createClass({
     var smokeSignal = {
       userId: UserStore.getUserData().nick,
       _id: +moment() + '_'+ Math.random(),
-      type: this.props.type,
-      title: this.state.title,
       tags: this.state.selectedTags,
       description: this.state.description,
       createdAt: +moment(),
@@ -146,12 +143,6 @@ var ThreadPage = React.createClass({
           automaticallyAdjustContentInsets={false}
         >
           <View style={styles.container}>
-            <Text style={styles.newThreadField}>Title</Text>
-            <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1,}}
-              onChangeText={(title) => this.setState({title})}
-              value={this.state.title}
-            /> 
             <Text style={{marginTop:20}}>Tags</Text>
             <View style={{flexDirection: 'row', marginLeft:30}}>
             { that.state.selectedTags.length && this.state.selectedTags.map(function(tag, i){
