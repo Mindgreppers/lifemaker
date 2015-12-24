@@ -28,6 +28,11 @@ var styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
   },
+  signUpButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+  },
   tag: {
     fontSize: 10,
   },
