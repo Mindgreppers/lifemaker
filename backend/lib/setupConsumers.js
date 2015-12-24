@@ -14,7 +14,6 @@ error.log = console.log.bind(console)
 
 app.use(bodyParser.json()); 
 app.use(cookieParser({secret: 'asdfasasdkj3d'}))
-//app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/checkCookie', function (req, res) {
@@ -24,7 +23,6 @@ app.get('/checkCookie', function (req, res) {
     console.log(req.cookies.user)
     var params = {nick: req.cookies.user}
     readUser(params, res) 
-   // res.cookie('user', '' , { maxAge: 900000, httpOnly: true });
   }
   else {
 
@@ -62,18 +60,13 @@ app.post('/logout', function(req, res){
 })
 
 var consumers = {
-  // user
- // 'c-user': 'user/create',
   'u-user': 'user/update',
   'joinUser': 'user/joinUser',
   'r-user': 'user/socketRead',
-  // smokesignal
   'c-smokesignal': 'smokesignal/create',
   'r-smokesignal.forall': 'smokesignal/read',
-  //'r-smokesignal.count': 'smokesignal/count',
   'r-user.interest-matches': 'smokesignal/interestBasedSearch',
   'r-user.search': 'smokesignal/search',
-  //'u-smokesignal': 'smokesignal/update',
 
   'u-smokesignal.comment': 'smokesignal/comment',
   'u-smokesignal.comment.thanks': ['smokesignal/comment-thanks', 'user/woodAndKarma'],

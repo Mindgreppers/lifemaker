@@ -35,7 +35,6 @@ var SmokeSignalsPage = React.createClass({
 
   componentDidMount: function() {
     this.listenTo(SmokeStore, this.refreshList);
-    console.log(this.state.forMe) 
     socket.on('r-user.' + UserStore.getUserData().nick  + '.search.done', function(data) {
       ToastAndroid.show(data.message, ToastAndroid.SHORT) 
       this.setState({
@@ -171,7 +170,6 @@ var SmokeSignalsPage = React.createClass({
       body: JSON.stringify({nick: UserStore.getUserData.nick})
     })
     .then(function(response) {
-      console.log(response)
       if(response.status === 200) {
         that.props.navigator.push({id: 7})
       }
@@ -247,7 +245,7 @@ var SmokeSignalsPage = React.createClass({
      )
    },
     _renderSmokeSignals: function(smokeSignal) {
-      if(smokeSignal._source) {
+        console.log(smokeSignal)
         if(smokeSignal._source.description > 70) {
           var description = smokeSignal.description.slice(0,70) 
         }
@@ -262,7 +260,6 @@ var SmokeSignalsPage = React.createClass({
               <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>
           </View>
         )
-      }
     },
 });
 
@@ -276,16 +273,21 @@ var TabsView = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     this.setState({dataSource: nextProps.smokeSignalsData})
   },
+  
+  getMoreSignals: function() {
+    console.log('pankaj')
+  },
   render() {
     var smokeSignals = this.state.dataSource.map(function(id){
       return SmokeStore.getSmokeSignal(id)
     })
-    console.log(this.state.dataSource)
     return (
       <ListView
         style={{width:screenWidth}}
+        onEndReached={this.getMoreSignals} 
         dataSource={ds.cloneWithRows(smokeSignals)}
         renderRow={this.props._renderSmokeSignals}
+        pageSize={4}
       />
     )
   }

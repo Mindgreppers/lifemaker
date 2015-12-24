@@ -37,7 +37,15 @@ var SmokeStore = Reflux.createStore({
         return signal._id
       })
 
+      var interestMatches = res.results.reduce(function(result, smokesignal) {
+        result[smokesignal._id] = smokesignal
+        return result
+      }, {})
+
+      _.merge(this.data.smokeSignals, interestMatches)
+
       this.trigger()
+
     }.bind(this)) 
 
     socket.on('r-smokesignal.forall.done', function(smokesignals) {
@@ -47,30 +55,28 @@ var SmokeStore = Reflux.createStore({
       this.data.forAll = smokesignals.message.map(function(signal) {
         return signal._id
       })
-
       this.data.smokeSignals = smokesignals.message.reduce(function(result, smokesignal) {
         result[smokesignal._id] = smokesignal
         return result
       },{})
-      console.log(this.data.smokeSignals)
       this.trigger()
 
     }.bind(this))
 
     socket.on('c-smokesignal.done', function(smokesignal) { 
-
+      console.log(smokesignal)
       this.data.forAllCount += 1
       this.data.smokeSignals[smokesignal.result._id] = smokesignal.result
-      console.log(smokesignal.result._id)
-      console.log(this.data.smokeSignals)
       this.data.forAll.unshift(smokesignal.result._id)
       this.trigger()
+      console.log(this.data.forAll)
+      console.log(this.data.smokeSignals)
 
     }.bind(this))
 
     socket.on('interestsSmokeSignal', function(smokesignal) {
+      console.log(smokesignal)
       this.data.forMeCount += 1
-      console.log(smokesignal, "gffghff fhgfg  fghghf")
       this.data.forMe.unshift(smokesignal.result._id) 
       this.trigger()
     }.bind(this))
