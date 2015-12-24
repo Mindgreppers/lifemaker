@@ -3,9 +3,11 @@
 var React = require('react-native')
 
 window.navigator.userAgent = 'react-native'
+
 var moment = require('moment')
 var Reflux = require('reflux')
-var Icon = require('react-native-vector-icons/Ionicons');
+var { Icon, } = require('react-native-icons');
+
 var {
   AppRegistry,
   StyleSheet,
