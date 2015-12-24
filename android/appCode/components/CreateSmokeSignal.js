@@ -15,7 +15,7 @@ var CreateSmokeSignal = React.createClass({
     return {}
   },
   createss: function() {
-    this.props.navigator.push({id : 2})
+    this.props.navigator.push({id: 2})
   },
   render: function() {
     return (

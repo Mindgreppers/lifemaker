@@ -6,7 +6,7 @@ window.navigator.userAgent = 'react-native'
 
 var moment = require('moment')
 var Reflux = require('reflux')
-var { Icon, } = require('react-native-icons');
+var Icon = require('react-native-vector-icons/Ionicons');
 
 var {
   AppRegistry,
@@ -250,4 +250,5 @@ var InterestField = React.createClass({
     )
   }
 })
+
 module.exports = ThreadPage
