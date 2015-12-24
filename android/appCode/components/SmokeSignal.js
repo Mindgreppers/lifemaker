@@ -36,11 +36,13 @@ var ThreadPage = React.createClass({
   ],
 
   componentDidMount: function() {
+
     this.listenTo(SmokeStore, this.refreshList) 
+
   },
 
   getInitialState: function() {
-    console.log(this.props.id)
+
     return {
       showCommentBox: false,
       text: '',
@@ -49,6 +51,7 @@ var ThreadPage = React.createClass({
     }
   
   },
+
   refreshList: function(message) {
     console.log(message)
     ToastAndroid.show(message.message, ToastAndroid.SHORT)
@@ -105,6 +108,7 @@ var ThreadPage = React.createClass({
   },
 
   submitComment: function() {
+
     this.refs.comment.blur()
     this.setState({
       showCommentBox: false
@@ -120,11 +124,13 @@ var ThreadPage = React.createClass({
     
     this.setState({comment: ''})
     socket.emit('u-smokesignal.comment', comment)
+
   },
 
   submitCommentText: function(comment) {
     this.setState({comment: comment})
   },
+
   render: function() {
     var navigationView = (
       <View style={[styles.DrawerView,{height: ScreenHeight}]}>

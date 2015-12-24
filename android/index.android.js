@@ -57,8 +57,8 @@ var LifeMaker = React.createClass({
       return <SmokeSignalsPage navigator={navigator}/>
     }
     else if (route.id === 2) {
-      var NewThreadPage = require('./appCode/components/NewThread')
-      return <NewThreadPage type={route.type} navigator={navigator}/>
+      var NewThread = require('./appCode/components/NewThread')
+      return <NewThread navigator={navigator}/>
     }
     else if (route.id === 3) {
       var SmokeSignalPage = require('./appCode/components/SmokeSignal')

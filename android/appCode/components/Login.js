@@ -1,8 +1,6 @@
-var React = require('react-native')
-
 'use strict';
 
-var connect = require('../socket')
+var React = require('react-native')
 var params = require('../../config')
 var UserStore = require('../Stores/UserStore')
 
@@ -26,16 +24,19 @@ var Login = React.createClass({
     }
   },
 
-  signup: function() {
+  signUp: function() {
     this.props.navigator.push({id: 7})
   },
+
   _handleSubmit: function(id) {
 
+    this.refs.nick.blur()
     var that = this
-
+ 
     var user = {
       nick: this.state.nickname,
     }
+
     fetch(params.ipAddress + '/login', {
       method: 'post',
       headers: {
@@ -45,21 +46,27 @@ var Login = React.createClass({
       body: JSON.stringify(user)
     })
     .then(function(response) {
-      console.log(response)
+
       if(response.status === 200) {
+
         return response.json()
-      }
-      else if (response.status === 400) {
-        ToastAndroid.show(response._bodyText, ToastAndroid.SHORT)
+
+      } else if (response.status === 400) {
+
+        ToastAndroid.show('Not Found', ToastAndroid.SHORT)
         that.props.navigator.push({id: 7})
+
         return {}
       }
+
     }).then(function(response) {
-      if(response) {
+
+      if(response.status === 200) {
         ToastAndroid.show(response.message, ToastAndroid.SHORT)
         UserStore.storeUserData(response)
         that.props.navigator.push({id: 1})
       }
+
      }).done()
 
   },
@@ -70,6 +77,7 @@ var Login = React.createClass({
         <Text style={styles.interestPageTitle}>Login</Text>
         <Text style={styles.loginField}>Nickname</Text>
         <TextInput
+          ref="nick"
           style={{height: 60, borderColor: 'gray', borderWidth: 1 }}
           onChangeText={(nickname) => this.setState({nickname})}
           value={this.state.nickname}
@@ -78,10 +86,12 @@ var Login = React.createClass({
           <TouchableOpacity style={styles.submitRegistration} onPress={this._handleSubmit}>
               <Text>Submit</Text>
           </TouchableOpacity>
-         </View>
-         <TouchableOpacity onPress={this._signUp}>
+        </View>
+        <View style={styles.signUpButton}>
+          <TouchableOpacity onPress={this.signUp}>
             <Text>Signup</Text>
-         </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   },
