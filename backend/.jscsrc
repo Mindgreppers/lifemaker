@@ -1,9 +1,0 @@
-{
-  "preset": "node-style-guide",
-  "requireCamelCaseOrUpperCaseIdentifiers": null,
-  "requireTrailingComma": null,
-  "requireCapitalizedComments": null,
-  "disallowKeywordsOnNewLine": null,
-  "requireSpaceAfterLineComment": null,
-  "maximumLineLength": null
-}
