@@ -10,8 +10,15 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  liveSS: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+  },
   loading: {
     position: 'absolute',
+  },
+  liveSSTitle: {
+    flex: 1
   },
   loadingView: {
   },
@@ -92,7 +99,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   DrawerView: {
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
   },
   DrawerHeading: {
     flexDirection: 'row',

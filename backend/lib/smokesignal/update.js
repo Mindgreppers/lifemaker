@@ -44,7 +44,7 @@ module.exports = function(params, socket) {
 
 if (require.main === module) {
   module.exports({
-    _id: 'pankaj',
-    tags: ['hb', 'hb']
+    _id: '1450863081335_0.9154447398614138',
+    active: false
   })
 }

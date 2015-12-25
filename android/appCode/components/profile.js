@@ -22,6 +22,7 @@ var {
 var styles = require('../styles/styles.js')
 var socket = require('../socket')
 var CreateSmokeSignal = require('./CreateSmokeSignal')
+var SideBar = require('./SideBar')
 var ScreenHeight = Dimensions.get('window').height
 var ApplicationHeader =  require('./ApplicationHeader')
 var UserStore = require('../Stores/UserStore')
@@ -29,46 +30,52 @@ var SmokeStore = require('../Stores/SmokeStore')
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
-var data = [
-  { id: 1, title: "Life is strange", tags: "Life, journary", description: "If you live long enough, you ll make mistakes. But if you learn from them, you ll be a better person. It s how you handle adversity, not how it affects you. The main thing is never quit, never quit, never quit."
- },
- { id: 2,title:"I need help to learn about the Life", tags: "amazing", description: "Throughout life people will make you mad, disrespect you and     treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."},
-{id: 3, title : "Do you want to learn about the Life", tags: "great", description:"Throughout life people will make you mad, disrespect you and treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."}
-]
+var data = []
 
 var ProfilePage = React.createClass({
 
   getInitialState: function() {
-    console.log(UserStore.getUserData())
+
     return {
       dataSource: ds.cloneWithRows(data),
       user: UserStore.getUserData(),
       smokeSignals: SmokeStore.getSmokeSignals()
     }
-    console.log(this.state.user)
+
   },
  
   componentDidMount: function() {
+
     socket.on(UserStore.getUserData(), function(results) {
       ToastAndroid.show(results.message, ToastAndroid.SHORT)
     })
+
   },
 
   profileEdit: function(){
+
     this.props.navigator.push({id: 5 ,})
+
   },
 
   showSmokeSignals: function(){
-    this.props.navigator.push({id: 10})     
+
+    this.props.navigator.push({id: 11, userId: this.state.user.nick})     
+
   },
 
   closeSmokeSignals: function() {
-    this.props.navigator.push({id: 11})
+
+    this.props.navigator.push({id: 10, userId: this.state.user.nick})
+
   },
 
   openDrawer: function(){
+
     this.refs['DRAWER'].openDrawer()
+
   },
+
   render: function(){
     var navigationView = (
       <View style={[styles.DrawerView,{height: ScreenHeight}]}>
@@ -98,10 +105,10 @@ var ProfilePage = React.createClass({
  
     return (
       <DrawerLayoutAndroid
-        drawerWidth={100}
+        drawerWidth={300}
         ref={'DRAWER'}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
-        renderNavigationView={() => navigationView}
+        renderNavigationView={() => <SideBar navigator={this.props.navigator}/>}
       >
         <ApplicationHeader openDrawer={this.openDrawer} title= 'Profile'/>
         <ScrollView

@@ -22,6 +22,7 @@ var {
 var styles = require('../styles/styles.js')
 var ApplicationHeader = require('./ApplicationHeader')
 var ScreenHeight = Dimensions.get('window').height
+var SideBar = require('./SideBar')
 var socket = require('../socket') 
 var CreateSmokeSignal = require('./CreateSmokeSignal')
 var UserStore = require('../Stores/UserStore')
@@ -69,38 +70,13 @@ var ProfileEditPage = React.createClass({
   },
 
   render: function() {
-    var navigationView = (
-      <View style={[styles.DrawerView,{height: ScreenHeight}]}>
-        <View style={styles.DrawerHeading}>
-          <Text style={styles.DrawerHeadingText}>LifeMaker</Text>
-        </View>
-        <View style={styles.DrawerSmokeSignals}>
-          <Icon
-            name='bonfire'
-            size={25}
-            color='#000000'
-            style={{width:25,height:25,marginLeft:5}}
-          />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>SmokeSignals</Text> 
-        </View>
-        <View style={styles.DrawerSmokeSignals}>
-          <Icon
-            name='person'
-            size={25}
-            color='#000000'
-            style={{width:25,height:25,marginLeft:5}}
-          />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text> 
-        </View>
-      </View>
-    )
-
+    
     return (
       <DrawerLayoutAndroid
           drawerWidth={300}
           ref={'DRAWER'}
           drawerPosition={DrawerLayoutAndroid.positions.Left}
-          renderNavigationView={() => navigationView}>
+          renderNavigationView={() => <SideBar navigator={this.props.navigator}/>}>
           <ApplicationHeader openDrawer={this.openDrawer} title= 'ProfileEdit'/>
         <ScrollView
           automaticallyAdjustContentInsets={false}

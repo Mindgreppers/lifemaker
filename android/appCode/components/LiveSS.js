@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Icon = require('react-native-vector-icons/Ionicons');
 
 var {
   AppRegistry,
@@ -12,54 +13,60 @@ var {
   ListView,
   ScrollView,
   ToolbarAndroid,
+  Dimensions,
 } = React
 
+var socket = require('../socket')
 var styles = require('../styles/styles.js')
-var { Icon, } = require('react-native-icons');
 var CreateSmokeSignal = require('./CreateSmokeSignal')
+var SideBar = require('./SideBar')
 var ApplicationHeader =  require('./ApplicationHeader')
+var ScreenHeight = Dimensions.get('window').height
+var UserStore = require('../Stores/UserStore')
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-
-var data = [
-  { id: 1, title: "Life is strange", tags: "Life, journary", description: "If you live long enough, you ll make mistakes. But if you learn from them, you ll be a better person. It s how you handle adversity, not how it affects you. The main thing is never quit, never quit, never quit."
- },
- { id: 2,title:"I need help to learn about the Life", tags: "amazing", description: "Throughout life people will make you mad, disrespect you and treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."},
-{id: 3, title : "Do you want to learn about the Life", tags: "great", description:"Throughout life people will make you mad, disrespect you and treat you bad. Let God deal with the things they do, cause hate in your heart will consume you too."}
-]
 
 var SmokeSignalsList = React.createClass({
   
   getInitialState: function() {
     return {
-      dataSource: ds.cloneWithRows(data),
+      dataSource: ds.cloneWithRows([]),
     }
+  },
+
+  componentDidMount: function() {
+      
+    var that = this
+    socket.emit('r-userss', {nick: this.props.userId, active: true})
+
+    socket.on('r-userss.done', function(result) {
+
+      console.log(result.message)
+
+      that.setState({
+        dataSource: ds.cloneWithRows(result.message)   
+      }) 
+
+    })
+
+  },
+ 
+  closeSignal: function(smokeId) {
+    socket.emit('u-smokesignal', {_id: smokeId, active: false})  
   },
 
   openDrawer: function(){
     this.refs['DRAWER'].openDrawer()
   },
 
-  _addNeed: function() {
-    this.props.navigator.push({id : 6, type : 'Need'})
-  },
-
-  _addOffer: function() {
-    this.props.navigator.push({id : 6, type : 'Offer'})
-  },
-      
-  _addGeneral: function() {
-    this.props.navigator.push({id : 6, type : 'General'})
-  },
-
   render:function(){
-    var navigationView = (<Text>Hiii I am Pankaj</Text>)
+
     return (
       <DrawerLayoutAndroid
-          drawerWidth={100}
+          drawerWidth={300}
           ref={'DRAWER'}
           drawerPosition={DrawerLayoutAndroid.positions.Left}
-          renderNavigationView={() => navigationView}
+          renderNavigationView={() => <SideBar navigator={this.props.navigator}/>}
       >
         <ApplicationHeader openDrawer={this.openDrawer} title= 'LivesSignals'/>
         <ScrollView
@@ -71,40 +78,38 @@ var SmokeSignalsList = React.createClass({
             renderRow={this._renderSmokeSignals}
           />
         </ScrollView>
-        <CreateSmokeSignal _addNeed={this._addNeed} _addOffer={this._addOffer} _addGeneral={this._addGeneral}/>
+        <CreateSmokeSignal navigator={this.props.navigator}/>
       </DrawerLayoutAndroid>
     ) 
   },
   _renderSmokeSignals: function(smokeSignal) {
-    var description = smokeSignal.description.slice(0,70) 
-    return (
-      <View style={styles.smokeSignal}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={[styles.title, {width: 250}]}>{smokeSignal.title}</Text>
-          <TouchableOpacity>
-            <Icon
-              name='ion|power'
-              size={20}
-              color='#26a69a'
-              style={{width: 20, height: 20, marginLeft:10, marginTop:3}}
-            /> 
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.tags}>{smokeSignal.tags}</Text>
-        <Text style={styles.description}>{description}.....</Text>
-        <TouchableOpacity style={styles.upvoteLabel}>
-          <Text style={styles.commentUpvote}>+20 woods</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.downvoteLabel}>
-          <Text style={styles.commentDownvote}>- 5 woods</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.replyLabel}>
-          <Text style={styles.reply}>20 reply</Text>
-        </TouchableOpacity>
+        console.log(smokeSignal)
+        if(smokeSignal._source.description > 70) {
+          var description = smokeSignal.description.slice(0,70) 
+        }
+        return (
+          <View style={styles.smokeSignal}>
+            <View style={styles.liveSS}>
+              <TouchableOpacity style={styles.liveSSTitle}>
+                <Text style={styles.title}>{smokeSignal._source.description}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.closeSignal.bind(this, smokeSignal._id)}>
+                <Icon
+                  name='power'
+                  size={25}
+                  color='#26a69a'
+                  style={{width:25,height:25,marginLeft:5}}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.tags}>{smokeSignal._source.tags.toString()}</Text>
+              <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
+              <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
+              <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>
+          </View>
+        )
+    },
 
-      </View>
-    )
-  },
 
 })
 

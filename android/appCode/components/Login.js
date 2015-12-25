@@ -61,8 +61,7 @@ var Login = React.createClass({
 
     }).then(function(response) {
 
-      if(response.status === 200) {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT)
+      if(response.nick === user.nick) {
         UserStore.storeUserData(response)
         that.props.navigator.push({id: 1})
       }

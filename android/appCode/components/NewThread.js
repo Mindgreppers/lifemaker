@@ -26,6 +26,7 @@ var {
 
 var socket = require('../socket')
 var styles = require('../styles/styles.js')
+var SideBar = require('./SideBar')
 var SmokeStore = require('../Stores/SmokeStore')
 var UserStore = require('../Stores/UserStore')
 var ApplicationHeader = require('./ApplicationHeader')
@@ -138,7 +139,7 @@ var ThreadPage = React.createClass({
           drawerWidth={300}
           ref={'DRAWER'}
           drawerPosition={DrawerLayoutAndroid.positions.Left}
-          renderNavigationView={() => navigationView}>
+          renderNavigationView={() => <SideBar navigator={this.props.navigator}/>}>
         <ApplicationHeader openDrawer={this.openDrawer} title= 'CreateSignal'/>
         <ScrollView
           style = {styles.scrollView}

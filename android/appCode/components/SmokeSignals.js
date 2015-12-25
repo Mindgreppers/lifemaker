@@ -171,7 +171,7 @@ var SmokeSignalsPage = React.createClass({
     })
     .then(function(response) {
       if(response.status === 200) {
-        that.props.navigator.push({id: 7})
+        that.props.navigator.push({id: 8})
       }
       else if (response.status === 400) {
         ToastAndroid.show(response._bodyText, ToastAndroid.SHORT)
@@ -180,13 +180,21 @@ var SmokeSignalsPage = React.createClass({
     }).done()
   },
 
+  gotoProfile: function() {
+    this.props.navigator.push({id: 4})
+  },
+
+  gotoSignals: function() {
+    this.props.navigator.push({id: 1})
+  },
+
   render: function() {
     var navigationView = (
       <View style={[styles.DrawerView,{height: ScreenHeight}]}>
         <View style={styles.DrawerHeading}>
           <Text style={styles.DrawerHeadingText}>LifeMaker</Text>
         </View>
-        <View style={styles.DrawerSmokeSignals}>
+        <TouchableOpacity style={styles.DrawerSmokeSignals} onPress={this.gotoSignals}>
           <Icon
             name='bonfire'
             size={25}
@@ -194,8 +202,8 @@ var SmokeSignalsPage = React.createClass({
             style={{width:25,height:25,marginLeft:5}}
           />
           <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>SmokeSignals</Text> 
-        </View>
-        <View style={styles.DrawerSmokeSignals}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.DrawerSmokeSignals} onPress={this.gotoProfile}>
           <Icon
             name='person'
             size={25}
@@ -203,7 +211,7 @@ var SmokeSignalsPage = React.createClass({
             style={{width:25,height:25,marginLeft:5}}
           />
           <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text> 
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.DrawerSmokeSignals} onPress={this.logout}>
           <Icon
             name='log-out'
@@ -211,7 +219,7 @@ var SmokeSignalsPage = React.createClass({
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
           />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text> 
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Logout</Text> 
         </TouchableOpacity>
       </View>
     )

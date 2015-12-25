@@ -34,7 +34,7 @@ app.get('/checkCookie', function (req, res) {
 app.post('/login', function(req, res){
 
   if(req.body.nick) {
-    var readUser = require('../lib/user/read')
+    var readUser = require('./user/read')
     debug(req.body, 'all user information')
     readUser(req.body, res)
     res.cookie('user', req.body.nick , { maxAge: 9000000000, httpOnly: true });
@@ -62,12 +62,14 @@ app.post('/logout', function(req, res){
 var consumers = {
   'u-user': 'user/update',
   'joinUser': 'user/joinUser',
+  'r-userss': 'user/getUserSS',
   'r-user': 'user/socketRead',
   'c-smokesignal': 'smokesignal/create',
   'r-smokesignal.forall': 'smokesignal/read',
   'r-user.interest-matches': 'smokesignal/interestBasedSearch',
   'r-user.search': 'smokesignal/search',
 
+  'u-smokesignal': 'smokesignal/update', 
   'u-smokesignal.comment': 'smokesignal/comment',
   'u-smokesignal.comment.thanks': ['smokesignal/comment-thanks', 'user/woodAndKarma'],
   'u-smokesignal.thanks': ['smokesignal/thanks', 'user/woodAndKarma']
