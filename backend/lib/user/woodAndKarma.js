@@ -75,7 +75,7 @@ module.exports = function(params, socket, io) {
         }
       }).then(function(res) {
 
-        debug(res)
+        debug(res, "Now Getting Both the userObjects")
         io.to(user.nick).emit('woodKarma', {
           message: 'Thanks! Your Karma = ' + thankee.karma + ' Wood = ' + thankee.wood,
           code: '201',

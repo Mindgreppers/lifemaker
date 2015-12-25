@@ -33,14 +33,10 @@ module.exports = function(params, socket, io) {
       message: params.action + ' +' + params.count,
       params: params
     })
-    /*io.emit('u-smokesignal.' + params._id + '.action.done', {
-      code: 200,
-      message: params.action + ' +' + params.count,
-      params: params
-    })*/
   })
   .catch(function(err) {
     error('Error in ss action', err)
+    console.log(err)
     io.emit('u-smokesignal.' + params._id + '.action.error', {
       message: 'Error in ' + params.action,
       code: 500,

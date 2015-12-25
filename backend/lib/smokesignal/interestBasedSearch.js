@@ -38,10 +38,17 @@ module.exports = function(params, socket, io) {
       type: 'smokesignal',
       body: {
         query: {
-          bool: {
-            should: interests.map(function(interest) {
-              return { match_phrase: { tags: interest} }
-            })
+          filtered: { 
+            query: {
+                bool: {
+                  should: interests.map(function(interest) {
+                    return { match_phrase: { tags: interest} }
+                  }),
+                }
+            },
+            filter: {
+              term: {active: true}
+            }
           }
         },
         sort: [{

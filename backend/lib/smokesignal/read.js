@@ -15,14 +15,11 @@ module.exports = function(params, socket, io) {
       type: 'smokesignal',
       body: {
         query: {
-          "match_all": params.match_all
-        },
-        sort: [{
-          createdAt: {
-            order: "desc"
+          filtered: {
+            query:    { match_all: params.match_all},
+            filter:   { term: { active: true }}
           }
-        }]
-
+        }
       }
     }).then(function(resp) {
    

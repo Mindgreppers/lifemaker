@@ -253,10 +253,6 @@ var SmokeSignalsPage = React.createClass({
      )
    },
     _renderSmokeSignals: function(smokeSignal) {
-        console.log(smokeSignal)
-        if(smokeSignal._source.description > 70) {
-          var description = smokeSignal.description.slice(0,70) 
-        }
         return (
           <View style={styles.smokeSignal}>
             <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
