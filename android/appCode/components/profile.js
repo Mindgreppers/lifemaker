@@ -39,7 +39,9 @@ var ProfilePage = React.createClass({
     return {
       dataSource: ds.cloneWithRows(data),
       user: UserStore.getUserData(),
-      smokeSignals: SmokeStore.getSmokeSignals()
+      smokeSignals: SmokeStore.getSmokeSignals(),
+      liveCount: 0,
+      closeCount: 0,
     }
 
   },
@@ -49,6 +51,17 @@ var ProfilePage = React.createClass({
     socket.on(UserStore.getUserData(), function(results) {
       ToastAndroid.show(results.message, ToastAndroid.SHORT)
     })
+    socket.emit('r-userss', {nick: this.state.user.nick, active: true})
+    socket.emit('r-userss', {nick: this.state.user.nick, active: false})
+
+    socket.on('r-userss.done', function(smokeSignals) {
+      if(smokeSignals.active) {
+        this.setState({liveCount: smokeSignals.counts})
+      }
+      else {
+        this.setState({closeCount: smokeSignals.counts})
+      }
+    }.bind(this))
 
   },
 
@@ -171,10 +184,10 @@ var ProfilePage = React.createClass({
 
           <Text style={styles.profileText}>{this.state.user.interests.join(', ')}</Text>
           <TouchableOpacity style={styles.thanksButton} onPress={this.showSmokeSignals}>
-            <Text style={styles.profileButtonText}>223 Lives SmokeSignal</Text>
+            <Text style={styles.profileButtonText}>{this.state.liveCount} Lives SmokeSignal</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.thanksButton} onPress={this.closeSmokeSignals}>
-            <Text style={styles.profileButtonText}>223 Close SmokeSignal</Text>
+            <Text style={styles.profileButtonText}>{this.state.closeCount} Close SmokeSignal</Text>
           </TouchableOpacity>
 
         </View>

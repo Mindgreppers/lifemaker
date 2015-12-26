@@ -89,9 +89,8 @@ var CloseSS = React.createClass({
         return (
           <View style={styles.smokeSignal}>
             <TouchableOpacity>
-              <Text style={styles.title}>{smokeSignal._source.description}</Text>
+              <Text style={styles.description}>{smokeSignal._source.message}</Text>
             </TouchableOpacity>
-            <Text style={styles.tags}>{smokeSignal._source.tags.toString()}</Text>
               <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
               <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
               <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>

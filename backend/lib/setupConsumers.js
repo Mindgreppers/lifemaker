@@ -65,6 +65,7 @@ var consumers = {
   'r-userss': 'user/getUserSS',
   'r-user': 'user/socketRead',
   'c-smokesignal': 'smokesignal/create',
+  'r-smokesignal.scroll': 'smokesignal/scroll',
   'r-smokesignal.forall': 'smokesignal/read',
   'r-user.interest-matches': 'smokesignal/interestBasedSearch',
   'r-user.search': 'smokesignal/search',

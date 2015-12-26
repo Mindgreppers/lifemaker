@@ -41,7 +41,6 @@ var SmokeSignalsList = React.createClass({
 
     socket.on('r-userss.done', function(result) {
 
-      console.log(result.message)
 
       that.setState({
         dataSource: ds.cloneWithRows(result.message)   
@@ -91,7 +90,7 @@ var SmokeSignalsList = React.createClass({
           <View style={styles.smokeSignal}>
             <View style={styles.liveSS}>
               <TouchableOpacity style={styles.liveSSTitle}>
-                <Text style={styles.title}>{smokeSignal._source.description}</Text>
+                <Text style={styles.description}>{smokeSignal._source.message}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.closeSignal.bind(this, smokeSignal._id)}>
                 <Icon
@@ -102,7 +101,6 @@ var SmokeSignalsList = React.createClass({
                 />
               </TouchableOpacity>
             </View>
-            <Text style={styles.tags}>{smokeSignal._source.tags.toString()}</Text>
               <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
               <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
               <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>

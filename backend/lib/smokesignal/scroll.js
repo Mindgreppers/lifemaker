@@ -7,14 +7,12 @@ error.log = console.log.bind(console)
 var es = require('../es')
 
 module.exports = function(params, socket, io) {
-  debug(params)
-  console.log('kdjgfjkdshgjkhdskgjk', params, params.match_all)
 
   es.search({
       index: 'smokesignals',
       type: 'smokesignal',
       body: {
-        from : 0, size : 2,
+        from : params.from, size : params.size,
         query: {
           filtered: {
             query:    { match_all: params.match_all},
@@ -24,13 +22,7 @@ module.exports = function(params, socket, io) {
       }
     }).then(function(resp) {
    
-      var smokesignals = resp.hits.hits
-      smokesignals.forEach(function(smokesignal){
-
-        socket.join(smokesignal._id)
-
-      })
-      socket.emit('r-smokesignal.forall.done', {
+      socket.emit('r-smokesignal.scroll.done', {
         message: resp.hits.hits,
         counts: resp.hits.total,
         code: 200
@@ -38,7 +30,7 @@ module.exports = function(params, socket, io) {
 
     }, function(err) {
 
-      socket.emit('r-smokesignal.forall.error', {
+      socket.emit('r-smokesignal.scroll.error', {
         message: err.message,
         code: 404
       })

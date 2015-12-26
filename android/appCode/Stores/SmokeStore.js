@@ -29,6 +29,28 @@ var SmokeStore = Reflux.createStore({
 
     }.bind(this))
 
+    socket.on('r-smokesignal.scroll.done', function(data){
+
+      var scrollSignals = data.message.reduce(function(result, smokesignal) {
+        result[smokesignal._id] = smokesignal
+        return result
+      }, {})
+
+      _.merge(this.data.smokeSignals, scrollSignals)
+       
+      var signalsIds = data.message.map(function(signal) {
+        return signal._id
+      })
+    
+      this.data.forAll = this.data.forAll.concat(signalsIds)
+
+      console.log(this.data.forAll, signalsIds)
+
+      console.log(this.data.smokeSignals, scrollSignals)
+      this.trigger()
+      
+    }.bind(this))
+
     socket.on('u-smokesignal.done', function(result) {
 
       this.updateSmokeSignal(result)
@@ -157,6 +179,12 @@ var SmokeStore = Reflux.createStore({
 
     socket.emit('c-smokesignal', smokeSignal)
 
+  },
+
+  scrollSmokeSignals: function(params) {
+
+    socket.emit('r-smokesignal.scroll', params)
+    
   },
 })
 

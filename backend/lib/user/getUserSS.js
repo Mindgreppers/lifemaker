@@ -29,6 +29,7 @@ module.exports = function(params, socket, io) {
     socket.emit('r-userss.done', {
       message: resp.hits.hits,
       counts: resp.hits.total,
+      active: params.active,
       code: 200
     })
 

@@ -267,6 +267,9 @@ var SmokeSignalsPage = React.createClass({
 });
 
 var TabsView = React.createClass({
+
+  count: 2,
+
   getInitialState: function() {
     return {
       dataSource: this.props.smokeSignalsData,
@@ -278,7 +281,10 @@ var TabsView = React.createClass({
   },
   
   getMoreSignals: function() {
-    console.log('pankaj')
+
+    SmokeStore.scrollSmokeSignals({from: this.count, size: 2, match_all: {}})
+    this.count = this.count + 2
+ 
   },
   render() {
     var smokeSignals = this.state.dataSource.map(function(id){
