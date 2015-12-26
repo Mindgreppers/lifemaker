@@ -4,7 +4,8 @@ module.exports = {
       hosts: [{ host: 'localhost', protocol: 'http', port: 9200}],
       requestTimeout: 90000,
       maxConnections: 200,
-      log: 'error'
+      log: 'debug',
+      apiVersion: '1.7'
     },
     default_index: 'test',
     default_type: 'test',
