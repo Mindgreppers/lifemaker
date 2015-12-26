@@ -96,6 +96,10 @@ var LifeMaker = React.createClass({
       var LiveSS = require('./appCode/components/LiveSS')
       return <LiveSS userId={route.userId} navigator={navigator}/>
     }
+    else if(route.id === 12) {
+      var Durations = require('./appCode/components/DurationSS')
+      return <Durations message={route.message} navigator={navigator}/>
+    }
   }, 
     
   render: function() {

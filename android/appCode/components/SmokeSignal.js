@@ -125,7 +125,6 @@ var ThreadPage = React.createClass({
     
     this.setState({comment: ''})
     socket.emit('u-smokesignal.comment', comment)
-
   },
 
   submitCommentText: function(comment) {
@@ -146,11 +145,9 @@ var ThreadPage = React.createClass({
             style = {styles.scrollView}
           >
           <View style={styles.container}>
-            <Text style={styles.title}>{this.state.smokeSignal._source.title}</Text>
-            <Text style={styles.tags}>{this.state.smokeSignal._source.tags.toString()}</Text>
-            <Text style={styles.description}>{this.state.smokeSignal._source.description}</Text>
+            <Text style={styles.description}>{this.state.smokeSignal._source.message}</Text>
 
-            <Text style={styles.timeInfoText}>Burning Since 5 minutes ago</Text> 
+            <Text style={styles.timeInfoText}> {moment.duration(+moment().diff(this.state.smokeSignal._source.burningTill)).humanize()} remaining</Text> 
             <TouchableOpacity style={styles.label} onPress={this.ssAction.bind(this, {action: 'thanks', userId: this.state.smokeSignal._source.userId})}>
               <View>
                 <Text style={styles.labelText}>{this.state.smokeSignal._source.thanks} Thanks</Text>
@@ -178,20 +175,12 @@ var ThreadPage = React.createClass({
             <View style={styles.commentInputView}>
             <TextInput
               ref= 'comment'
-              style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 250}}
+              style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 280}}
               onChangeText={this.submitCommentText}
               autoFocus= {true}
               value={this.state.comment}
-              onBlur= {this.endEdits}
+              onSubmitEditing={this.submitComment}
             />
-            <TouchableOpacity style={styles.submitComment} onPress={this.submitComment}>
-              <Icon
-                name='android-send'
-                size={25}
-                color='#000000'
-                style={{width:25,height:25}}
-               />
-            </TouchableOpacity>
             </View>
           }
           </View>

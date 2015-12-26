@@ -11,8 +11,8 @@ module.exports = function(params, socket, io) {
       index: 'smokesignals',
       type: 'smokesignal',
       id: params._id,
-      body: _.pick(params, ['userId', 'title', 'type',
-        'description', 'img', 'tags', 'createdAt', 'burningTill',
+      body: _.pick(params, ['userId', 'title',
+        'message', 'img', 'createdAt', 'burningTill',
         'active', 'thanks', 'nothanks', 'anonymous', 'comments'
       ])
     })
@@ -22,24 +22,27 @@ module.exports = function(params, socket, io) {
         type: 'user',
         body: {
           query: {
-            bool: {
-              should: params.tags.map(function(tag){
-                return {match_phrase: {interests: tag}}
-              })
-            }
+              bool: {
+                  should: [
+                      {match: { interests : params.message }}
+                  ]
+              }
           }
-        }
-      }).then(function(res) {
+       }
+    }).then(function(res) {
+
+      if(!_.isEmpty(res.hits.hits)) {
 
         res.hits.hits.forEach(function(user) {
-            debug(user._id)
           io.to(user._id).emit('interestsSmokeSignal', {
             result: {
               _source: params,
               _id: params._id
             }
-         }) 
+          }) 
         }) 
+
+      }
 
       }).catch(function(err) {
         

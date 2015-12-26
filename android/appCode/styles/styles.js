@@ -10,6 +10,32 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  messageContainer: {
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+    backgroundColor: '#ffffff'
+  },
+  closeButton: {
+    flex: 1
+  },
+  dropDownDuration: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
+  createButton: {
+    marginRight: 40, 
+  },
+  dropdown: {
+    height: 20,
+    width: 200,
+    marginTop: 20,
+    borderBottomColor: "#f0f0f0",
+    borderBottomWidth: 1,
+    marginRight: 5,
+  },
+  days: {
+    fontSize: 17,
+  },
   liveSS: {
     alignItems: 'flex-start',
     flexDirection: 'row',
