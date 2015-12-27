@@ -168,9 +168,6 @@ var ThreadPage = React.createClass({
               </TouchableOpacity>
             </View>
             {this.state.smokeSignal._source.comments.map(this.renderCommentBox)}
-            <TouchableOpacity style={styles.showMoreButton} onPress={this._handleSubmit}>
-              <Text style={styles.showMore}>show more</Text>
-            </TouchableOpacity>
             {this.state.showCommentBox && 
             <View style={styles.commentInputView}>
             <TextInput

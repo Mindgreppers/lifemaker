@@ -42,7 +42,7 @@ var SmokeStore = Reflux.createStore({
         return signal._id
       })
     
-      this.data.forAll = this.data.forAll.concat(signalsIds)
+      this.data.forAll = _.union(this.data.forAll, signalsIds)
 
       console.log(this.data.forAll, signalsIds)
 

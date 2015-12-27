@@ -1,4 +1,5 @@
 var React = require('react-native')
+var params = require('../../config')
 
 window.navigator.userAgent = 'react-native'
 
