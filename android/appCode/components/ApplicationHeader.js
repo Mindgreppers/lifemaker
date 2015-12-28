@@ -68,7 +68,11 @@ var ApplicationHeader = React.createClass({
             /> 
           </TouchableOpacity>
           { this.state.showTitle && <View style={styles.titleView}><Text style={styles.PageTitle}>{this.props.title}</Text></View> }
-          { this.state.showSearchBar && <TextInput
+        </View>
+      </ToolbarAndroid>
+    </View>
+    )
+         /* { this.state.showSearchBar && <TextInput
             style={styles.searchBar}
             onChangeText={this.props.changeSearchText}
             onSubmitEditing={this.props.submitSearch}
@@ -165,7 +169,7 @@ var ApplicationHeader = React.createClass({
          </TouchableOpacity>  } 
          </View>
         </View>
-    )
+    )*/
   }
 })
 
