@@ -6,6 +6,10 @@ var {
 } = React
 
 var styles = StyleSheet.create({
+  commentActionCon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   tagView : {
     justifyContent: 'center',
     alignItems: 'center',
@@ -497,15 +501,11 @@ var styles = StyleSheet.create({
     height: 40,
     marginBottom: 10,
   },
-  commentUpvote:  {
+  commentAction:  {
     color: '#26a69a',
-    textAlign: 'left',
-    marginBottom:  -17,
   },
-  commentDownvote:  {
-    color: '#26a69a',
-    marginTop: 20,
-    textAlign: 'center',
+  commentActionButton: {
+    flex: 1
   },
   thanks: {
     color: '#26a69a',

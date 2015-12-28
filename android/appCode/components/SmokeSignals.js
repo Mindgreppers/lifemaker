@@ -34,14 +34,9 @@ var SmokeSignalsPage = React.createClass({
   mixins: [Reflux.ListenerMixin],
 
   componentDidMount: function() {
+
     this.listenTo(SmokeStore, this.refreshList);
-    socket.on('r-user.' + UserStore.getUserData().nick  + '.search.done', function(data) {
-      ToastAndroid.show(data.message, ToastAndroid.SHORT) 
-      this.setState({
-        dataSource: ds.cloneWithRows(data.results),
-        showSearchResults: true
-      })  
-    }.bind(this))
+
   },
 
   refreshList: function() {
@@ -55,17 +50,11 @@ var SmokeSignalsPage = React.createClass({
 
   getInitialState: function() {
     return {
-      Need: true,
-      Offer: true,
-      General: true,
       forMe: SmokeStore.getInterestsMatches(),
       forAll: SmokeStore.request()[0],
       forMeCount: 'For Me | ' + SmokeStore.getCount()[0],
       forAllCount: 'For All | ' + SmokeStore.getCount()[1],
-      searchResults: [],
-      searchText: '',
       dataSource: ds.cloneWithRows([]),
-      showSearchResults: false
     }
   },
 
@@ -73,90 +62,12 @@ var SmokeSignalsPage = React.createClass({
     this.props.navigator.push({id : 3 , smokeId: id}) 
   },
 
-  onActionSelected: function(position) {
-    if (position === 0) { // index of 'Settings'
-      showSettings();
-    }
-  },
-
-  showNeeds: function() {
-    if(!this.state.Need) {
-      this.setState({
-        Need: true,
-        forAll: SmokeStore.request()
-      })
-    }
-    else {
-      this.setState({Need: false})
-    }
-    var forAll = this.state.forAll.filter(function(smokeSignal) {
-     if(this.state[smokeSignal._source.type]) {
-        return smokeSignal
-     }
-    }.bind(this))
-    this.setState({
-      forAll: forAll,
-    }) 
-  }, 
-
-  showOffers: function() {
-    if(!this.state.Offer) {
-      this.setState({
-        Offer: true,
-        forAll: SmokeStore.request()
-      })
-    }
-    else {
-      this.setState({
-        Offer: false,
-      })
-    }
-    var forAll = this.state.forAll.filter(function(smokeSignal) {
-     if(this.state[smokeSignal._source.type]) {
-        return smokeSignal
-     }
-    }.bind(this))
-    this.setState({
-      forAll: forAll,
-    }) 
-  }, 
-
-  showGeneral: function(val) {
-    if(!this.state.General) {
-      this.setState({
-        General: true,
-        forAll: SmokeStore.request()
-      })
-    }
-    else {
-      this.setState({
-        General: false,
-      })
-    }
-    var forAll = this.state.forAll.filter(function(smokeSignal) {
-     if(this.state[smokeSignal._source.type]) {
-        return smokeSignal
-     }
-    }.bind(this))
-    this.setState({
-      forAll: forAll,
-    }) 
-  }, 
-
   openDrawer: function(){
     this.refs['DRAWER'].openDrawer()
   },
   
   createss: function() {
     this.props.navigator.push({id : 2,})
-  },
-
-  changeSearchText: function(searchText) {
-    this.setState({searchText: searchText})
-  },
-
-  submitSearch: function() {
-   socket.emit('r-user.search', {userId: UserStore.getUserData().nick, searchText: this.state.searchText, from: 0, size: 10})  
   },
 
   logout: function() {
@@ -186,6 +97,10 @@ var SmokeSignalsPage = React.createClass({
 
   gotoSignals: function() {
     this.props.navigator.push({id: 1})
+  },
+
+  ssAction: function(ss) {
+    socket.emit('u-smokesignal.thanks', {thankerId: UserStore.getUserData().nick, thankeeId: ss.userId, _id: ss.smokeId, action: ss.action, count: 1})
   },
 
   render: function() {
@@ -234,20 +149,10 @@ var SmokeSignalsPage = React.createClass({
 
             <ApplicationHeader openDrawer={this.openDrawer} title="SmokeSignals" showNeeds={this.showNeeds} showOffers={this.showOffers} showGeneral={this.showGeneral} searchText={this.state.searchText} changeSearchText={this.changeSearchText} submitSearch={this.submitSearch} needs={this.state.Need} offers={this.state.Offer} general={this.state.General}/>
 
-          { !this.state.showSearchResults ? ( 
             <ScrollableTabView>
               <TabsView tabLabel={this.state.forMeCount}  _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.forMe} style={styles.tabsView} style={{width: screenWidth}}/>
               <TabsView initialPage={0} tabLabel={this.state.forAllCount} _renderSmokeSignals={this._renderSmokeSignals} smokeSignalsData={this.state.forAll} style={{width: screenWidth}}/>
             </ScrollableTabView>
-             )
-            : (
-              <ListView
-                style={{width:screenWidth}}
-                dataSource={this.state.dataSource}
-                renderRow={this._renderSmokeSignals}
-              />
-            )  
-          }
           <CreateSmokeSignal navigator={this.props.navigator}/>
        </DrawerLayoutAndroid>
      )
@@ -265,9 +170,17 @@ var SmokeSignalsPage = React.createClass({
             <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
               <Text style={styles.description}>{message || smokeSignal._source.message}</Text>
             </TouchableOpacity>
-              <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
-              <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
-              <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>
+            <View style={styles.commentActionCon}>
+              <TouchableOpacity style={styles.commentActionButton} onPress={this.ssAction.bind(this, {action: 'thanks', userId:smokeSignal._source.userId, smokeId: smokeSignal._id})}> 
+                <Text style={[styles.commentAction,{textAlign: 'left'}]}>{smokeSignal._source.thanks} Thanks</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentActionButton} onPress={this.ssAction.bind(this, {action: 'nothanks', userId:smokeSignal._source.userId, smokeId: smokeSignal._id})}>
+                <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.nothanks} NoThanks</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentActionButton}>
+                <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Reply</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )
     },
