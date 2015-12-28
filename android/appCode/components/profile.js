@@ -142,7 +142,7 @@ var ProfilePage = React.createClass({
               <Text style={styles.profileImageText}>{this.state.user.nick[0].toUpperCase()}</Text>
             </View>
           </View>
-          <Text style={styles.profileText}>{this.state.user.nick}</Text>
+          <Text style={styles.profileText}>{this.state.user.name}</Text>
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
               name='plus'
