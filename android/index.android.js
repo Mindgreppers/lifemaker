@@ -14,6 +14,7 @@ var {
   Dimensions,
   Navigator,
   BackAndroid,
+  DeviceEventEmitter,
 } = React;
 
 var screenWidth = Dimensions.get('window').width
@@ -21,7 +22,28 @@ var screenHeight = Dimensions.get('window').height
 var params = require('./config')
 var styles = require('./appCode/styles/styles')
 var UserStore = require('./appCode/Stores/UserStore')
+var Notification = require('react-native-system-notification')
 var _navigator;
+
+Notification.create({ subject: 'Hey', message: 'Yo!I am Pankajsdfk Hello world.' });
+
+
+Notification.create({
+  subject: 'Scheduled Notification',
+  message: 'This notification will show on 2015/9/9 morning at 8:30 AM, and repeat for 10 times every minute.',
+  repeatEvery: 60000,
+  repeatCount: 10
+});
+
+Notification.create({
+  subject: 'Delayed Notification',
+  message: 'Thi03 notification will show after 10 seconds, even the app has been stoped.',
+  delay: 10000
+});
+
+DeviceEventEmitter.addListener('sysNotificationClick', function(e) {
+  console.log(e);
+});
 
 var LifeMaker = React.createClass({
 

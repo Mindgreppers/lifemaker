@@ -11,7 +11,6 @@ var debug = require('debug')('register')
 var error = debug
 error.log = console.log.bind(console)
 
-
 app.use(bodyParser.json()); 
 app.use(cookieParser({secret: 'asdfasasdkj3d'}))
 

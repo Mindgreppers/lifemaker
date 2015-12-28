@@ -12,6 +12,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.chymtt.reactnativedropdown.DropdownPackage; // <----- import
+import io.neson.react.notification.NotificationPackage;
 
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
@@ -31,6 +32,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .addPackage(new MainReactPackage())
                 .addPackage(new VectorIconsPackage())
                 .addPackage(new DropdownPackage()) 
+                .addPackage(new NotificationPackage(this))
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

@@ -86,4 +86,5 @@ dependencies {
     compile "com.facebook.react:react-native:0.16.+"
     compile project(':react-native-vector-icons')
     compile project(':ReactNativeDropdownAndroid')
+    compile project(':react-native-system-notification')
 }
