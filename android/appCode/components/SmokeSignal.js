@@ -53,6 +53,10 @@ var ThreadPage = React.createClass({
 
     this.listenTo(SmokeStore, this.refreshList) 
 
+    if (this.props.openCommentBox) {
+      this.setState({showCommentBox: true})
+    }
+
     if(this.state.smokeSignal._source.message.length > 200) {
 
       this.setState({

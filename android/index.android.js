@@ -62,7 +62,7 @@ var LifeMaker = React.createClass({
     }
     else if (route.id === 3) {
       var SmokeSignalPage = require('./appCode/components/SmokeSignal')
-      return <SmokeSignalPage id={route.smokeId} navigator={navigator}/>
+      return <SmokeSignalPage openCommentBox={route.openCommentBox} id={route.smokeId} navigator={navigator}/>
     }
     else if (route.id === 4) {
       var ProfilePage = require('./appCode/components/profile')

@@ -59,7 +59,7 @@ var SmokeSignalsPage = React.createClass({
   },
 
   _handleSubmit: function(id, e) {
-    this.props.navigator.push({id : 3 , smokeId: id}) 
+    this.props.navigator.push({id : 3 , smokeId: id, openCommentBox: false}) 
   },
 
   openDrawer: function(){
@@ -101,6 +101,10 @@ var SmokeSignalsPage = React.createClass({
 
   ssAction: function(ss) {
     socket.emit('u-smokesignal.thanks', {thankerId: UserStore.getUserData().nick, thankeeId: ss.userId, _id: ss.smokeId, action: ss.action, count: 1})
+  },
+
+  reply: function(id, e) {
+    this.props.navigator.push({id : 3 , smokeId: id, openCommentBox: true}) 
   },
 
   render: function() {
@@ -177,7 +181,7 @@ var SmokeSignalsPage = React.createClass({
               <TouchableOpacity style={styles.commentActionButton} onPress={this.ssAction.bind(this, {action: 'nothanks', userId:smokeSignal._source.userId, smokeId: smokeSignal._id})}>
                 <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.nothanks} NoThanks</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.commentActionButton}>
+              <TouchableOpacity style={styles.commentActionButton} onPress={this.reply.bind(null, smokeSignal._id)}>
                 <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Reply</Text>
               </TouchableOpacity>
             </View>
