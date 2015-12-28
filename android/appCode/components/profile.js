@@ -138,10 +138,9 @@ var ProfilePage = React.createClass({
             /> 
           </TouchableOpacity>
           <View style={styles.profileImageContainer}>
-            <Image
-              style={styles.profileImage}
-              source={{uri: 'http://www.caretofun.net/wp-content/uploads/2015/07/beautiful-girl-profile-caretofun.net-6.jpg'}}
-            />
+            <View style={styles.imageContainer}>
+              <Text style={styles.profileImageText}>{this.state.user.nick[0].toUpperCase()}</Text>
+            </View>
           </View>
           <Text style={styles.profileText}>{this.state.user.nick}</Text>
           <TouchableOpacity style={styles.thanksButton}>

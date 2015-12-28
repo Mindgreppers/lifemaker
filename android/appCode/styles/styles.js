@@ -321,6 +321,7 @@ var styles = StyleSheet.create({
   profileImageContainer:  {
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
   edit:  {
     width: 25,
@@ -336,10 +337,18 @@ var styles = StyleSheet.create({
     color: '#26a69a',
     marginBottom: 20,
   },
-  profileImage:  {
-    width:  100,
-    height:  100,
+  imageContainer: {
+    backgroundColor: 'gray',
     borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
+    height: 100,
+  }, 
+  profileImageText: {
+    fontSize: 60,
+    marginTop: -5,
+    color: '#ffffff'
   },
   editImage: {
     width: 100,
