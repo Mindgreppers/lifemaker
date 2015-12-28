@@ -150,7 +150,7 @@ var ProfilePage = React.createClass({
               color='#26a69a'
               style={{width:15,height:15,marginTop:2,marginRight:5}}
            />
-          <Text style={styles.profileButtonText}>{this.state.user.thanksGiven.count} Thanks Givens</Text>
+          <Text style={styles.profileButtonText}>{this.state.user.thanksGiven.count} Thanks Given</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.thanksButton}>
@@ -169,7 +169,7 @@ var ProfilePage = React.createClass({
               color='#26a69a'
               style={{width:15,height:15,marginTop:2,marginRight:5}}
            />
-          <Text style={styles.profileButtonText}>{this.state.user.woods} woods</Text>
+          <Text style={styles.profileButtonText}>{this.state.user.woods} Woods</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
@@ -183,10 +183,10 @@ var ProfilePage = React.createClass({
 
           <Text style={styles.profileText}>{this.state.user.interests.join(', ')}</Text>
           <TouchableOpacity style={styles.thanksButton} onPress={this.showSmokeSignals}>
-            <Text style={styles.profileButtonText}>{this.state.liveCount} Lives SmokeSignal</Text>
+          { this.state.liveCount === 1 && <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignal</Text> || <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignals</Text>}
           </TouchableOpacity>
           <TouchableOpacity style={styles.thanksButton} onPress={this.closeSmokeSignals}>
-            <Text style={styles.profileButtonText}>{this.state.closeCount} Close SmokeSignal</Text>
+            <Text style={styles.profileButtonText}>{this.state.closeCount} Close SmokeSignals</Text>
           </TouchableOpacity>
 
         </View>

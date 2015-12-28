@@ -87,8 +87,9 @@ var Login = React.createClass({
           </TouchableOpacity>
         </View>
         <View style={styles.signUpButton}>
+          <Text>or create your Account</Text>
           <TouchableOpacity onPress={this.signUp}>
-            <Text>Signup</Text>
+            <Text style={{color: '#26a69a'}}>signup</Text>
           </TouchableOpacity>
         </View>
       </View>
