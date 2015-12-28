@@ -36,12 +36,6 @@ var ThreadPage = React.createClass({
     Reflux.ListenerMixin 
   ],
 
-  componentDidMount: function() {
-
-    this.listenTo(SmokeStore, this.refreshList) 
-
-  },
-
   getInitialState: function() {
 
     return {
@@ -49,8 +43,31 @@ var ThreadPage = React.createClass({
       text: '',
       smokeSignal: SmokeStore.getSmokeSignal(this.props.id),
       comment: '',
+      message: '',
+      more: false,
     }
   
+  },
+
+  componentDidMount: function() {
+
+    this.listenTo(SmokeStore, this.refreshList) 
+
+    if(this.state.smokeSignal._source.message.length > 200) {
+
+      this.setState({
+        message : this.state.smokeSignal._source.message.slice(0, 200) + '...'
+      })
+      
+    }
+
+  },
+
+  showMore: function() {
+    this.setState({
+      more: true,
+      message: this.state.smokeSignal._source.message
+    })
   },
 
   refreshList: function(message) {
@@ -132,6 +149,7 @@ var ThreadPage = React.createClass({
   },
 
   render: function() {
+    
 
     return (
       <DrawerLayoutAndroid
@@ -145,7 +163,11 @@ var ThreadPage = React.createClass({
             style = {styles.scrollView}
           >
           <View style={styles.container}>
-            <Text style={styles.description}>{this.state.smokeSignal._source.message}</Text>
+              <Text style={styles.description}>{this.state.message || this.state.smokeSignal._source.message}</Text>
+
+              { !this.state.more && <TouchableOpacity style={styles.showMoreButton} onPress={this.showMore}>
+                <Text style={styles.showMore}>show more.</Text>
+              </TouchableOpacity> }
 
             <Text style={styles.timeInfoText}> {moment.duration(+moment().diff(this.state.smokeSignal._source.burningTill)).humanize()} remaining</Text> 
             <TouchableOpacity style={styles.label} onPress={this.ssAction.bind(this, {action: 'thanks', userId: this.state.smokeSignal._source.userId})}>

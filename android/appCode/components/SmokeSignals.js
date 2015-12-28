@@ -253,10 +253,17 @@ var SmokeSignalsPage = React.createClass({
      )
    },
     _renderSmokeSignals: function(smokeSignal) {
+
+        var message = ''
+
+        if(smokeSignal._source.message.length > 200) {
+           message = smokeSignal._source.message.slice(0, 200) + '...'
+        }
+
         return (
           <View style={styles.smokeSignal}>
             <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
-              <Text style={styles.description}>{smokeSignal._source.message}</Text>
+              <Text style={styles.description}>{message || smokeSignal._source.message}</Text>
             </TouchableOpacity>
               <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
               <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
