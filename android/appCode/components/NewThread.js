@@ -87,6 +87,7 @@ var ThreadPage = React.createClass({
               style={{height: 120, borderWidth: 0, borderColor: '#ffffff',marginRight: 10, marginLeft: 10}}
               ref="message"
               placeholder="message"
+              autoCapitalize="sentences"
               onChangeText={(message) => this.setState({message})}
               multiline={true}
               autoFocus={true}
