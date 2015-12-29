@@ -60,7 +60,8 @@ var ThreadPage = React.createClass({
     if(this.state.smokeSignal._source.message.length > 200) {
 
       this.setState({
-        message : this.state.smokeSignal._source.message.slice(0, 200) + '...'
+        message : this.state.smokeSignal._source.message.slice(0, 200) + '...',
+        more: true
       })
       
     }
@@ -69,7 +70,7 @@ var ThreadPage = React.createClass({
 
   showMore: function() {
     this.setState({
-      more: true,
+      more: false,
       message: this.state.smokeSignal._source.message
     })
   },
@@ -169,7 +170,7 @@ var ThreadPage = React.createClass({
           <View style={styles.container}>
               <Text style={styles.description}>{this.state.message || this.state.smokeSignal._source.message}</Text>
 
-              { !this.state.more && <TouchableOpacity style={styles.showMoreButton} onPress={this.showMore}>
+              { this.state.more && <TouchableOpacity style={styles.showMoreButton} onPress={this.showMore}>
                 <Text style={styles.showMore}>show more.</Text>
               </TouchableOpacity> }
 

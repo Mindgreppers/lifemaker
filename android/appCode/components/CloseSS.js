@@ -41,9 +41,11 @@ var CloseSS = React.createClass({
 
     socket.on('r-userss.done', function(result) {
 
-      this.setState({
-        dataSource: ds.cloneWithRows(result.message)   
-      }) 
+      if(this.isMounted()) {
+        this.setState({
+          dataSource: ds.cloneWithRows(result.message)   
+        }) 
+      }
 
     }.bind(this))
 
@@ -91,9 +93,17 @@ var CloseSS = React.createClass({
             <TouchableOpacity>
               <Text style={styles.description}>{smokeSignal._source.message}</Text>
             </TouchableOpacity>
-              <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
-              <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
-              <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>
+            <View style={styles.commentActionCon}>
+              <TouchableOpacity style={styles.commentActionButton}> 
+                <Text style={[styles.commentAction,{textAlign: 'left'}]}>{smokeSignal._source.thanks} Thanks</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentActionButton}>
+                <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.nothanks} NoThanks</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentActionButton}>
+              { smokeSignal._source.comments.length === 1 && <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Reply</Text> || <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Replys</Text> }
+              </TouchableOpacity>
+            </View>
           </View>
         )
     },

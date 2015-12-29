@@ -41,21 +41,51 @@ var OtherProfilePage = React.createClass({
   getInitialState: function() {
     return {
       dataSource: ds.cloneWithRows([]),
-      user: {}
+      user: {},
+      liveCount: 0,
+      closeCount: 0,
     }
   },
- 
+
+  showSmokeSignals: function(){
+
+    this.props.navigator.push({id: 11, userId: this.state.user.nick})     
+
+  },
+
+  closeSmokeSignals: function() {
+
+    this.props.navigator.push({id: 10, userId: this.state.user.nick})
+
+  },
+
   componentDidMount: function() {
     this.listenTo(UserStore, this.refreshList) 
 
     UserStore.getOtherUserProfile(this.props.userId)
     socket.on('r-user.done', function(data) {
 
-      this.setState({
-        user: data.result 
-      })  
+      if(this.isMounted()) {
+        this.setState({
+          user: data.result 
+        })  
+      }
 
     }.bind(this))
+    socket.emit('r-userss', {nick: this.state.user.nick, active: true})
+    socket.emit('r-userss', {nick: this.state.user.nick, active: false})
+
+    socket.on('r-userss.done', function(smokeSignals) {
+      if(this.isMounted()) {
+        if(smokeSignals.active) {
+          this.setState({liveCount: smokeSignals.counts})
+        }
+        else {
+          this.setState({closeCount: smokeSignals.counts})
+        }
+      }
+    }.bind(this))
+
 
   },
 
@@ -83,6 +113,12 @@ var OtherProfilePage = React.createClass({
           style = {styles.scrollView}
         >
         { !_.isEmpty(this.state.user) && <View style={styles.container}>
+          <View style={styles.profileImageContainer}>
+            <View style={styles.imageContainer}>
+              <Text style={styles.profileImageText}>{this.state.user.nick[0].toUpperCase()}</Text>
+            </View>
+          </View>
+
           <Text style={styles.profileText}>{this.state.user.nick}</Text>
           <TouchableOpacity style={styles.thanksButton}>
             <Icon
@@ -115,72 +151,17 @@ var OtherProfilePage = React.createClass({
 
           <Text style={styles.profileText}>{this.state.user.interests.join(', ')}</Text>
           <TouchableOpacity style={styles.thanksButton} onPress={this.showSmokeSignals}>
-            <Text style={styles.profileButtonText}>223 Lives SmokeSignal</Text>
+          { this.state.liveCount === 1 && <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignal</Text> || <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignals</Text>}
           </TouchableOpacity>
           <TouchableOpacity style={styles.thanksButton} onPress={this.closeSmokeSignals}>
-            <Text style={styles.profileButtonText}>223 Close SmokeSignal</Text>
+            <Text style={styles.profileButtonText}>{this.state.closeCount} Close SmokeSignals</Text>
           </TouchableOpacity>
-
         </View>}
         </ScrollView>
          <CreateSmokeSignal navigator={this.props.navigator}/>
       </DrawerLayoutAndroid>
     )
   },
-  _renderSmokeSignals: function(smokeSignal) {
-    var description = smokeSignal.description.slice(0,70) 
-    return (
-      <View style={styles.smokeSignal}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.title}>{smokeSignal.title}</Text>
-          <TouchableOpacity>
-            <Icon
-              name='power'
-              size={25}
-              color='#000000'
-              style={styles.edit}
-            /> 
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.tags}>{smokeSignal.tags}</Text>
-        <Text style={styles.description}>{description}.....</Text>
-        <TouchableOpacity style={styles.upvoteLabel}>
-          <Text style={styles.commentUpvote}>+20 woods</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.downvoteLabel}>
-          <Text style={styles.commentDownvote}>- 5 woods</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.replyLabel}>
-          <Text style={styles.reply}>20 reply</Text>
-        </TouchableOpacity>
-
-      </View>
-    )
-  },
-
+  
 })
-var SmokeSignalsList = React.createClass({
-  render:function(){
-    return (
-      <ListView
-        dataSource={this.props.dataSource}
-        renderRow={this.props._renderSmokeSignals}
-      />
-    ) 
-  }
-})
-var CloseSSList = React.createClass({
-  render:function(){
-    return (
-      <View>
-        <Text>Close</Text>
-      <ListView
-        dataSource={this.props.dataSource}
-        renderRow={this.props._renderSmokeSignals}
-      />
-      </View>
-    ) 
-  }
-})
-
 module.exports = OtherProfilePage

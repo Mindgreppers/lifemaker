@@ -41,15 +41,16 @@ var SmokeSignalsList = React.createClass({
 
     socket.on('r-userss.done', function(result) {
 
-
-      that.setState({
-        dataSource: ds.cloneWithRows(result.message)   
-      }) 
+      if(that.isMounted()) {
+        that.setState({
+          dataSource: ds.cloneWithRows(result.message)   
+        }) 
+      }
 
     })
 
   },
- 
+
   closeSignal: function(smokeId) {
     socket.emit('u-smokesignal', {_id: smokeId, active: false})  
   },
@@ -67,7 +68,7 @@ var SmokeSignalsList = React.createClass({
           drawerPosition={DrawerLayoutAndroid.positions.Left}
           renderNavigationView={() => <SideBar navigator={this.props.navigator}/>}
       >
-        <ApplicationHeader openDrawer={this.openDrawer} title= 'LivesSignals'/>
+        <ApplicationHeader openDrawer={this.openDrawer} title= 'LiveSignals'/>
         <ScrollView
           automaticallyAdjustContentInsets={false}
           style = {styles.scrollView}
@@ -101,9 +102,17 @@ var SmokeSignalsList = React.createClass({
                 />
               </TouchableOpacity>
             </View>
-              <Text style={[styles.commentUpvote, styles.upvoteLabel]}>{smokeSignal._source.thanks} Thanks</Text>
-              <Text style={[styles.commentDownvote, styles.downvoteLabel]}>{smokeSignal._source.nothanks} NoThanks</Text>
-              <Text style={[styles.reply, styles.replyLabel]}>{smokeSignal._source.comments.length} Reply</Text>
+            <View style={styles.commentActionCon}>
+              <TouchableOpacity style={styles.commentActionButton}> 
+                <Text style={[styles.commentAction,{textAlign: 'left'}]}>{smokeSignal._source.thanks} Thanks</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentActionButton}>
+                <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.nothanks} NoThanks</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentActionButton}>
+              { smokeSignal._source.comments.length === 1 && <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Reply</Text> || <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Replys</Text> }
+              </TouchableOpacity>
+            </View>
           </View>
         )
     },

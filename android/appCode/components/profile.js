@@ -39,7 +39,6 @@ var ProfilePage = React.createClass({
     return {
       dataSource: ds.cloneWithRows(data),
       user: UserStore.getUserData(),
-      smokeSignals: SmokeStore.getSmokeSignals(),
       liveCount: 0,
       closeCount: 0,
     }
@@ -55,11 +54,13 @@ var ProfilePage = React.createClass({
     socket.emit('r-userss', {nick: this.state.user.nick, active: false})
 
     socket.on('r-userss.done', function(smokeSignals) {
-      if(smokeSignals.active) {
-        this.setState({liveCount: smokeSignals.counts})
-      }
-      else {
-        this.setState({closeCount: smokeSignals.counts})
+      if(this.isMounted()) {
+        if(smokeSignals.active) {
+          this.setState({liveCount: smokeSignals.counts})
+        }
+        else {
+          this.setState({closeCount: smokeSignals.counts})
+        }
       }
     }.bind(this))
 
@@ -195,60 +196,7 @@ var ProfilePage = React.createClass({
       </DrawerLayoutAndroid>
     )
   },
-  _renderSmokeSignals: function(smokeSignal) {
-    var description = smokeSignal.description.slice(0,70) 
-    return (
-      <View style={styles.smokeSignal}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.title}>{smokeSignal.title}</Text>
-          <TouchableOpacity>
-            <Icon
-              name='power'
-              size={25}
-              color='#000000'
-              style={styles.edit}
-            /> 
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.tags}>{smokeSignal.tags}</Text>
-        <Text style={styles.description}>{description}.....</Text>
-        <TouchableOpacity style={styles.upvoteLabel}>
-          <Text style={styles.commentUpvote}>+20 woods</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.downvoteLabel}>
-          <Text style={styles.commentDownvote}>- 5 woods</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.replyLabel}>
-          <Text style={styles.reply}>20 reply</Text>
-        </TouchableOpacity>
-
-      </View>
-    )
-  },
-
-})
-var SmokeSignalsList = React.createClass({
-  render:function(){
-    return (
-      <ListView
-        dataSource={this.props.dataSource}
-        renderRow={this.props._renderSmokeSignals}
-      />
-    ) 
-  }
-})
-var CloseSSList = React.createClass({
-  render:function(){
-    return (
-      <View>
-        <Text>Close</Text>
-      <ListView
-        dataSource={this.props.dataSource}
-        renderRow={this.props._renderSmokeSignals}
-      />
-      </View>
-    ) 
-  }
+  
 })
 
 module.exports = ProfilePage

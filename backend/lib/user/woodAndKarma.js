@@ -54,7 +54,7 @@ module.exports = function(params, socket, io) {
 
     //Update thanker
     thanker.woods -= params.count
-    thanker.karma += params.count * 0.2
+    thanker.karma += params.count * 5
     thanker[params.action + 'Given'].count += params.count
 
     var thankersThankees = thanker[params.action + 'Given'].receivers
