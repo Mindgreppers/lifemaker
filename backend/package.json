@@ -9,6 +9,7 @@
     "body-parser": "^1.14.1",
     "client-session": "^0.1.7",
     "cookie-parser": "^1.4.0",
+    "crypto": "0.0.3",
     "debug": "^2.2.0",
     "epicsearch": "^1.4.2",
     "express": "^4.13.3",

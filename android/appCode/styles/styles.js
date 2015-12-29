@@ -243,7 +243,7 @@ var styles = StyleSheet.create({
   submitRegistration: {
     backgroundColor: '#26a69a',
     borderRadius: 28,
-    marginTop: 80,
+    marginTop: 40,
     marginBottom: 120,
     paddingTop: 10,
     paddingBottom: 10,

@@ -8,6 +8,7 @@ var {
   Text,
   View,
   TouchableOpacity,
+  ScrollView,
   TextInput,
   Dimensions,
   ToastAndroid,
@@ -20,7 +21,8 @@ var screenHeight = Dimensions.get('window').height
 var Login = React.createClass({
   getInitialState: function(){
     return {
-      nickname:'',
+      nickname: '',
+      password: '',
     }
   },
 
@@ -35,6 +37,7 @@ var Login = React.createClass({
  
     var user = {
       nick: this.state.nickname,
+      password: this.state.password
     }
 
     fetch(params.ipAddress + '/login', {
@@ -54,9 +57,14 @@ var Login = React.createClass({
       } else if (response.status === 400) {
 
         ToastAndroid.show('Not Found', ToastAndroid.SHORT)
-        that.props.navigator.push({id: 7})
 
         return {}
+
+      } else if(response.status === 401) {
+        
+        ToastAndroid.show('Please check your nick and password', ToastAndroid.SHORT)
+        return {}
+
       }
 
     }).then(function(response) {
@@ -72,27 +80,38 @@ var Login = React.createClass({
 
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.interestPageTitle}>Login</Text>
-        <Text style={styles.loginField}>Nickname</Text>
-        <TextInput
-          ref="nick"
-          style={{height: 60, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(nickname) => this.setState({nickname})}
-          value={this.state.nickname}
-        /> 
-        <View style={styles.button}>
-          <TouchableOpacity style={styles.submitRegistration} onPress={this._handleSubmit}>
-              <Text>Submit</Text>
-          </TouchableOpacity>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.interestPageTitle}>Login</Text>
+          <Text style={styles.loginField}>Nickname</Text>
+          <TextInput
+            ref="nick"
+            style={{height: 60, borderColor: 'gray', borderWidth: 1 }}
+            onChangeText={(nickname) => this.setState({nickname})}
+            value={this.state.nickname}
+          /> 
+          <Text style={styles.loginField}>Password</Text>
+          <TextInput
+            style={{height: 60, borderColor: 'gray', borderWidth: 1}}
+            keyboardType={'default'}
+            secureTextEntry={true}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+          />
+
+          <View style={styles.button}>
+            <TouchableOpacity style={styles.submitRegistration} onPress={this._handleSubmit}>
+                <Text>Submit</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.signUpButton}>
+            <Text>or create your Account</Text>
+            <TouchableOpacity onPress={this.signUp}>
+              <Text style={{color: '#26a69a'}}>signup</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.signUpButton}>
-          <Text>or create your Account</Text>
-          <TouchableOpacity onPress={this.signUp}>
-            <Text style={{color: '#26a69a'}}>signup</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </ScrollView>
     )
   },
 })

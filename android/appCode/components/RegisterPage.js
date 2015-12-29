@@ -41,6 +41,7 @@ var RegisterPage = React.createClass({
 
     var user = {
       nick: this.state.nickname,
+      password: this.state.password,
       email: this.state.email,
       woods: 65,
       karma: 42
@@ -74,31 +75,42 @@ var RegisterPage = React.createClass({
 
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.interestPageTitle}>Signup</Text>
-        <Text style={styles.loginField}>Nickname</Text>
-        <TextInput
-          style={{height: 60, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(nickname) => this.setState({nickname})}
-          value={this.state.nickname}
-        /> 
-        <Text style={styles.loginField}>Email</Text>
-        <TextInput
-          style={{height: 60, borderColor: 'gray', borderWidth: 1}}
-          keyboardType={'email-address'}
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-        />
-        <View style={styles.button}>
-          <TouchableOpacity style={styles.submitRegistration} onPress={this._handleSubmit}>
-              <Text>Submit</Text>
-          </TouchableOpacity>
-         </View>
-         {this.state.progress &&
-            <View style={{height: screenHeight,width: screenWidth, position: 'absolute', backgroundColor: 'trasperant'}}>
-            </View>
-         } 
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.interestPageTitle}>Signup</Text>
+          <Text style={styles.loginField}>Nickname</Text>
+          <TextInput
+            style={{height: 60, borderColor: 'gray', borderWidth: 1 }}
+            onChangeText={(nickname) => this.setState({nickname})}
+            value={this.state.nickname}
+          /> 
+          <Text style={styles.loginField}>Email</Text>
+          <TextInput
+            style={{height: 60, borderColor: 'gray', borderWidth: 1}}
+            keyboardType={'email-address'}
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
+          />
+          <Text style={styles.loginField}>Password</Text>
+          <TextInput
+            style={{height: 60, borderColor: 'gray', borderWidth: 1}}
+            keyboardType={'default'}
+            secureTextEntry={true}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+          />
+
+          <View style={styles.button}>
+            <TouchableOpacity style={styles.submitRegistration} onPress={this._handleSubmit}>
+                <Text>Submit</Text>
+            </TouchableOpacity>
+           </View>
+           {this.state.progress &&
+              <View style={{height: screenHeight,width: screenWidth, position: 'absolute', backgroundColor: 'trasperant'}}>
+              </View>
+           } 
+        </View>
+      </ScrollView>
     )
   },
 })

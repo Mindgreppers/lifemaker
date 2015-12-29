@@ -1,4 +1,5 @@
 var _ = require('lodash')
+var hashPassword = require('./password.js')
 var debug = require('debug')('register')
 var error = debug
 error.log = console.log.bind(console)
@@ -56,9 +57,11 @@ module.exports = function(params, res) {
         debug('nick exists', params.nick, response)
 
       } else { //create user
+        var password = hashPassword.hash(params.password)
         var user = {
           nick: params.nick,
           email: params.email,
+          password: password,
           woods: 65,
           karma: 40,
           thanksReceived: {

@@ -33,11 +33,11 @@ app.get('/checkCookie', function (req, res) {
 
 app.post('/login', function(req, res){
 
+  console.log(req.body)
   if(req.body.nick) {
     var readUser = require('./user/read')
     debug(req.body, 'all user information')
     readUser(req.body, res)
-    res.cookie('user', req.body.nick , { maxAge: 9000000000, httpOnly: true });
   }
   else {
     res.status(404).send({message: 'not found'})
