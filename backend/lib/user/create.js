@@ -35,28 +35,42 @@ module.exports = function(params, res) {
     return
   }
 
-  es.get({
-      index: 'users',
-      type: 'user',
-      id: params.nick
-    })
-    .catch(function(err) {
-      if(err.status === 404) {
+  es.search({
+    index: 'users',
+    type: 'user',
+    body: {
+      query: {
+        bool: {
+          should: [
+            {match_phrase: {nick: params.nick}},
+            {match_phrase: {email: params.email}}
+          ]
+        }
+      }
+    }
+  })
+  .catch(function(err) {
+    if(err.status === 404) {
         return
-      } 
-      error('Error in finding user with given nick', err, params.nick)
+    } 
+    error('Error in finding user with given nick', err, params.nick)
 
-      res.status(500).send('Database read error')
-      throw err
-    })
-    .then(function(response) {
+    res.status(500).send('Database read error')
+    throw err
+  })
+  .then(function(response) {
 
-      if (response && response.found) {
+    if (response.hits.hits.length && response.hits.hits[0]._source.nick === params.nick) {
 
         res.status(400).send('user exists!')
         debug('nick exists', params.nick, response)
 
-      } else { //create user
+    } else if(response.hits.hits.length && response.hits.hits[0]._source.email === params.email) {
+
+      res.status(400).send('email exists!')
+      debug('email exists', params.email. response)
+    
+    } else { //create user
         var password = hashPassword.hash(params.password)
         var user = {
           nick: params.nick,
@@ -105,8 +119,7 @@ function isValidEmail(email) {
 
 if (require.main === module) {
   module.exports({
-    nick: 'sexyboy',
-    email: 'vaibhavmule135@gmail.com',
-    interests: ['hb']
-  }, socket)
+    nick: 'pankaj',
+    email: 'vaibhave135@gmail.com',
+  })
 }
