@@ -83,20 +83,6 @@ var ProfileEditPage = React.createClass({
           style = {styles.scrollView}
         >
           <View style={styles.container}>
-            <View style={styles.profileImageContainer}>
-              <TouchableOpacity onPress={this.profileEdit}>
-                <Image
-                  style={styles.editImage}
-                  source={{uri: 'http://www.caretofun.net/wp-content/uploads/2015/07/beautiful-girl-profile-caretofun.net-6.jpg'}}
-                /> 
-                <Icon
-                  name='camera'
-                  size={25}
-                  color='#000000'
-                  style={{width:25,height:25,position:'absolute',top:35,left:35}}
-                /> 
-              </TouchableOpacity>
-            </View>
             <Text style={styles.profileEditFields}>Name</Text>
             <TextInput
               style={{height: 40, borderColor: 'gray', borderWidth: 1 ,}}
