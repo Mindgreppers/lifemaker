@@ -40,12 +40,12 @@ module.exports = function(params, socket, io) {
     //Update Thankee
     if (params.action === 'thanks') {
       thankee.woods += params.count
-      thankee.karma += params.count
+      thankee.karma += params.count * 5
     } else {
-      thankee.karma -= params.count
+      thankee.karma -= params.count * 5
     }
 
-    thankee[params.action + 'Received'].count += params.count
+    thankee[params.action + 'Received'].count += params.count 
 
     var thankeesThankers = thankee[params.action + 'Received'].givers
     if (!_.find(thankeesThankers, params.thankerId)) {
@@ -54,7 +54,7 @@ module.exports = function(params, socket, io) {
 
     //Update thanker
     thanker.woods -= params.count
-    thanker.karma += params.count * 5
+    thanker.karma += params.count
     thanker[params.action + 'Given'].count += params.count
 
     var thankersThankees = thanker[params.action + 'Given'].receivers
