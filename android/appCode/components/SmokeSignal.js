@@ -191,7 +191,7 @@ var ThreadPage = React.createClass({
             <View style={styles.commentStyle}>
             { this.state.smokeSignal._source.comments.length === 1 && 
               <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comment</Text> || 
-              <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comment</Text>
+              <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comments</Text>
             }
 
               <TouchableOpacity style={styles.commentButton} onPress={this.showCommentBox}>

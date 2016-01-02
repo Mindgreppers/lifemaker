@@ -187,7 +187,7 @@ var ProfilePage = React.createClass({
           { this.state.liveCount === 1 && <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignal</Text> || <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignals</Text>}
           </TouchableOpacity>
           <TouchableOpacity style={styles.thanksButton} onPress={this.closeSmokeSignals}>
-            <Text style={styles.profileButtonText}>{this.state.closeCount} Close SmokeSignals</Text>
+            <Text style={styles.profileButtonText}>{this.state.closeCount} Closed SmokeSignals</Text>
           </TouchableOpacity>
 
         </View>

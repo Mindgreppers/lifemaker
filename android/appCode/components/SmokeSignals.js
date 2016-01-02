@@ -182,7 +182,7 @@ var SmokeSignalsPage = React.createClass({
                 <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.nothanks} NoThanks</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.commentActionButton} onPress={this.reply.bind(null, smokeSignal._id)}>
-              { smokeSignal._source.comments.length === 1 && <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Reply</Text> || <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Replys</Text> }
+              { smokeSignal._source.comments.length === 1 && <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Reply</Text> || <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Replies</Text> }
               </TouchableOpacity>
             </View>
           </View>

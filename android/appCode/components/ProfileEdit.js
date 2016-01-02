@@ -89,12 +89,6 @@ var ProfileEditPage = React.createClass({
               onChangeText={(name) => this.setState({name})}
               value={this.state.name}
             /> 
-            <Text style={styles.profileEditFields}>email</Text>
-            <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1 ,}}
-              onChangeText={(email) => this.setState({email})}
-              value={this.state.email}
-            /> 
             <Text style={styles.profileEditFields}>Interests</Text>
             <TextInput
               style={{height: 40, borderColor: 'gray', borderWidth: 1}}
