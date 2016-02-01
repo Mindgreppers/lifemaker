@@ -1,2 +1,5 @@
 # LifeMaker
-[![Stories in Ready](https://badge.waffle.io/Mindgreppers/lifemaker.svg?label=ready&title=Ready)](http://waffle.io/Mindgreppers/lifemaker)
+
+Awakening and action for growth
+
+[Read more on the wiki](https://github.com/Mindgreppers/lifemaker/wiki)
