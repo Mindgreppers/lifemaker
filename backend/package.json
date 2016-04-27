@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "DEBUG=* node ./lib/setupConsumers",
   },
   "dependencies": {
     "body-parser": "^1.14.1",
