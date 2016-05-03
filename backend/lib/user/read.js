@@ -20,17 +20,17 @@ module.exports = function(params, res) {
 
     if(params.password) {
       if(hashPassword.validate(response._source.password, params.password) && params.nick === response._source.nick) {
-        console.log(params, 'with password') 
+        console.log(params, 'with password')
         res.cookie('user', params.nick , { maxAge: 9000000000, httpOnly: true });
-        res.status(200).json(response._source) 
+        res.status(200).json(response._source)
       }
       else {
-        res.status(401).json({message: 'Please check your nick and password'}) 
+        res.status(401).json({message: 'Please check your nick and password'})
       }
-    
+
     }
     else {
-      res.status(200).json(response._source) 
+      res.status(200).json(response._source)
     }
 
   })
@@ -38,7 +38,7 @@ module.exports = function(params, res) {
 
     res.sendStatus(400)
 
-  }).done()
+  })
 }
 if(require.main === module) {
   module.exports({
