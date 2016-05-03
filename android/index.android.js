@@ -26,7 +26,7 @@ var _navigator;
 var LifeMaker = React.createClass({
 
   componentDidMount: function() {
-    var that = this  
+    var that = this
     fetch(params.ipAddress + '/checkCookie', {credentials: 'same-origin'})
     .then(function(res) {
       if(res.status === 200) {
@@ -100,8 +100,12 @@ var LifeMaker = React.createClass({
       var Durations = require('./appCode/components/DurationSS')
       return <Durations message={route.message} navigator={navigator}/>
     }
-  }, 
-    
+    else if(route.id === 13) {
+      var ActivityThread = require('./appCode/components/ActivityThread')
+      return <ActivityThread navigator={navigator}/>
+    }
+  },
+
   render: function() {
     if(this.state.user === 0) {
       return (

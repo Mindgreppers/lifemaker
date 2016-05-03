@@ -11,6 +11,7 @@
     "react": "^0.14.3",
     "react-native": "^0.16.0",
     "react-native-action-button": "^1.0.6",
+    "react-native-button": "^1.4.2",
     "react-native-dropdown-android": "0.0.7",
     "react-native-gcm-android": "0.0.7",
     "react-native-icons": "^0.6.3",

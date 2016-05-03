@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Icon = require('react-native-vector-icons/Ionicons');
+var Button = require('react-native-button');
 
 var {
   AppRegistry,
@@ -28,6 +29,18 @@ var ApplicationHeader =  require('./ApplicationHeader')
 var UserStore = require('../Stores/UserStore')
 var SmokeStore = require('../Stores/SmokeStore')
 
+var MOCKED_USER_DATA =
+  {
+    nick: 'Abhishek',
+    active_signals: 10,
+    positive_karma: 50,
+    negative_karma: 10,
+    skills: ["Rails", "Sports"],
+    interests: ["Travelling", "Music"],
+    gravatar: "http://i.imgur.com/UePbdph.jpg"
+  };
+
+
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
 var data = []
@@ -44,7 +57,7 @@ var ProfilePage = React.createClass({
     }
 
   },
- 
+
   componentDidMount: function() {
 
     socket.on(UserStore.getUserData(), function(results) {
@@ -74,7 +87,7 @@ var ProfilePage = React.createClass({
 
   showSmokeSignals: function(){
 
-    this.props.navigator.push({id: 11, userId: this.state.user.nick})     
+    this.props.navigator.push({id: 11, userId: this.state.user.nick})
 
   },
 
@@ -90,6 +103,10 @@ var ProfilePage = React.createClass({
 
   },
 
+  _handlePress: function() {
+    this.props.navigator.push({id: 13})
+  },
+
   render: function(){
     var navigationView = (
       <View style={[styles.DrawerView,{height: ScreenHeight}]}>
@@ -103,7 +120,7 @@ var ProfilePage = React.createClass({
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
           />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>SmokeSignals</Text> 
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>SmokeSignals</Text>
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
@@ -112,11 +129,11 @@ var ProfilePage = React.createClass({
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
           />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text> 
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text>
         </View>
       </View>
     )
- 
+
     return (
       <DrawerLayoutAndroid
         drawerWidth={300}
@@ -136,59 +153,54 @@ var ProfilePage = React.createClass({
               size={25}
               color='#000000'
               style={styles.edit}
-            /> 
+            />
           </TouchableOpacity>
-          <View style={styles.profileImageContainer}>
-            <View style={styles.imageContainer}>
-              <Text style={styles.profileImageText}>{this.state.user.nick[0].toUpperCase()}</Text>
+
+          <View style={styles.profileContainer}>
+            <Image
+              style={styles.gravatar}
+              source={{uri: MOCKED_USER_DATA.gravatar}}
+            />
+          <View style={styles.profileInfo}>
+              <Text style={styles.nick}>{MOCKED_USER_DATA.nick}</Text>
+              <Button
+                style={{fontSize: 20, color: 'green'}}
+                styleDisabled={{color: 'red'}}
+                onPress={this._handlePress}
+              >
+                View Activity
+              </Button>
             </View>
           </View>
-          <Text style={styles.profileText}>{this.state.user.name}</Text>
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
-          <Text style={styles.profileButtonText}>{this.state.user.thanksGiven.count} Thanks Given</Text>
-          </TouchableOpacity>
 
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
-          <Text style={styles.profileButtonText}>{this.state.user.thanksReceived.count} Thanks Received</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
-          <Text style={styles.profileButtonText}>{this.state.user.woods} Woods</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
-          <Text style={styles.profileButtonText}>{this.state.user.karma} Karma</Text>
-          </TouchableOpacity>
+          <View style={styles.karmaContainer}>
+            <View style={styles.karmaDetails}>
+              <Text>Positive Karma</Text>
+              <Text>10</Text>
+            </View>
+            <View style={styles.karmaDetails}>
+              <Text>Negative Karma</Text>
+              <Text>10</Text>
+            </View>
+          </View>
 
-          <Text style={styles.profileText}>{this.state.user.interests.join(', ')}</Text>
-          <TouchableOpacity style={styles.thanksButton} onPress={this.showSmokeSignals}>
-          { this.state.liveCount === 1 && <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignal</Text> || <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignals</Text>}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.thanksButton} onPress={this.closeSmokeSignals}>
-            <Text style={styles.profileButtonText}>{this.state.closeCount} Closed SmokeSignals</Text>
-          </TouchableOpacity>
+          <View>
+            <Text style={styles.nick}>Skills</Text>
+          </View>
+          <View style={styles.skillsContainer}>
+            {MOCKED_USER_DATA.skills.map(function(skill, index){
+              return <View key={index} style={styles.skillContainer} ><Text style={styles.skill}>{skill}</Text></View>
+            })}
+          </View>
+
+          <View>
+            <Text style={styles.nick}>Interests</Text>
+          </View>
+          <View style={styles.skillsContainer}>
+            {MOCKED_USER_DATA.interests.map(function(skill, index){
+              return <View key={index} style={styles.skillContainer} ><Text style={styles.skill}>{skill}</Text></View>
+            })}
+          </View>
 
         </View>
         </ScrollView>
@@ -196,7 +208,7 @@ var ProfilePage = React.createClass({
       </DrawerLayoutAndroid>
     )
   },
-  
+
 })
 
 module.exports = ProfilePage
