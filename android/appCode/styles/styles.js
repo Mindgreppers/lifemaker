@@ -6,6 +6,23 @@ var {
 } = React
 
 var styles = StyleSheet.create({
+  ssTypeContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+  ssType: {
+    flex: 1,
+    height: 120,
+    borderWidth: 1,
+    borderColor: '#f0f0f0',
+    backgroundColor: '#ffffee',
+    opacity: 50,
+  },
+  highlight: {
+    opacity: 100,
+    backgroundColor: '#fff12f'
+  },
   commentActionCon: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -27,7 +44,7 @@ var styles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   createButton: {
-    marginRight: 40, 
+    marginRight: 40,
   },
   dropdown: {
     height: 20,
@@ -348,7 +365,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     width: 100,
     height: 100,
-  }, 
+  },
   profileImageText: {
     fontSize: 60,
     marginTop: -5,
