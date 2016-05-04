@@ -21,7 +21,7 @@ module.exports = function(params, socket, io) {
         }
       }
     }).then(function(resp) {
-   
+
       socket.emit('r-smokesignal.scroll.done', {
         message: resp.hits.hits,
         counts: resp.hits.total,
@@ -37,7 +37,6 @@ module.exports = function(params, socket, io) {
       error()
 
     })
-    .done()
 }
 
 
