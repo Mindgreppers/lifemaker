@@ -104,11 +104,10 @@ module.exports = function(params, res) {
 
           res.status(500).send('DB error in registering')
         })
-        .done()
+        //.done()
       }
     })
-    .catch()
-    .done()
+    //.done()
 }
 
 function isValidEmail(email) {
