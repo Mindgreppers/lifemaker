@@ -572,6 +572,15 @@ var styles = StyleSheet.create({
     borderColor: '#f0f0f0',
     borderWidth: 1,
   },
+  ssCategory: {
+    backgroundColor: '#012300',
+    color: '#ffffff',
+    borderColor: '#f0f0f0',
+    borderWidth: 1,
+    width: 80,
+    textAlign: 'center',
+    alignSelf: 'flex-end'
+  },
   comment:  {
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',

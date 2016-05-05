@@ -23,7 +23,7 @@ module.exports = function(params, socket, io) {
         }
       }
     }).then(function(resp) {
-   
+
       var smokesignals = resp.hits.hits
       smokesignals.forEach(function(smokesignal){
 
@@ -45,7 +45,6 @@ module.exports = function(params, socket, io) {
       error()
 
     })
-    .done()
 }
 
 

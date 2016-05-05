@@ -10,7 +10,7 @@ module.exports = function(params, socket, io) {
       index: 'smokesignals',
       type: 'smokesignal',
       id: params._id,
-      body: _.pick(params, ['userId', 'title',
+      body: _.pick(params, ['userId', 'title', 'category',
         'message', 'img', 'createdAt', 'burningTill',
         'active', 'thanks', 'nothanks', 'anonymous', 'comments'
       ])
