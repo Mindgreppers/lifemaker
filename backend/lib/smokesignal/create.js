@@ -11,7 +11,7 @@ module.exports = function(params, socket, io) {
       index: 'smokesignals',
       type: 'smokesignal',
       id: params._id,
-      body: _.pick(params, ['userId', 'title',
+      body: _.pick(params, ['userId', 'title', 'category',
         'message', 'img', 'createdAt', 'burningTill',
         'active', 'thanks', 'nothanks', 'anonymous', 'comments'
       ])
@@ -87,6 +87,8 @@ if (require.main === module) {
     userId: 'awesomepankaj',
     title: 'Wild vs Man',
     type: 'Need',
+    category: 'Dharma',
+    message: 'Demo MSG',
     description: 'kuch bhi',
     img: 'http://res.cloudnary.com/image.png',
     tags: ['wild', 'man', 'hb'],
