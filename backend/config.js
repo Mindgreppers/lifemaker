@@ -1,7 +1,7 @@
 module.exports = {
   epicsearch: {
     clientParams: {
-      hosts: [{ host: process.env.ELASTICSEARCH_URL || 'localhost', protocol: 'http', port: process.env.ELASTICSEARCH_PORT || 9200}],
+      hosts: [{ protocol: process.env.ELASTICSEARCH_PROTOCOL || 'http', host: process.env.ELASTICSEARCH_URL || 'localhost', protocol: 'http', port: process.env.ELASTICSEARCH_PORT || 9200}],
       requestTimeout: 90000,
       maxConnections: 200,
       log: 'error'
