@@ -34,7 +34,7 @@ module.exports = {
     }
   },
   socket: {
-    port: 3000
+    port: process.env.SOCKET_PORT || 3000
   }
 
 }
