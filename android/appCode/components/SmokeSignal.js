@@ -26,6 +26,7 @@ var ApplicationHeader = require('./ApplicationHeader')
 var CreateSmokeSignal = require('./CreateSmokeSignal')
 var SideBar = require('./SideBar')
 var UserStore = require('../Stores/UserStore')
+var SmokeSignalBox = require('./SmokeSignalBox')
 
 var ScreenHeight = Dimensions.get('window').height
 var ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
@@ -33,7 +34,7 @@ var ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 var ThreadPage = React.createClass({
 
   mixins: [
-    Reflux.ListenerMixin 
+    Reflux.ListenerMixin
   ],
 
   getInitialState: function() {
@@ -46,12 +47,12 @@ var ThreadPage = React.createClass({
       message: '',
       more: false,
     }
-  
+
   },
 
   componentDidMount: function() {
 
-    this.listenTo(SmokeStore, this.refreshList) 
+    this.listenTo(SmokeStore, this.refreshList)
 
     if (this.props.openCommentBox) {
       this.setState({showCommentBox: true})
@@ -63,7 +64,7 @@ var ThreadPage = React.createClass({
         message : this.state.smokeSignal._source.message.slice(0, 200) + '...',
         more: true
       })
-      
+
     }
 
   },
@@ -82,7 +83,7 @@ var ThreadPage = React.createClass({
   },
 
   _handleSubmit: function() {
-    this.props.navigator.push({id : 3 ,}) 
+    this.props.navigator.push({id : 3 ,})
   },
 
   handleProfilePage: function(userId) {
@@ -103,7 +104,7 @@ var ThreadPage = React.createClass({
   ssAction: function(ss) {
     socket.emit('u-smokesignal.thanks', {thankerId: UserStore.getUserData().nick, thankeeId: ss.userId, _id: this.state.smokeSignal._id, action: ss.action, count: 1})
   },
-  
+
   addCommentAction: function(comment, e) {
     var commentThanks = {
       thankerId: UserStore.getUserData().nick,
@@ -115,7 +116,7 @@ var ThreadPage = React.createClass({
     }
     socket.emit('u-smokesignal.comment.thanks', commentThanks)
   },
-  
+
   openDrawer: function(){
     this.refs['DRAWER'].openDrawer()
   },
@@ -144,7 +145,7 @@ var ThreadPage = React.createClass({
       nothanks: 0,
       userId: UserStore.getUserData().nick
     }
-    
+
     this.setState({comment: ''})
     socket.emit('u-smokesignal.comment', comment)
   },
@@ -154,7 +155,7 @@ var ThreadPage = React.createClass({
   },
 
   render: function() {
-    
+
 
     return (
       <DrawerLayoutAndroid
@@ -168,13 +169,13 @@ var ThreadPage = React.createClass({
             style = {styles.scrollView}
           >
           <View style={styles.container}>
-              <Text style={styles.description}>{this.state.message || this.state.smokeSignal._source.message}</Text>
+              <SmokeSignalBox category={this.state.smokeSignal._source.category} message={this.state.smokeSignal._source.message}/>
 
               { this.state.more && <TouchableOpacity style={styles.showMoreButton} onPress={this.showMore}>
                 <Text style={styles.showMore}>show more.</Text>
               </TouchableOpacity> }
 
-            <Text style={styles.timeInfoText}> {moment.duration(+moment().diff(this.state.smokeSignal._source.burningTill)).humanize()} remaining</Text> 
+            <Text style={styles.timeInfoText}> {moment.duration(+moment().diff(this.state.smokeSignal._source.burningTill)).humanize()} remaining</Text>
             <TouchableOpacity style={styles.label} onPress={this.ssAction.bind(this, {action: 'thanks', userId: this.state.smokeSignal._source.userId})}>
               <View>
                 <Text style={styles.labelText}>{this.state.smokeSignal._source.thanks} Thanks</Text>
@@ -186,20 +187,20 @@ var ThreadPage = React.createClass({
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.author} onPress={this.handleProfilePage.bind(this, this.state.smokeSignal._source.userId)}>
-              <Text style={styles.author}>written by {this.state.smokeSignal._source.userId}</Text> 
+              <Text style={styles.author}>written by {this.state.smokeSignal._source.userId}</Text>
             </TouchableOpacity>
             <View style={styles.commentStyle}>
-            { this.state.smokeSignal._source.comments.length === 1 && 
-              <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comment</Text> || 
+            { this.state.smokeSignal._source.comments.length === 1 &&
+              <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comment</Text> ||
               <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comments</Text>
             }
 
               <TouchableOpacity style={styles.commentButton} onPress={this.showCommentBox}>
-                <Text style={styles.commentText}>Comment</Text> 
+                <Text style={styles.commentText}>Comment</Text>
               </TouchableOpacity>
             </View>
             {this.state.smokeSignal._source.comments.map(this.renderCommentBox)}
-            {this.state.showCommentBox && 
+            {this.state.showCommentBox &&
             <View style={styles.commentInputView}>
             <TextInput
               ref= 'comment'

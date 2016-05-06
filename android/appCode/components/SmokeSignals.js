@@ -26,6 +26,7 @@ var UserStore = require('../Stores/UserStore')
 var socket = require('../socket')
 var CreateSmokeSignal = require('./CreateSmokeSignal')
 var SmokeSignalCategory = require('./SmokeSignalCategory')
+var SmokeSignalBox = require('./SmokeSignalBox')
 var screenWidth = Dimensions.get('window').width
 var ScreenHeight = Dimensions.get('window').height
 var ApplicationHeader = require('./ApplicationHeader')
@@ -165,16 +166,14 @@ var SmokeSignalsPage = React.createClass({
    },
     _renderSmokeSignals: function(smokeSignal) {
 
-        var message = ''
-        if(smokeSignal._source.message.length > 200) {
-           message = smokeSignal._source.message.slice(0, 200) + '...'
+        var message = '';
+        if(this.props.message.length > 200) {
+           message = this.props.message.slice(0, 200) + '...'
         }
+
         return (
           <View style={styles.smokeSignal}>
-            <SmokeSignalCategory category={ Utility.capitalise(smokeSignal._source.category) || 'Dharma' } />
-            <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
-              <Text style={styles.description}>{message || smokeSignal._source.message}</Text>
-            </TouchableOpacity>
+            <SmokeSignalBox category={smokeSignal._source.category} onSubmit={this._handleSubmit.bind(null, smokeSignal._id)} message={message || smokeSignal._source.message}/>
             <View style={styles.commentActionCon}>
               <TouchableOpacity style={styles.commentActionButton} onPress={this.ssAction.bind(this, {action: 'thanks', userId:smokeSignal._source.userId, smokeId: smokeSignal._id})}>
                 <Text style={[styles.commentAction,{textAlign: 'left'}]}>{smokeSignal._source.thanks} Thanks</Text>
