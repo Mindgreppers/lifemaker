@@ -2,7 +2,6 @@ var React = require('react-native')
 
 window.navigator.userAgent = 'react-native'
 
-var Dropdown = require('react-native-dropdown-android')
 var Icon = require('react-native-vector-icons/Ionicons')
 var moment = require('moment')
 
@@ -14,8 +13,12 @@ var {
   ToolbarAndroid,
   Dimensions,
   ToastAndroid,
+  TouchableHighlight
 } = React
 
+var Utility = require('../utility')
+
+var smokeSignalCategories = require('../config').smokeSignalCategories
 
 var SmokeStore = require('../Stores/SmokeStore')
 var socket = require('../socket')
@@ -28,15 +31,25 @@ var Durations = React.createClass({
 
   getInitialState: function() {
     return {
-      selectedValue: 1   
+      selectedValue: 0
     }
   },
 
   componentDidMount: function() {
     socket.on('c-smokesignal.result', function(result) {
-      ToastAndroid.show(result.message, ToastAndroid.SHORT) 
-      this.props.navigator.push({id : 1}) 
+      ToastAndroid.show(result.message, ToastAndroid.SHORT)
+      this.props.navigator.push({id : 1})
     }.bind(this))
+  },
+
+  getCategory: function(index) {
+    return smokeSignalCategories[index].code;
+  },
+
+  _onPressButton: function(val) {
+    this.setState({
+      selectedValue: val
+    })
   },
 
   _handleSubmit: function() {
@@ -45,18 +58,19 @@ var Durations = React.createClass({
       _id: +moment() + '_'+ Math.random(),
       message: this.props.message,
       createdAt: +moment(),
+      category: this.getCategory(this.state.selectedValue),
       burningTill: +(moment().add(this.state.selectedValue, 'days')),
       active: true,
       thanks: 0,
       nothanks: 0,
       comments: [],
       anonymous: false,
-    } 
+    }
     SmokeStore.addSmokeSignal(smokeSignal)
   },
 
   closeDurationsPage: function() {
-    
+
     this.props.navigator.pop()
 
   },
@@ -78,24 +92,32 @@ var Durations = React.createClass({
                 style={{width:20,height:20,marginLeft:5}}
               />
             </TouchableOpacity>
+            <Text style={{marginRight:35}}>Category - {Utility.capitalise(this.getCategory(this.state.selectedValue))}</Text>
             <TouchableOpacity style={styles.createButton}  onPress={this._handleSubmit}>
               <Text style={{color: '#26a69a'}}>CREATE</Text>
             </TouchableOpacity>
           </View>
         </ToolbarAndroid>
-        <View style={[styles.messageContainer, {height: ScreenHeight, alignItems: 'center'}]}>
-          <Text style={{marginTop: 20, fontSize: 17}}>Set Durations</Text>
-          <View style={styles.dropDownDuration}>
-            <Dropdown
-              style={styles.dropdown}
-              values={[ 1, 4, 8, 10, 12, 15]} 
-              selected={0} onChange={(data) => { this.setState({selectedValue: data.value}) }} />
-              <Text style={styles.days}>Days</Text>
-           </View>
+
+        <View style={styles.ssTypeContainer}>
+          { smokeSignalCategories.map( (ssCategory, index) => {
+            return (
+              <TouchableHighlight key={ssCategory.code} onPress={ () => this._onPressButton(index) }>
+                <View style={[styles.ssType, {backgroundColor: ssCategory.color}, index === this.state.selectedValue && styles.highlight] }>
+                  <Text>
+                    {ssCategory.title}
+                  </Text>
+                  <View>
+                    <Text>{ssCategory.description}</Text>
+                  </View>
+                </View>
+              </TouchableHighlight>
+            )
+          })}
         </View>
       </DrawerLayoutAndroid>
     )
-  } 
+  }
 })
 
 module.exports = Durations
