@@ -241,6 +241,13 @@ var styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  gravatar:  {
+    width: 50,
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   sendSmoke:  {
     backgroundColor: '#26a69a',
     borderRadius: 28,
@@ -425,6 +432,49 @@ var styles = StyleSheet.create({
     borderColor: '#f0f0f0',
     margin: 20,
     padding: 20,
+  },
+  profileContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: '#GAFCFF',
+  },
+  karmaContainer: {
+    margin: 20,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: '#GAFCFF',
+  },
+  karmaDetails: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  skillsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  skillContainer: {
+    flex: 1,
+    backgroundColor: '#e6e6e6',
+    borderColor: '#000',
+    borderWidth: 1,
+    justifyContent: 'center',
+    margin: 10,
+  },
+  skill: {
+    alignSelf: 'center'
+  },
+  nick: {
+    fontSize: 20,
+    marginBottom: 8,
+    textAlign: 'center',
   },
   interestPageContainer: {
     backgroundColor: '#ffffff',
