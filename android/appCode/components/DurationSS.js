@@ -16,28 +16,9 @@ var {
   TouchableHighlight
 } = React
 
-var smokeSignalCategories = [
-  {
-    code: 'dharma',
-    title: 'Dharma',
-    description: 'Identifying and performing your duties to the best of your ability.'
-  },
-  {
-    code: 'kama',
-    title: 'Kama',
-    description: 'Fulfilling desires: material, physical or spiritual.'
-  },
-  {
-    code: 'vidya',
-    title: 'Vidya',
-    description: 'Pursuit of knowledge and truth.'
-  },
-  {
-    code: 'artha',
-    title: 'Artha',
-    description: 'Seeking means to do what you need to do.'
-  },
-]
+var Utility = require('../utility')
+
+var smokeSignalCategories = require('../config').smokeSignalCategories
 
 var SmokeStore = require('../Stores/SmokeStore')
 var socket = require('../socket')
@@ -111,6 +92,7 @@ var Durations = React.createClass({
                 style={{width:20,height:20,marginLeft:5}}
               />
             </TouchableOpacity>
+            <Text style={{marginRight:35}}>Category - {Utility.capitalise(this.getCategory(this.state.selectedValue))}</Text>
             <TouchableOpacity style={styles.createButton}  onPress={this._handleSubmit}>
               <Text style={{color: '#26a69a'}}>CREATE</Text>
             </TouchableOpacity>
@@ -121,7 +103,7 @@ var Durations = React.createClass({
           { smokeSignalCategories.map( (ssCategory, index) => {
             return (
               <TouchableHighlight key={ssCategory.code} onPress={ () => this._onPressButton(index) }>
-                <View style={[styles.ssType, index === this.state.selectedValue && styles.highlight] }>
+                <View style={[styles.ssType, {backgroundColor: ssCategory.color}, index === this.state.selectedValue && styles.highlight] }>
                   <Text>
                     {ssCategory.title}
                   </Text>

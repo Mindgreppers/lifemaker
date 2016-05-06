@@ -16,12 +16,10 @@ var styles = StyleSheet.create({
     height: 120,
     borderWidth: 1,
     borderColor: '#f0f0f0',
-    backgroundColor: '#ffffee',
-    opacity: 50,
+    opacity: 0.5,
   },
   highlight: {
-    opacity: 100,
-    backgroundColor: '#fff12f'
+    opacity: 1,
   },
   commentActionCon: {
     flexDirection: 'row',
@@ -573,7 +571,6 @@ var styles = StyleSheet.create({
     borderWidth: 1,
   },
   ssCategory: {
-    backgroundColor: '#012300',
     color: '#ffffff',
     borderColor: '#f0f0f0',
     borderWidth: 1,
