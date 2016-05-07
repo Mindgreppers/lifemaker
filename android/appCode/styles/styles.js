@@ -6,6 +6,17 @@ var {
 } = React
 
 var styles = StyleSheet.create({
+  ssCategoryHeader: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 15,
+    marginBottom: 5,
+  },
+  ssCategoryText: {
+    textAlign: 'center',
+    fontSize: 16
+  },
   ssTypeContainer: {
     flex: 1,
     flexDirection: 'column',

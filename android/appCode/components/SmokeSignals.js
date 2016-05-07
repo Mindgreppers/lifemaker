@@ -167,8 +167,8 @@ var SmokeSignalsPage = React.createClass({
     _renderSmokeSignals: function(smokeSignal) {
 
         var message = '';
-        if(this.props.message.length > 200) {
-           message = this.props.message.slice(0, 200) + '...'
+        if(smokeSignal._source.message.length > 200) {
+           message = smokeSignal._source.message.slice(0, 200) + '...'
         }
 
         return (

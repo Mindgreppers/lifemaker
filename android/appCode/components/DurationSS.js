@@ -104,11 +104,11 @@ var Durations = React.createClass({
             return (
               <TouchableHighlight key={ssCategory.code} onPress={ () => this._onPressButton(index) }>
                 <View style={[styles.ssType, {backgroundColor: ssCategory.color}, index === this.state.selectedValue && styles.highlight] }>
-                  <Text>
+                  <Text style={styles.ssCategoryHeader}>
                     {ssCategory.title}
                   </Text>
                   <View>
-                    <Text>{ssCategory.description}</Text>
+                    <Text style={styles.ssCategoryText}>{ssCategory.description}</Text>
                   </View>
                 </View>
               </TouchableHighlight>
