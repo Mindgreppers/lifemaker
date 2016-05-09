@@ -36,7 +36,6 @@ console.log(params)
         err: err
       })
     })
-    .done()
 }
 
 if (require.main === module) {
