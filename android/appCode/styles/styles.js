@@ -249,8 +249,12 @@ var styles = StyleSheet.create({
     height: 25,
   },
   icon:  {
-    width: 20,
     height: 20,
+    width: 20,
+  },
+  buddhaIcon: {
+    height: 40,
+    width: 25,
   },
   sendSmoke:  {
     backgroundColor: '#26a69a',
@@ -531,7 +535,8 @@ var styles = StyleSheet.create({
     color: '#26a69a',
   },
   commentActionButton: {
-    flex: 1
+    flex: 1,
+    marginTop: 20
   },
   thanks: {
     color: '#26a69a',
@@ -547,7 +552,15 @@ var styles = StyleSheet.create({
     marginTop: 5,
   },
   labelText:  {
-    color: '#26a69a'
+    color: '#26a69a',
+  },
+  buddhaText: {
+    color: '#26a69a',
+    marginTop: 15,
+    marginRight: 10,
+  },
+  author: {
+    marginBottom: 5,
   },
   comments:  {
     textAlign: 'left',
@@ -577,7 +590,8 @@ var styles = StyleSheet.create({
   smokeSignal:  {
     backgroundColor: '#ffffff',
     margin: 20,
-    padding: 20,
+    marginBottom: 10,
+    padding: 10,
     borderColor: '#f0f0f0',
     borderWidth: 1,
   },

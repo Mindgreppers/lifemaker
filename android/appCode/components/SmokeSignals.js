@@ -18,6 +18,7 @@ var {
   Dimensions,
   ToastAndroid,
   ProgressBar,
+  Image
 } = React
 
 var styles = require('../styles/styles.js')
@@ -110,6 +111,15 @@ var SmokeSignalsPage = React.createClass({
     this.props.navigator.push({id : 3 , smokeId: id, openCommentBox: true})
   },
 
+  handleProfilePage: function(userId) {
+    if(userId === UserStore.getUserData().nick) {
+      this.props.navigator.push({id : 4})
+    }
+    else {
+      this.props.navigator.push({id : 9, userId: userId})
+    }
+  },
+
   render: function() {
     var navigationView = (
       <View style={[styles.DrawerView,{height: ScreenHeight}]}>
@@ -174,17 +184,42 @@ var SmokeSignalsPage = React.createClass({
         return (
           <View style={styles.smokeSignal}>
             <SmokeSignalBox category={smokeSignal._source.category} onSubmit={this._handleSubmit.bind(null, smokeSignal._id)} message={message || smokeSignal._source.message}/>
-            <View style={styles.commentActionCon}>
-              <TouchableOpacity style={styles.commentActionButton} onPress={this.ssAction.bind(this, {action: 'thanks', userId:smokeSignal._source.userId, smokeId: smokeSignal._id})}>
-                <Text style={[styles.commentAction,{textAlign: 'left'}]}>{smokeSignal._source.thanks} Thanks</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.commentActionButton} onPress={this.ssAction.bind(this, {action: 'nothanks', userId:smokeSignal._source.userId, smokeId: smokeSignal._id})}>
-                <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.nothanks} NoThanks</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.commentActionButton} onPress={this.reply.bind(null, smokeSignal._id)}>
-              { smokeSignal._source.comments.length === 1 && <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Reply</Text> || <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Replies</Text> }
-              </TouchableOpacity>
+
+            <TouchableOpacity style={styles.author} onPress={this.handleProfilePage.bind(this, smokeSignal._source.userId)}>
+              <Text style={styles.author}>written by {smokeSignal._source.userId}</Text>
+            </TouchableOpacity>
+
+            <View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+
+              <View style={{flex: 0}}><Text style={styles.buddhaText}>{smokeSignal._source.thanks}</Text></View>
+              <View style={{flex: 1}}>
+                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'thanks', userId: smokeSignal._source.userId})}>
+                  <Image
+                    style={styles.buddhaIcon}
+                    source={require('../img/happy_buddha.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={{flex: 0}}><Text style={styles.buddhaText}>{smokeSignal._source.nothanks}</Text></View>
+              <View style={{flex: 1}}>
+                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'nothanks'})}>
+                  <Image
+                    style={styles.buddhaIcon}
+                    source={require('../img/normal_buddha.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+
             </View>
+
+            <View style={styles.commentStyle}>
+            { smokeSignal._source.comments.length === 1 &&
+              <Text style={styles.comments}>{smokeSignal._source.comments.length} Comment</Text> ||
+              <Text style={styles.comments}>{smokeSignal._source.comments.length} Comments</Text>
+            }
+            </View>
+
           </View>
         )
     },

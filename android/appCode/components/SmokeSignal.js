@@ -175,20 +175,34 @@ var ThreadPage = React.createClass({
                 <Text style={styles.showMore}>show more.</Text>
               </TouchableOpacity> }
 
-            <Text style={styles.timeInfoText}> {moment.duration(+moment().diff(this.state.smokeSignal._source.burningTill)).humanize()} remaining</Text>
-            <TouchableOpacity style={styles.label} onPress={this.ssAction.bind(this, {action: 'thanks', userId: this.state.smokeSignal._source.userId})}>
-              <View>
-                <Text style={styles.labelText}>{this.state.smokeSignal._source.thanks} Thanks</Text>
+              <TouchableOpacity style={styles.author} onPress={this.handleProfilePage.bind(this, this.state.smokeSignal._source.userId)}>
+                <Text style={styles.author}>written by {this.state.smokeSignal._source.userId}</Text>
+              </TouchableOpacity>
+
+              <View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+
+                <View style={{flex: 0}}><Text style={styles.buddhaText}>{this.state.smokeSignal._source.thanks}</Text></View>
+                <View style={{flex: 1}}>
+                  <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'thanks', userId: this.state.smokeSignal._source.userId})}>
+                    <Image
+                      style={styles.buddhaIcon}
+                      source={require('../img/happy_buddha.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{flex: 0}}><Text style={styles.buddhaText}>{this.state.smokeSignal._source.nothanks}</Text></View>
+                <View style={{flex: 1}}>
+                  <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'nothanks'})}>
+                    <Image
+                      style={styles.buddhaIcon}
+                      source={require('../img/normal_buddha.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.downvote} onPress={this.ssAction.bind(this, {action: 'nothanks'})}>
-              <View>
-                <Text style={styles.labelText}>{this.state.smokeSignal._source.nothanks}  NoThanks</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.author} onPress={this.handleProfilePage.bind(this, this.state.smokeSignal._source.userId)}>
-              <Text style={styles.author}>written by {this.state.smokeSignal._source.userId}</Text>
-            </TouchableOpacity>
+
             <View style={styles.commentStyle}>
             { this.state.smokeSignal._source.comments.length === 1 &&
               <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comment</Text> ||
