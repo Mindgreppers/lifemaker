@@ -7,8 +7,7 @@ error.log = console.log.bind(console)
 var es = require('../es')
 
 module.exports = function(params, socket, io) {
-console.log(params)
-  es.update({
+  return es.update({
       index: 'users',
       type: 'user',
       id: params.nick,
@@ -36,7 +35,6 @@ console.log(params)
         err: err
       })
     })
-    .done()
 }
 
 if (require.main === module) {

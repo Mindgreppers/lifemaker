@@ -6,6 +6,7 @@ var Reflux =  require('reflux')
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 var Icon = require('react-native-vector-icons/Ionicons');
 var params = require('../../config')
+var Utility = require('../utility')
 
 var {
   Text,
@@ -17,6 +18,7 @@ var {
   Dimensions,
   ToastAndroid,
   ProgressBar,
+  Image
 } = React
 
 var styles = require('../styles/styles.js')
@@ -24,6 +26,8 @@ var SmokeStore = require('../Stores/SmokeStore')
 var UserStore = require('../Stores/UserStore')
 var socket = require('../socket')
 var CreateSmokeSignal = require('./CreateSmokeSignal')
+var SmokeSignalCategory = require('./SmokeSignalCategory')
+var SmokeSignalBox = require('./SmokeSignalBox')
 var screenWidth = Dimensions.get('window').width
 var ScreenHeight = Dimensions.get('window').height
 var ApplicationHeader = require('./ApplicationHeader')
@@ -59,13 +63,13 @@ var SmokeSignalsPage = React.createClass({
   },
 
   _handleSubmit: function(id, e) {
-    this.props.navigator.push({id : 3 , smokeId: id, openCommentBox: false}) 
+    this.props.navigator.push({id : 3 , smokeId: id, openCommentBox: false})
   },
 
   openDrawer: function(){
     this.refs['DRAWER'].openDrawer()
   },
-  
+
   createss: function() {
     this.props.navigator.push({id : 2,})
   },
@@ -77,7 +81,7 @@ var SmokeSignalsPage = React.createClass({
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-      }, 
+      },
       body: JSON.stringify({nick: UserStore.getUserData.nick})
     })
     .then(function(response) {
@@ -99,12 +103,21 @@ var SmokeSignalsPage = React.createClass({
     this.props.navigator.push({id: 1})
   },
 
-  ssAction: function(ss) {
-    socket.emit('u-smokesignal.thanks', {thankerId: UserStore.getUserData().nick, thankeeId: ss.userId, _id: ss.smokeId, action: ss.action, count: 1})
+  ssAction: function(params) {
+    socket.emit('u-smokesignal.thanks', {thankerId: UserStore.getUserData().nick, thankeeId: params.userId, _id: params.smokeId, action: params.action, count: 1})
   },
 
   reply: function(id, e) {
-    this.props.navigator.push({id : 3 , smokeId: id, openCommentBox: true}) 
+    this.props.navigator.push({id : 3 , smokeId: id, openCommentBox: true})
+  },
+
+  handleProfilePage: function(userId) {
+    if(userId === UserStore.getUserData().nick) {
+      this.props.navigator.push({id : 4})
+    }
+    else {
+      this.props.navigator.push({id : 9, userId: userId})
+    }
   },
 
   render: function() {
@@ -120,7 +133,7 @@ var SmokeSignalsPage = React.createClass({
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
           />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>SmokeSignals</Text> 
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>SmokeSignals</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.DrawerSmokeSignals} onPress={this.gotoProfile}>
           <Icon
@@ -129,7 +142,7 @@ var SmokeSignalsPage = React.createClass({
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
           />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text> 
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.DrawerSmokeSignals} onPress={this.logout}>
           <Icon
@@ -138,7 +151,7 @@ var SmokeSignalsPage = React.createClass({
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
           />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Logout</Text> 
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Logout</Text>
         </TouchableOpacity>
       </View>
     )
@@ -163,28 +176,50 @@ var SmokeSignalsPage = React.createClass({
    },
     _renderSmokeSignals: function(smokeSignal) {
 
-        var message = ''
-
+        var message = '';
         if(smokeSignal._source.message.length > 200) {
            message = smokeSignal._source.message.slice(0, 200) + '...'
         }
 
         return (
           <View style={styles.smokeSignal}>
-            <TouchableOpacity onPress={this._handleSubmit.bind(null, smokeSignal._id)}>
-              <Text style={styles.description}>{message || smokeSignal._source.message}</Text>
+            <SmokeSignalBox category={smokeSignal._source.category} onSubmit={this._handleSubmit.bind(null, smokeSignal._id)} message={message || smokeSignal._source.message}/>
+
+            <TouchableOpacity style={styles.author} onPress={this.handleProfilePage.bind(this, smokeSignal._source.userId)}>
+              <Text style={styles.author}>written by {smokeSignal._source.userId}</Text>
             </TouchableOpacity>
-            <View style={styles.commentActionCon}>
-              <TouchableOpacity style={styles.commentActionButton} onPress={this.ssAction.bind(this, {action: 'thanks', userId:smokeSignal._source.userId, smokeId: smokeSignal._id})}> 
-                <Text style={[styles.commentAction,{textAlign: 'left'}]}>{smokeSignal._source.thanks} Thanks</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.commentActionButton} onPress={this.ssAction.bind(this, {action: 'nothanks', userId:smokeSignal._source.userId, smokeId: smokeSignal._id})}>
-                <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.nothanks} NoThanks</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.commentActionButton} onPress={this.reply.bind(null, smokeSignal._id)}>
-              { smokeSignal._source.comments.length === 1 && <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Reply</Text> || <Text style={[styles.commentAction, {textAlign: 'center'}]}>{smokeSignal._source.comments.length} Replies</Text> }
-              </TouchableOpacity>
+
+            <View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+
+              <View style={{flex: 0}}><Text style={styles.buddhaText}>{smokeSignal._source.thanks}</Text></View>
+              <View style={{flex: 1}}>
+                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'thanks', userId: smokeSignal._source.userId, smokeId: smokeSignal._id})}>
+                  <Image
+                    style={styles.buddhaIcon}
+                    source={require('../img/happy_buddha.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={{flex: 0}}><Text style={styles.buddhaText}>{smokeSignal._source.nothanks}</Text></View>
+              <View style={{flex: 1}}>
+                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'nothanks', userId: smokeSignal._source.userId, smokeId: smokeSignal._id})}>
+                  <Image
+                    style={styles.buddhaIcon}
+                    source={require('../img/normal_buddha.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+
             </View>
+
+            <View style={styles.commentStyle}>
+            { smokeSignal._source.comments.length === 1 &&
+              <Text style={styles.comments}>{smokeSignal._source.comments.length} Comment</Text> ||
+              <Text style={styles.comments}>{smokeSignal._source.comments.length} Comments</Text>
+            }
+            </View>
+
           </View>
         )
     },
@@ -203,12 +238,12 @@ var TabsView = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     this.setState({dataSource: nextProps.smokeSignalsData})
   },
-  
+
   getMoreSignals: function() {
 
     SmokeStore.scrollSmokeSignals({from: this.count, size: 2, match_all: {}})
     this.count = this.count + 2
- 
+
   },
   render() {
     var smokeSignals = this.state.dataSource.map(function(id){
@@ -217,7 +252,7 @@ var TabsView = React.createClass({
     return (
       <ListView
         style={{width:screenWidth}}
-        onEndReached={this.getMoreSignals} 
+        onEndReached={this.getMoreSignals}
         dataSource={ds.cloneWithRows(smokeSignals)}
         renderRow={this.props._renderSmokeSignals}
         pageSize={4}

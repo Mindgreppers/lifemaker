@@ -5,8 +5,10 @@ error.log = console.error.bind(console)
 
 var es = require('../es')
 
-module.exports = function (params, socket, io) {
-  es.mget({
+
+module.exports = function(params, socket, io) {
+
+  return es.mget({
     index: 'users',
     type: 'user',
     body: {
@@ -44,7 +46,7 @@ module.exports = function (params, socket, io) {
       thankee.karma -= params.count * 5
     }
 
-    thankee[params.action + 'Received'].count += params.count 
+    thankee[params.action + 'Received'].count += params.count
 
     var thankeesThankers = thankee[params.action + 'Received'].givers
     if (!_.find(thankeesThankers, params.thankerId)) {

@@ -8,9 +8,8 @@ var es = require('../es')
 
 module.exports = function(params, socket, io) {
   debug(params)
-  console.log('kdjgfjkdshgjkhdskgjk', params, params.match_all)
 
-  es.search({
+  return es.search({
       index: 'smokesignals',
       type: 'smokesignal',
       body: {
@@ -23,7 +22,7 @@ module.exports = function(params, socket, io) {
         }
       }
     }).then(function(resp) {
-   
+
       var smokesignals = resp.hits.hits
       smokesignals.forEach(function(smokesignal){
 
@@ -45,7 +44,6 @@ module.exports = function(params, socket, io) {
       error()
 
     })
-    .done()
 }
 
 

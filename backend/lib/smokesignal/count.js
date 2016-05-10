@@ -7,7 +7,7 @@ var es = require('../es')
 
 module.exports = function(params, socket) {
 
-  es.count({
+  return es.count({
       index: params.count
     }).then(function(resp) {
       debug(resp.count)
@@ -22,7 +22,7 @@ module.exports = function(params, socket) {
         code: 404
       })
     })
-    .done()
+
 }
 
 

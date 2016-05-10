@@ -7,8 +7,7 @@ error.log = console.log.bind(console)
 var es = require('../es')
 
 module.exports = function(params, socket) {
-  debug('poakjshdksjd')
-  es.update({
+  return es.update({
       index: 'smokesignals',
       type: 'smokesignal',
       id: params._id,
@@ -38,7 +37,7 @@ module.exports = function(params, socket) {
       throw err
 
     })
-    .done()
+
 }
 
 

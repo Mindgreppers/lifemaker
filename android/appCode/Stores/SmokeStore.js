@@ -8,17 +8,17 @@ var socket = require('../socket')
 var SmokeStore = Reflux.createStore({
 
   data: {smokeSignals: {}, forMe: [], forAll: [], forAllCount: 0, forMeCount: 0,},
-  
+
   init: function() {
 
     socket.emit('r-smokesignal.forall', {match_all: {}})
 
-    socket.emit('r-user.interest-matches', {userId: UserStore.getUserData().nick, size: 20, from: 0}) 
+    socket.emit('r-user.interest-matches', {userId: UserStore.getUserData().nick, size: 20, from: 0})
 
     socket.emit('joinUser', {nick: UserStore.getUserData().nick})
-    
-    socket.on('u-smokesignal.action.done', function(result) {
 
+    socket.on('u-smokesignal.action.done', function(result) {
+      console.log("Abhishek", result);
       this.updatessAction(result.params, result.message)
 
     }.bind(this))
@@ -37,18 +37,18 @@ var SmokeStore = Reflux.createStore({
       }, {})
 
       _.merge(this.data.smokeSignals, scrollSignals)
-       
+
       var signalsIds = data.message.map(function(signal) {
         return signal._id
       })
-    
+
       this.data.forAll = _.union(this.data.forAll, signalsIds)
 
       console.log(this.data.forAll, signalsIds)
 
       console.log(this.data.smokeSignals, scrollSignals)
       this.trigger()
-      
+
     }.bind(this))
 
     socket.on('u-smokesignal.done', function(result) {
@@ -72,7 +72,7 @@ var SmokeStore = Reflux.createStore({
 
       this.trigger()
 
-    }.bind(this)) 
+    }.bind(this))
 
     socket.on('r-smokesignal.forall.done', function(smokesignals) {
 
@@ -89,7 +89,7 @@ var SmokeStore = Reflux.createStore({
 
     }.bind(this))
 
-    socket.on('c-smokesignal.done', function(smokesignal) { 
+    socket.on('c-smokesignal.done', function(smokesignal) {
       this.data.forAllCount += 1
       this.data.smokeSignals[smokesignal.result._id] = smokesignal.result
       this.data.forAll.unshift(smokesignal.result._id)
@@ -101,7 +101,7 @@ var SmokeStore = Reflux.createStore({
 
     socket.on('interestsSmokeSignal', function(smokesignal) {
       this.data.forMeCount += 1
-      this.data.forMe.unshift(smokesignal.result._id) 
+      this.data.forMe.unshift(smokesignal.result._id)
       this.trigger()
     }.bind(this))
 
@@ -133,7 +133,7 @@ var SmokeStore = Reflux.createStore({
   },
 
   updateSmokeSignal: function(smokeSignal) {
-    var ss = _.find(this.data.smokeSignals, {_id: smokeSignal._id}) 
+    var ss = _.find(this.data.smokeSignals, {_id: smokeSignal._id})
     if(!ss) {
       return
     }
@@ -146,7 +146,7 @@ var SmokeStore = Reflux.createStore({
     }
     this.trigger()
   },
-  
+
   updateCommentAction: function(params, message) {
     var ss = _.find(this.data.smokeSignals, {_id: params._id})
     var comment = _.find(ss._source.comments, {commentId: params.commentId})
@@ -156,7 +156,7 @@ var SmokeStore = Reflux.createStore({
     comment[params.action] += 1
     this.trigger({message: message})
   },
-  
+
   updatessAction: function(params, message) {
     var ss = _.find(this.data.smokeSignals, {_id: params._id})
 
@@ -164,14 +164,14 @@ var SmokeStore = Reflux.createStore({
       return
     }
     ss._source[params.action] += 1
-    
+
     this.trigger({message: message})
   },
 
   //get Smoke with id
   getSmokeSignal: function(smokeId) {
     var smokeSignal = this.data.smokeSignals[smokeId]
-    
+
     return smokeSignal
   },
 
@@ -184,9 +184,8 @@ var SmokeStore = Reflux.createStore({
   scrollSmokeSignals: function(params) {
 
     socket.emit('r-smokesignal.scroll', params)
-    
+
   },
 })
 
 module.exports = SmokeStore
-

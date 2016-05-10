@@ -11,13 +11,15 @@ module.exports = function(params, socket, io) {
 
   var commentAction = _.pick(params, ['count', 'commentId', 'action'])//where action is thanks or nothanks and count is number of times action is done
 
-  es.update({
+  return es.update({
       index: 'smokesignals',
       type: 'smokesignal',
       id: params._id,
       body: {
-        script: 'commentAction',
-        params: commentAction
+        script: {
+          file: 'commentAction',
+          params: commentAction
+        }
       }
     })
     .then(function(res) {
@@ -36,7 +38,6 @@ module.exports = function(params, socket, io) {
         params: params
       })
     })
-    .done()
 }
 
 

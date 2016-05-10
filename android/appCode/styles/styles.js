@@ -6,6 +6,32 @@ var {
 } = React
 
 var styles = StyleSheet.create({
+  ssCategoryHeader: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 15,
+    marginBottom: 5,
+  },
+  ssCategoryText: {
+    textAlign: 'center',
+    fontSize: 16
+  },
+  ssTypeContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+  ssType: {
+    flex: 1,
+    height: 120,
+    borderWidth: 1,
+    borderColor: '#f0f0f0',
+    opacity: 0.5,
+  },
+  highlight: {
+    opacity: 1,
+  },
   commentActionCon: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -27,7 +53,7 @@ var styles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   createButton: {
-    marginRight: 40, 
+    marginRight: 40,
   },
   dropdown: {
     height: 20,
@@ -223,8 +249,12 @@ var styles = StyleSheet.create({
     height: 25,
   },
   icon:  {
-    width: 20,
     height: 20,
+    width: 20,
+  },
+  buddhaIcon: {
+    height: 40,
+    width: 25,
   },
   sendSmoke:  {
     backgroundColor: '#26a69a',
@@ -348,7 +378,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     width: 100,
     height: 100,
-  }, 
+  },
   profileImageText: {
     fontSize: 60,
     marginTop: -5,
@@ -505,7 +535,8 @@ var styles = StyleSheet.create({
     color: '#26a69a',
   },
   commentActionButton: {
-    flex: 1
+    flex: 1,
+    marginTop: 20
   },
   thanks: {
     color: '#26a69a',
@@ -521,7 +552,15 @@ var styles = StyleSheet.create({
     marginTop: 5,
   },
   labelText:  {
-    color: '#26a69a'
+    color: '#26a69a',
+  },
+  buddhaText: {
+    color: '#26a69a',
+    marginTop: 15,
+    marginRight: 10,
+  },
+  author: {
+    marginBottom: 5,
   },
   comments:  {
     textAlign: 'left',
@@ -551,9 +590,18 @@ var styles = StyleSheet.create({
   smokeSignal:  {
     backgroundColor: '#ffffff',
     margin: 20,
-    padding: 20,
+    marginBottom: 10,
+    padding: 10,
     borderColor: '#f0f0f0',
     borderWidth: 1,
+  },
+  ssCategory: {
+    color: '#ffffff',
+    borderColor: '#f0f0f0',
+    borderWidth: 1,
+    width: 80,
+    textAlign: 'center',
+    alignSelf: 'flex-end'
   },
   comment:  {
     borderBottomWidth: 1,

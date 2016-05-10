@@ -14,15 +14,18 @@ var es = require('../es')
  * */
 module.exports = function(params, socket, io) {
 
-  es.update({
+  return es.update({
     index: 'smokesignals',
     type: 'smokesignal',
     id: params._id,
     body: {
-      script: 'ssAction',
-      params: {
-        action: params.action,
-        count: params.count
+      script: {
+        file: 'ssAction',
+        lang: 'groovy',
+        params: {
+          action: params.action,
+          count: params.count
+        }
       }
     }
   })
@@ -44,5 +47,4 @@ module.exports = function(params, socket, io) {
       params: params
     })
   })
-  .done()
 }
