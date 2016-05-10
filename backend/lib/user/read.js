@@ -11,7 +11,7 @@ var es = require('../es')
 */
 
 module.exports = function(params, res) {
-  es.get({
+  return es.get({
     index: 'users',
     type: 'user',
     id: params.nick

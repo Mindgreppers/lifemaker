@@ -8,7 +8,7 @@ var es = require('../es')
 
 module.exports = function(params, socket, io) {
 
-  es.search({
+  return es.search({
       index: 'smokesignals',
       type: 'smokesignal',
       body: {

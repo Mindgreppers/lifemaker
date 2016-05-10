@@ -103,8 +103,8 @@ var SmokeSignalsPage = React.createClass({
     this.props.navigator.push({id: 1})
   },
 
-  ssAction: function(ss) {
-    socket.emit('u-smokesignal.thanks', {thankerId: UserStore.getUserData().nick, thankeeId: ss.userId, _id: ss.smokeId, action: ss.action, count: 1})
+  ssAction: function(params) {
+    socket.emit('u-smokesignal.thanks', {thankerId: UserStore.getUserData().nick, thankeeId: params.userId, _id: params.smokeId, action: params.action, count: 1})
   },
 
   reply: function(id, e) {
@@ -193,7 +193,7 @@ var SmokeSignalsPage = React.createClass({
 
               <View style={{flex: 0}}><Text style={styles.buddhaText}>{smokeSignal._source.thanks}</Text></View>
               <View style={{flex: 1}}>
-                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'thanks', userId: smokeSignal._source.userId})}>
+                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'thanks', userId: smokeSignal._source.userId, smokeId: smokeSignal._id})}>
                   <Image
                     style={styles.buddhaIcon}
                     source={require('../img/happy_buddha.png')}
@@ -203,7 +203,7 @@ var SmokeSignalsPage = React.createClass({
 
               <View style={{flex: 0}}><Text style={styles.buddhaText}>{smokeSignal._source.nothanks}</Text></View>
               <View style={{flex: 1}}>
-                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'nothanks'})}>
+                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'nothanks', userId: smokeSignal._source.userId, smokeId: smokeSignal._id})}>
                   <Image
                     style={styles.buddhaIcon}
                     source={require('../img/normal_buddha.png')}

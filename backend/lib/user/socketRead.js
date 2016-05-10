@@ -10,8 +10,8 @@ var es = require('../es')
 */
 
 module.exports = function(params, socket, io) {
- console.log(params) 
-  es.get({
+  debug(params)
+  return es.get({
     index: 'users',
     type: 'user',
     id: params.nick
@@ -25,7 +25,7 @@ module.exports = function(params, socket, io) {
 
     socket.emit('r-user.error', {message: 'error occure in read user from database', error: error})
 
-  }).done()
+  })
 }
 if(require.main === module) {
   module.exports({

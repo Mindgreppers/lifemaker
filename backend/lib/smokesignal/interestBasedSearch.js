@@ -12,7 +12,7 @@ var es = require('../es')
  */
 module.exports = function(params, socket, io) {
 
-  es.get({
+  return es.get({
     index: 'users',
     type: 'user',
     id: params.userId,
@@ -38,7 +38,7 @@ module.exports = function(params, socket, io) {
       type: 'smokesignal',
       body: {
         query: {
-          filtered: { 
+          filtered: {
             query: {
                 bool: {
                   should: interests.map(function(interest) {
@@ -75,7 +75,7 @@ module.exports = function(params, socket, io) {
       })
   })
   .catch()
-  .done()
+
  })
 }
 

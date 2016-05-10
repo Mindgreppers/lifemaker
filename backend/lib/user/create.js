@@ -6,7 +6,7 @@ error.log = console.log.bind(console)
 //var socket = require('socket.io')(require('../../config.js').socket.port);
 
 var es = require('../es')
-
+var Q = require('q')
 /**
  *@param nick
  *@param email
@@ -18,13 +18,13 @@ module.exports = function(params, res) {
     error('email not specified', params)
 
     res.status(400).send('Email not specified')
-    return
 
+    return Q()
   } else if (!isValidEmail(params.email)) {
     error('email not valid', params)
 
     res.status(400).send('Invalid email address')
-    return
+    return Q()
   }
 
   if (!params.nick) {
@@ -32,10 +32,10 @@ module.exports = function(params, res) {
 
     res.status(400).send('Nick not specified')
 
-    return
+    return Q()
   }
 
-  es.search({
+  return es.search({
     index: 'users',
     type: 'user',
     body: {
@@ -52,7 +52,7 @@ module.exports = function(params, res) {
   .catch(function(err) {
     if(err.status === 404) {
         return
-    } 
+    }
     error('Error in finding user with given nick', err, params.nick)
 
     res.status(500).send('Database read error')
@@ -69,7 +69,7 @@ module.exports = function(params, res) {
 
       res.status(400).send('email exists!')
       debug('email exists', params.email. response)
-    
+
     } else { //create user
         var password = hashPassword.hash(params.password)
         var user = {
@@ -104,10 +104,10 @@ module.exports = function(params, res) {
 
           res.status(500).send('DB error in registering')
         })
-        //.done()
+        //
       }
     })
-    //.done()
+    //
 }
 
 function isValidEmail(email) {

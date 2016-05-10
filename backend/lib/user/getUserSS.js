@@ -8,7 +8,7 @@ var es = require('../es')
 
 module.exports = function(params, socket, io) {
 
-  es.search({
+  return es.search({
     index: 'smokesignals',
     type: 'smokesignal',
     body: {
@@ -21,7 +21,7 @@ module.exports = function(params, socket, io) {
             match_phrase: { active: params.active}
           }
         }
-      } 
+      }
     }
   }).then(function(resp) {
 
@@ -42,12 +42,12 @@ module.exports = function(params, socket, io) {
     error()
 
   })
-  .done()
+
 }
 
 
 if (require.main === module) {
   module.exports({
-    nick: 'pankaj' 
+    nick: 'pankaj'
   })
 }

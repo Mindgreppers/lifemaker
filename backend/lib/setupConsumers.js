@@ -12,7 +12,7 @@ var error = debug
 error.log = console.log.bind(console)
 
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(cookieParser({secret: 'asdfasasdkj3d'}))
 
 
@@ -22,7 +22,7 @@ app.get('/checkCookie', function (req, res) {
     var readUser = require('../lib/user/read')
     console.log(req.cookies.user)
     var params = {nick: req.cookies.user}
-    readUser(params, res) 
+    readUser(params, res)
   }
   else {
 
@@ -70,7 +70,7 @@ var consumers = {
   'r-user.interest-matches': 'smokesignal/interestBasedSearch',
   'r-user.search': 'smokesignal/search',
 
-  'u-smokesignal': 'smokesignal/update', 
+  'u-smokesignal': 'smokesignal/update',
   'u-smokesignal.comment': 'smokesignal/comment',
   'u-smokesignal.comment.thanks': ['smokesignal/comment-thanks', 'user/woodAndKarma'],
   'u-smokesignal.thanks': ['smokesignal/thanks', 'user/woodAndKarma']
@@ -88,6 +88,11 @@ io.on('connection', function(socket) {
         var consume = require(evc)
         socket.on(ev, function(data) {
           consume(data, socket, io)
+          .catch(error)
+          //.done()
+          //.then()
+          //.catch()
+
         })
       })
     })

@@ -8,9 +8,8 @@ var es = require('../es')
 
 module.exports = function(params, socket, io) {
   debug(params)
-  console.log('kdjgfjkdshgjkhdskgjk', params, params.match_all)
 
-  es.search({
+  return es.search({
       index: 'smokesignals',
       type: 'smokesignal',
       body: {

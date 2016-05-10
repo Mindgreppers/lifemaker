@@ -1,5 +1,6 @@
 var _ = require('lodash')
-var debug = require('debug')('register')
+var Q = require('q')
+var debug = require('debug')('ss/comment')
 // var socket = require('socket.io')(require('../../config.js').socket.port);
 var error = debug
 error.log = console.log.bind(console)
@@ -8,20 +9,22 @@ var es = require('../es')
 
 
 module.exports = function(params, socket, io) {
-  console.log(params)
+  debug(params)
 
   var pickComment = _.pick(params, ['userId',
     'commentId', 'text', 'thanks', 'nothanks'
   ])
 
-  es.update({
+  return es.update({
       index: 'smokesignals',
       type: 'smokesignal',
       id: params._id,
       body: {
-        script: "addComment",
-        params: {
-          comment: pickComment
+        script: {
+          file: "addComment",
+          params: {
+            comment: pickComment
+          }
         }
       }
     })
@@ -33,6 +36,7 @@ module.exports = function(params, socket, io) {
         code: 200
       })
       debug(res)
+      return Q()
     })
     .catch(function(err) {
       error('Error in indexing user', err)
@@ -46,7 +50,6 @@ module.exports = function(params, socket, io) {
       throw err
 
     })
-    .done()
 }
 
 

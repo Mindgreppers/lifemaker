@@ -6,7 +6,7 @@ error.log = console.log.bind(console)
 var es = require('../es')
 
 module.exports = function(params, socket, io) {
-  es.index({
+  return es.index({
       index: 'smokesignals',
       type: 'smokesignal',
       id: params._id,
@@ -48,8 +48,8 @@ module.exports = function(params, socket, io) {
 
       throw err
 
-    })//TODO add .done() Currently it is throwing error
-  //  .done()
+    })//TODO add  Currently it is throwing error
+  //
 }
 
 function emitToInterestedParties(params) {
