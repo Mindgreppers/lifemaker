@@ -87,7 +87,7 @@ io.on('connection', function(socket) {
         evc = './' + evc
         var consume = require(evc)
         socket.on(ev, function(data) {
-          consume(data, socket, io)
+          consume(data, socket, io, ev)
         })
       })
     })

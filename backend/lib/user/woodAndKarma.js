@@ -5,8 +5,7 @@ error.log = console.error.bind(console)
 
 var es = require('../es')
 
-module.exports = function(params, socket, io) {
-
+module.exports = function (params, socket, io) {
   es.mget({
     index: 'users',
     type: 'user',
@@ -93,4 +92,30 @@ module.exports = function(params, socket, io) {
       })
     })
   })
+}
+
+if (require.main === module) {
+	var io = require('socket.io-client')
+
+	var socket = io('http://localhost:3000', {jsonp: false, reconnection: true})
+	socket.on('connect', function(){
+		socket.emit('c-smokesignal.done', {
+			_id: '1',
+			userId: 'awesomepankaj',
+			title: 'Wild vs Man',
+			type: 'Need',
+			category: 'Dharma',
+			message: 'Demo MSG',
+			description: 'kuch bhi',
+			img: 'http://res.cloudnary.com/image.png',
+			tags: ['wild', 'man', 'hb'],
+			createdAt: '04.15',
+			burningTill: '04.15',
+			active: true,
+			thanks: 0,
+			nothanks: 0,
+			anonymous: false,
+			comments: []
+		})
+	})
 }
