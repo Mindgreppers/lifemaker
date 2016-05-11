@@ -87,7 +87,7 @@ module.exports = function(params, res) {
             receivers: []
           }
         }
-        es.index({
+        return es.index({
           index: 'users',
           type: 'user',
           id: params.nick,

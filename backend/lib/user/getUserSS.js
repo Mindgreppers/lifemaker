@@ -25,7 +25,6 @@ module.exports = function(params, socket, io) {
     }
   }).then(function(resp) {
 
-    console.log(resp.hits.total)
     socket.emit('r-userss.done', {
       message: resp.hits.hits,
       counts: resp.hits.total,

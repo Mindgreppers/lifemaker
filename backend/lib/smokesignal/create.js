@@ -9,41 +9,41 @@ const WOODS_FOR_SS = 5
 module.exports = function (params, socket, io) {
 
 	//fetching user information
-    es.get({
+    return es.get({
       index: 'users',
       type: 'user',
       id: params.userId
     })
 		.catch(function(err) {
-			
+
 			error('woodAndKarma/onSmokeSignalCreation', err, params)
 			if (err.status == 404) {
-				
+
 				error('woodAndKarma/onSmokeSignalCreation: user not found', params.userId)
 			}
 			throw err
 		})
 		.then(function(user) {
 			if (user._source.woods < WOODS_FOR_SS) {
-				
+
 				socket.emit('c-smokesignal.error', 'Insufficient wood ' + user._source.woods)
-			
+
 			} else {
-				
+
 				return createSmokeSignal(params, socket, io)
 				.then(function(res) {
-					return updateWoods(params, user, io)    
+					return updateWoods(params, user, io)
 				})
 				.then(function() {
-					
+
 					socket.emit('c-smokesignal.done', RESULT)
 				})
 			}
 		})
-			
+
 }
-	
-	
+
+
 	function createSmokeSignal (params, socket, io) {
   return es.index({
       index: 'smokesignals',
@@ -130,7 +130,7 @@ function emitToInterestedParties(params) {
 }
 
 function updateWoods(params, user, io) {
-	
+
 	var smokeCreator = user._source
 
 	//updating smokeCreator's wood
