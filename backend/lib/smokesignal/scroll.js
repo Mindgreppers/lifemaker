@@ -21,7 +21,7 @@ module.exports = function(params, socket, io) {
           }
         },
         sort: {
-          creaatedAt: 'desc'
+          createdAt: 'desc'
         }
       }
     }).then(function(resp) {
