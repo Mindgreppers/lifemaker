@@ -241,8 +241,8 @@ var TabsView = React.createClass({
 
   getMoreSignals: function() {
 
-    SmokeStore.scrollSmokeSignals({from: this.count, size: 2, match_all: {}})
-    this.count = this.count + 2
+    SmokeStore.scrollSmokeSignals({from: this.count, size: 10, match_all: {}})
+    this.count = this.count + 10
 
   },
   render() {

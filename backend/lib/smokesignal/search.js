@@ -35,6 +35,9 @@ module.exports = function(params, socket) {
             }
           }]
         }
+      },
+      sort: {
+        createdAt: 'desc'
       }
     }
   }).then(function(resp) {

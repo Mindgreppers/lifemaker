@@ -12,12 +12,16 @@ module.exports = function(params, socket, io) {
       index: 'smokesignals',
       type: 'smokesignal',
       body: {
-        from : params.from, size : params.size,
+        from : params.from,
+        size : params.size,
         query: {
           filtered: {
             query:    { match_all: params.match_all},
             filter:   { term: { active: true }}
           }
+        },
+        sort: {
+          creaatedAt: 'desc'
         }
       }
     }).then(function(resp) {
