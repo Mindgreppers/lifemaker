@@ -19,6 +19,6 @@
     "react-native-system-notification": "0.0.7",
     "react-native-vector-icons": "^1.0.0",
     "reflux": "^0.3.0",
-    "socket.io-client": "^1.3.7"
+    "socket.io-client": "^1.4.5"
   }
 }
