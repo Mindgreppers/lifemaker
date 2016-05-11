@@ -10,21 +10,22 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 15,
+    marginTop: 25,
     marginBottom: 5,
   },
   ssCategoryText: {
+    marginTop: 25,
     textAlign: 'center',
     fontSize: 16
   },
   ssTypeContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   },
   ssType: {
-    flex: 1,
-    height: 120,
+    width: 180,
+    height: 250,
     borderWidth: 1,
     borderColor: '#f0f0f0',
     opacity: 0.5,
