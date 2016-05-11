@@ -236,21 +236,36 @@ var ThreadPage = React.createClass({
      var that = this
     return (
       <View style={styles.comment} key={i}>
-        <Text style={styles.description}>{comment.text}</Text>
+        <View style={styles.parentContainer}>
+          <TouchableOpacity onPress={this.handleProfilePage.bind(this, comment.userId)}>
+            <View style={styles.imageContainer}>
+              <Text style={styles.profileImageText}>{comment.userId[0].toUpperCase()}</Text>
+            </View>
+          </TouchableOpacity>
+          <View style={styles.commentContainer}>
+            <Text style={styles.description}>{comment.text}</Text>
+          </View>
+        </View>
+
         <View style={{flexDirection: 'row'}}>
          <TouchableOpacity onPress={that.addCommentAction.bind(that, {userId: comment.userId, commentId: comment.commentId, action: "thanks"})}>
             <View>
-              <Text style={styles.thanks}>{comment.thanks} Thanks</Text>
+              <Text style={styles.thanks}>{comment.thanks}
+                <Image
+                  source={require('../img/happy_buddha.png')}
+                />
+              </Text>
+
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={that.addCommentAction.bind(that, {commentId: comment.commentId, action: "nothanks"})}>
             <View>
-              <Text style={styles.nothanks}>{comment.nothanks} NoThanks</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View>
-              <Text style={styles.nothanks}>{comment.userId}</Text>
+              <Text style={styles.nothanks}>{comment.nothanks}
+                <Image
+                  source={require('../img/normal_buddha.png')}
+                />
+              </Text>
+
             </View>
           </TouchableOpacity>
         </View>

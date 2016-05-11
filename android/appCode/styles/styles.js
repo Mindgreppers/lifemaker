@@ -257,6 +257,10 @@ var styles = StyleSheet.create({
     height: 40,
     width: 25,
   },
+  buddhaIconSmall: {
+    height: 20,
+    width: 12,
+  },
   sendSmoke:  {
     backgroundColor: '#26a69a',
     borderRadius: 28,
@@ -356,7 +360,6 @@ var styles = StyleSheet.create({
   profileImageContainer:  {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
   },
   edit:  {
     width: 25,
@@ -372,18 +375,31 @@ var styles = StyleSheet.create({
     color: '#26a69a',
     marginBottom: 20,
   },
+  parentContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   imageContainer: {
     backgroundColor: 'gray',
-    borderRadius: 50,
+    borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 100,
-    height: 100,
+    width: 30,
+    height: 30,
   },
   profileImageText: {
-    fontSize: 60,
-    marginTop: -5,
+    fontSize: 15,
     color: '#ffffff'
+  },
+  commentContainer: {
+    flex: 1,
+    borderRadius: 10,
+    borderStyle: 'dotted',
+    marginLeft: 10,
+    borderWidth: 0.5,
+    borderColor: '#000'
   },
   editImage: {
     width: 100,
@@ -490,10 +506,9 @@ var styles = StyleSheet.create({
   },
   description:  {
     fontSize: 15,
-    marginTop: 10,
+    marginLeft: 5,
     color: '#000000',
     textAlign: 'left',
-    marginBottom: 20,
   },
   beer:  {
     height: 100,
@@ -541,12 +556,14 @@ var styles = StyleSheet.create({
   },
   thanks: {
     color: '#26a69a',
-    textAlign: 'left'
+    textAlign: 'left',
+    marginRight: 10,
   },
   nothanks: {
     color: '#26a69a',
     textAlign: 'right',
     marginLeft: 40,
+    marginRight: 10,
   },
   timeInfoText:  {
     textAlign: 'center',
