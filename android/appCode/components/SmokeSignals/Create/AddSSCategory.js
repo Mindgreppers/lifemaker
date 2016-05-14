@@ -16,18 +16,18 @@ var {
   TouchableHighlight
 } = React
 
-var Utility = require('../utility')
+var Utility = require('../../../utility')
 
-var smokeSignalCategories = require('../config').smokeSignalCategories
+var smokeSignalCategories = require('../../../config').smokeSignalCategories
 
-var SmokeStore = require('../Stores/SmokeStore')
-var socket = require('../socket')
-var UserStore = require('../Stores/UserStore')
-var SideBar = require('./SideBar')
-var styles = require('../styles/styles')
+var SmokeStore = require('../../../Stores/SmokeStore')
+var socket = require('../../../socket')
+var UserStore = require('../../../Stores/UserStore')
+var SideBar = require('../../SideBar')
+var styles = require('../../../styles/styles')
 var ScreenHeight = Dimensions.get('window').height
 
-var Durations = React.createClass({
+var AddSSCategory = React.createClass({
 
   getInitialState: function() {
     return {
@@ -70,7 +70,7 @@ var Durations = React.createClass({
     SmokeStore.addSmokeSignal(smokeSignal)
   },
 
-  closeDurationsPage: function() {
+  closeAddSSCategoryPage: function() {
 
     this.props.navigator.pop()
 
@@ -85,7 +85,7 @@ var Durations = React.createClass({
       >
         <ToolbarAndroid style={{backgroundColor: '#ffffff', height: 56}}>
           <View style={styles.headerBar}>
-            <TouchableOpacity style={styles.closeButton} onPress={this.closeDurationsPage}>
+            <TouchableOpacity style={styles.closeButton} onPress={this.closeAddSSCategoryPage}>
               <Icon
                 name='arrow-left-c'
                 size={20}
@@ -121,4 +121,4 @@ var Durations = React.createClass({
   }
 })
 
-module.exports = Durations
+module.exports = AddSSCategory

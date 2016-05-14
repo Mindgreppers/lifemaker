@@ -23,7 +23,7 @@ var {
 
 var styles = require('../styles/styles.js')
 var socket = require('../socket')
-var CreateSmokeSignal = require('./CreateSmokeSignal')
+var CreateSmokeSignal = require('./SmokeSignals/Create/Button')
 var ScreenHeight = Dimensions.get('window').height
 var SideBar = require('./SideBar')
 var ApplicationHeader =  require('./ApplicationHeader')

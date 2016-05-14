@@ -10,7 +10,7 @@ var {
   Text,
 } = React
 
-var CreateSmokeSignal = React.createClass({
+var Button = React.createClass({
   getInitialState: function() {
     return {}
   },
@@ -28,19 +28,19 @@ var CreateSmokeSignal = React.createClass({
           bottom: 18,
           alignItems: 'center',
           justifyContent: 'center',
-          right: 18}} onPress={this.createss}> 
+          right: 18}} onPress={this.createss}>
           <Icon
             name='plus'
             size={18}
             color="#ffffff"
             style={{width: 18,height: 18, textAlign: 'center'}}
-         /> 
+         />
         </TouchableOpacity>
     )
   }
 })
 
-module.exports = CreateSmokeSignal
+module.exports = Button
 
 var styles = StyleSheet.create({
   actionButtonIcon: {
@@ -49,36 +49,3 @@ var styles = StyleSheet.create({
     color: 'white',
   },
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

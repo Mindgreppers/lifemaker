@@ -57,8 +57,8 @@ var LifeMaker = React.createClass({
       return <SmokeSignalsPage navigator={navigator}/>
     }
     else if (route.id === 2) {
-      var NewThread = require('./appCode/components/CreateSS')
-      return <NewThread navigator={navigator}/>
+      var AddSSType = require('./appCode/components/SmokeSignals/Create/AddSSType')
+      return <AddSSType navigator={navigator}/>
     }
     else if (route.id === 3) {
       var SmokeSignalPage = require('./appCode/components/SmokeSignal')
@@ -97,12 +97,12 @@ var LifeMaker = React.createClass({
       return <LiveSS userId={route.userId} navigator={navigator}/>
     }
     else if(route.id === 12) {
-      var Durations = require('./appCode/components/DurationSS')
-      return <Durations message={route.message} ssType={route.ssType} navigator={navigator}/>
+      var AddSSCategory = require('./appCode/components/SmokeSignals/Create/AddSSCategory')
+      return <AddSSCategory message={route.message} ssType={route.ssType} navigator={navigator}/>
     }
     else if(route.id === 13) {
-      var Durations = require('./appCode/components/NewThread')
-      return <Durations ssType={route.ssType} navigator={navigator}/>
+      var AddSSMessage = require('./appCode/components/SmokeSignals/Create/AddSSMessage')
+      return <AddSSMessage ssType={route.ssType} navigator={navigator}/>
     }
   },
 

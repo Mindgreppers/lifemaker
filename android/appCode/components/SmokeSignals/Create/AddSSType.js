@@ -26,14 +26,14 @@ var {
 } = React
 
 
-var socket = require('../socket')
-var styles = require('../styles/styles.js')
-var SideBar = require('./SideBar')
-var ApplicationHeader = require('./ApplicationHeader')
+var socket = require('../../../socket')
+var styles = require('../../../styles/styles.js')
+var SideBar = require('../../SideBar')
+var ApplicationHeader = require('../../ApplicationHeader')
 var ScreenHeight = Dimensions.get('window').height
-var smokeSignalTypes = require('../config').smokeSignalTypes
+var smokeSignalTypes = require('../../../config').smokeSignalTypes
 
-var CreateSS = React.createClass({
+var AddSSType = React.createClass({
   getInitialState: function(){
     return {
       ssType: 0
@@ -107,4 +107,4 @@ var CreateSS = React.createClass({
 })
 
 
-module.exports = CreateSS
+module.exports = AddSSType

@@ -24,7 +24,7 @@ var ApplicationHeader = require('./ApplicationHeader')
 var ScreenHeight = Dimensions.get('window').height
 var SideBar = require('./SideBar')
 var socket = require('../socket') 
-var CreateSmokeSignal = require('./CreateSmokeSignal')
+var CreateSmokeSignal = require('./SmokeSignals/Create/Button')
 var UserStore = require('../Stores/UserStore')
 
 var ProfileEditPage = React.createClass({

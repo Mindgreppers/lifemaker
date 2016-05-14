@@ -25,13 +25,13 @@ var {
 } = React
 
 
-var socket = require('../socket')
-var styles = require('../styles/styles.js')
-var SideBar = require('./SideBar')
-var ApplicationHeader = require('./ApplicationHeader')
+var socket = require('../../../socket')
+var styles = require('../../../styles/styles.js')
+var SideBar = require('../../SideBar')
+var ApplicationHeader = require('../../ApplicationHeader')
 var ScreenHeight = Dimensions.get('window').height
 
-var ThreadPage = React.createClass({
+var AddSSMessage = React.createClass({
   getInitialState: function(){
     return {
       message:'',
@@ -98,4 +98,4 @@ var ThreadPage = React.createClass({
 })
 
 
-module.exports = ThreadPage
+module.exports = AddSSMessage

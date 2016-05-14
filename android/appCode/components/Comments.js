@@ -17,7 +17,7 @@ var {
 
 var styles = require('../styles/styles.js')
 var ApplicationHeader = require('./ApplicationHeader')
-var CreateSmokeSignal = require('./CreateSmokeSignal')
+var CreateSmokeSignal = require('./SmokeSignals/Create/Button')
 
 var ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 var data = [

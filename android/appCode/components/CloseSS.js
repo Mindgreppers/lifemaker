@@ -19,7 +19,7 @@ var {
 
 var socket = require('../socket')
 var styles = require('../styles/styles.js')
-var CreateSmokeSignal = require('./CreateSmokeSignal')
+var CreateSmokeSignal = require('./SmokeSignals/Create/Button')
 var SideBar = require('./SideBar')
 var ApplicationHeader =  require('./ApplicationHeader')
 var ScreenHeight = Dimensions.get('window').height

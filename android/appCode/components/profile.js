@@ -21,7 +21,7 @@ var {
 
 var styles = require('../styles/styles.js')
 var socket = require('../socket')
-var CreateSmokeSignal = require('./CreateSmokeSignal')
+var CreateSmokeSignal = require('./SmokeSignals/Create/Button')
 var SideBar = require('./SideBar')
 var ScreenHeight = Dimensions.get('window').height
 var ApplicationHeader =  require('./ApplicationHeader')
@@ -44,7 +44,7 @@ var ProfilePage = React.createClass({
     }
 
   },
- 
+
   componentDidMount: function() {
 
     socket.on(UserStore.getUserData(), function(results) {
@@ -74,7 +74,7 @@ var ProfilePage = React.createClass({
 
   showSmokeSignals: function(){
 
-    this.props.navigator.push({id: 11, userId: this.state.user.nick})     
+    this.props.navigator.push({id: 11, userId: this.state.user.nick})
 
   },
 
@@ -103,7 +103,7 @@ var ProfilePage = React.createClass({
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
           />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>SmokeSignals</Text> 
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>SmokeSignals</Text>
         </View>
         <View style={styles.DrawerSmokeSignals}>
           <Icon
@@ -112,11 +112,11 @@ var ProfilePage = React.createClass({
             color='#000000'
             style={{width:25,height:25,marginLeft:5}}
           />
-          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text> 
+          <Text style={{color:'#000000', fontSize:14,marginLeft:10,}}>Profile</Text>
         </View>
       </View>
     )
- 
+
     return (
       <DrawerLayoutAndroid
         drawerWidth={300}
@@ -136,7 +136,7 @@ var ProfilePage = React.createClass({
               size={25}
               color='#000000'
               style={styles.edit}
-            /> 
+            />
           </TouchableOpacity>
           <View style={styles.profileImageContainer}>
             <View style={styles.imageContainer}>
@@ -196,7 +196,7 @@ var ProfilePage = React.createClass({
       </DrawerLayoutAndroid>
     )
   },
-  
+
 })
 
 module.exports = ProfilePage
