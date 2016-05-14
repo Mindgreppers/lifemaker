@@ -380,6 +380,8 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
+    marginTop: 5,
+    marginBottom: 5,
   },
   parentLabelContainer: {
     flex: 1,
@@ -580,7 +582,6 @@ var styles = StyleSheet.create({
   },
   buddhaText: {
     color: '#26a69a',
-    marginTop: 15,
     marginRight: 10,
   },
   author: {

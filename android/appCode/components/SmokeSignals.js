@@ -7,6 +7,7 @@ var ScrollableTabView = require('react-native-scrollable-tab-view');
 var Icon = require('react-native-vector-icons/Ionicons');
 var params = require('../../config')
 var Utility = require('../utility')
+var BuddhaSection = require('./BuddhaSection')
 
 var {
   Text,
@@ -188,29 +189,7 @@ var SmokeSignalsPage = React.createClass({
               <Text style={styles.author}>written by {smokeSignal._source.userId}</Text>
             </TouchableOpacity>
 
-            <View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-
-              <View style={{flex: 0}}><Text style={styles.buddhaText}>{smokeSignal._source.thanks}</Text></View>
-              <View style={{flex: 1}}>
-                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'thanks', userId: smokeSignal._source.userId, smokeId: smokeSignal._id})}>
-                  <Image
-                    style={styles.buddhaIcon}
-                    source={require('../img/happy_buddha.png')}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View style={{flex: 0}}><Text style={styles.buddhaText}>{smokeSignal._source.nothanks}</Text></View>
-              <View style={{flex: 1}}>
-                <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'nothanks', userId: smokeSignal._source.userId, smokeId: smokeSignal._id})}>
-                  <Image
-                    style={styles.buddhaIcon}
-                    source={require('../img/normal_buddha.png')}
-                  />
-                </TouchableOpacity>
-              </View>
-
-            </View>
+            <BuddhaSection item={smokeSignal} itemType='smokesignal' onPress={this.ssAction}  />
 
             <View style={styles.commentStyle}>
             { smokeSignal._source.comments.length === 1 &&

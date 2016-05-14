@@ -27,6 +27,7 @@ var CreateSmokeSignal = require('./SmokeSignals/Create/Button')
 var SideBar = require('./SideBar')
 var UserStore = require('../Stores/UserStore')
 var SmokeSignalBox = require('./SmokeSignalBox')
+var BuddhaSection = require('./BuddhaSection')
 
 var ScreenHeight = Dimensions.get('window').height
 var ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
@@ -178,31 +179,7 @@ var ThreadPage = React.createClass({
               <TouchableOpacity style={styles.author} onPress={this.handleProfilePage.bind(this, this.state.smokeSignal._source.userId)}>
                 <Text style={styles.author}>written by {this.state.smokeSignal._source.userId}</Text>
               </TouchableOpacity>
-
-              <View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-
-                <View style={{flex: 0}}><Text style={styles.buddhaText}>{this.state.smokeSignal._source.thanks}</Text></View>
-                <View style={{flex: 1}}>
-                  <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'thanks', userId: this.state.smokeSignal._source.userId})}>
-                    <Image
-                      style={styles.buddhaIcon}
-                      source={require('../img/happy_buddha.png')}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{flex: 0}}><Text style={styles.buddhaText}>{this.state.smokeSignal._source.nothanks}</Text></View>
-                <View style={{flex: 1}}>
-                  <TouchableOpacity style={styles.iconContainer} onPress={this.ssAction.bind(this, {action: 'nothanks'})}>
-                    <Image
-                      style={styles.buddhaIcon}
-                      source={require('../img/normal_buddha.png')}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-              </View>
-
+              <BuddhaSection item={this.state.smokeSignal} itemType='smokesignal' onPress={this.ssAction}  />
             <View style={styles.commentStyle}>
             { this.state.smokeSignal._source.comments.length === 1 &&
               <Text style={styles.comments}>{this.state.smokeSignal._source.comments.length} Comment</Text> ||
@@ -247,28 +224,8 @@ var ThreadPage = React.createClass({
           </View>
         </View>
 
-        <View style={{flexDirection: 'row'}}>
-         <TouchableOpacity onPress={that.addCommentAction.bind(that, {userId: comment.userId, commentId: comment.commentId, action: "thanks"})}>
-            <View>
-              <Text style={styles.thanks}>{comment.thanks}
-                <Image
-                  source={require('../img/happy_buddha.png')}
-                />
-              </Text>
+        <BuddhaSection item={comment} itemType='comment' onPress={that.addCommentAction}  />
 
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={that.addCommentAction.bind(that, {commentId: comment.commentId, action: "nothanks"})}>
-            <View>
-              <Text style={styles.nothanks}>{comment.nothanks}
-                <Image
-                  source={require('../img/normal_buddha.png')}
-                />
-              </Text>
-
-            </View>
-          </TouchableOpacity>
-        </View>
       </View>
     )
   },
