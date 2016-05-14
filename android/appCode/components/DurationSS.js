@@ -57,6 +57,7 @@ var Durations = React.createClass({
       userId: UserStore.getUserData().nick,
       _id: +moment() + '_'+ Math.random(),
       message: this.props.message,
+      ssType: this.props.ssType,
       createdAt: +moment(),
       category: this.getCategory(this.state.selectedValue),
       burningTill: +(moment().add(this.state.selectedValue, 'days')),

@@ -26,7 +26,6 @@ var SmokeStore = require('../Stores/SmokeStore')
 var UserStore = require('../Stores/UserStore')
 var socket = require('../socket')
 var CreateSmokeSignal = require('./CreateSmokeSignal')
-var SmokeSignalCategory = require('./SmokeSignalCategory')
 var SmokeSignalBox = require('./SmokeSignalBox')
 var screenWidth = Dimensions.get('window').width
 var ScreenHeight = Dimensions.get('window').height
@@ -183,7 +182,7 @@ var SmokeSignalsPage = React.createClass({
 
         return (
           <View style={styles.smokeSignal}>
-            <SmokeSignalBox category={smokeSignal._source.category} onSubmit={this._handleSubmit.bind(null, smokeSignal._id)} message={message || smokeSignal._source.message}/>
+            <SmokeSignalBox ssType= {smokeSignal._source.ssType} category={smokeSignal._source.category} onSubmit={this._handleSubmit.bind(null, smokeSignal._id)} message={message || smokeSignal._source.message}/>
 
             <TouchableOpacity style={styles.author} onPress={this.handleProfilePage.bind(this, smokeSignal._source.userId)}>
               <Text style={styles.author}>written by {smokeSignal._source.userId}</Text>

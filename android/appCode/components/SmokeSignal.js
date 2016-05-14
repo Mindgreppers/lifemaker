@@ -169,7 +169,7 @@ var ThreadPage = React.createClass({
             style = {styles.scrollView}
           >
           <View style={styles.container}>
-              <SmokeSignalBox category={this.state.smokeSignal._source.category} message={this.state.smokeSignal._source.message}/>
+              <SmokeSignalBox ssType= {this.state.smokeSignal._source.ssType} category={this.state.smokeSignal._source.category} message={this.state.smokeSignal._source.message}/>
 
               { this.state.more && <TouchableOpacity style={styles.showMoreButton} onPress={this.showMore}>
                 <Text style={styles.showMore}>show more.</Text>

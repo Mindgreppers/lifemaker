@@ -7,6 +7,7 @@ var {
 
 var styles = require('../styles/styles.js')
 var SmokeSignalCategory = require('./SmokeSignalCategory')
+var SmokeSignalType = require('./SmokeSignalType')
 var Utility = require('../utility')
 
 var SmokeSignalBox = React.createClass({
@@ -15,7 +16,10 @@ var SmokeSignalBox = React.createClass({
 
     return (
       <View>
-        <SmokeSignalCategory category={ Utility.capitalise(this.props.category) || 'Dharma' } />
+        <View style={styles.parentLabelContainer}>
+          <SmokeSignalType value={ Utility.capitalise(this.props.ssType) || 'Offer' } />
+          <SmokeSignalCategory category={ Utility.capitalise(this.props.category) || 'Dharma' } />
+        </View>
         <TouchableOpacity onPress={this.props.onSubmit}>
           <Text style={styles.description}>{this.props.message}</Text>
         </TouchableOpacity>

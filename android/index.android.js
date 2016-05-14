@@ -26,7 +26,7 @@ var _navigator;
 var LifeMaker = React.createClass({
 
   componentDidMount: function() {
-    var that = this  
+    var that = this
     fetch(params.ipAddress + '/checkCookie', {credentials: 'same-origin'})
     .then(function(res) {
       if(res.status === 200) {
@@ -57,7 +57,7 @@ var LifeMaker = React.createClass({
       return <SmokeSignalsPage navigator={navigator}/>
     }
     else if (route.id === 2) {
-      var NewThread = require('./appCode/components/NewThread')
+      var NewThread = require('./appCode/components/CreateSS')
       return <NewThread navigator={navigator}/>
     }
     else if (route.id === 3) {
@@ -98,10 +98,14 @@ var LifeMaker = React.createClass({
     }
     else if(route.id === 12) {
       var Durations = require('./appCode/components/DurationSS')
-      return <Durations message={route.message} navigator={navigator}/>
+      return <Durations message={route.message} ssType={route.ssType} navigator={navigator}/>
     }
-  }, 
-    
+    else if(route.id === 13) {
+      var Durations = require('./appCode/components/NewThread')
+      return <Durations ssType={route.ssType} navigator={navigator}/>
+    }
+  },
+
   render: function() {
     if(this.state.user === 0) {
       return (

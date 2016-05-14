@@ -22,6 +22,7 @@ var {
   PixelRatio,
   ToastAndroid,
   ToolbarAndroid,
+  TouchableHighlight
 } = React
 
 
@@ -30,31 +31,35 @@ var styles = require('../styles/styles.js')
 var SideBar = require('./SideBar')
 var ApplicationHeader = require('./ApplicationHeader')
 var ScreenHeight = Dimensions.get('window').height
+var smokeSignalTypes = require('../config').smokeSignalTypes
 
-var ThreadPage = React.createClass({
+var CreateSS = React.createClass({
   getInitialState: function(){
     return {
-      message:'',
+      ssType: 0
     }
   },
 
-  _handleSubmit: function() {
-    this.refs.message.blur()
-    this.props.navigator.push({id: 12, message: this.state.message, ssType: this.props.ssType})
+  _handleNext: function() {
+    this.props.navigator.push({ id: 13, ssType: this.getSSType(this.state.ssType) })
   },
 
-  onSelect: function(index){
-    this.setState({
-      optionSelected: index + 1
-    })
-  },
   openDrawer: function(){
     this.refs['DRAWER'].openDrawer()
   },
 
+  getSSType: function(index) {
+    return smokeSignalTypes[index].code;
+  },
 
   closeSSPage: function() {
     this.props.navigator.pop()
+  },
+
+  _onPressButton: function(val) {
+    this.setState({
+      ssType: val
+    })
   },
 
   render: function() {
@@ -75,27 +80,31 @@ var ThreadPage = React.createClass({
                 style={{width:20,height:20,marginLeft:5}}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.createButton}  onPress={this._handleSubmit}>
+            <TouchableOpacity style={styles.createButton}  onPress={this._handleNext}>
               <Text style={{color: '#26a69a'}}>NEXT</Text>
             </TouchableOpacity>
           </View>
         </ToolbarAndroid>
-          <View style={[styles.messageContainer, {height: ScreenHeight}]}>
-            <TextInput
-              style={{height: 120, borderWidth: 0, borderColor: '#ffffff',marginRight: 10, marginLeft: 10}}
-              ref="message"
-              placeholder="message"
-              autoCapitalize="sentences"
-              onChangeText={(message) => this.setState({message})}
-              multiline={true}
-              autoFocus={true}
-              value={this.state.message}
-            />
-          </View>
+        <View style={styles.ssTypeContainer}>
+          { smokeSignalTypes.map( (ssCategory, index) => {
+            return (
+              <TouchableHighlight key={ssCategory.code} onPress={ () => this._onPressButton(index) }>
+                <View style={[styles.ssType, {backgroundColor: ssCategory.color}, index === this.state.ssType && styles.highlight] }>
+                  <Text style={styles.ssCategoryHeader}>
+                    {ssCategory.title}
+                  </Text>
+                  <View>
+                    <Text style={styles.ssCategoryText}>{ssCategory.description}</Text>
+                  </View>
+                </View>
+              </TouchableHighlight>
+            )
+          })}
+        </View>
       </DrawerLayoutAndroid>
     )
   },
 })
 
 
-module.exports = ThreadPage
+module.exports = CreateSS

@@ -24,6 +24,28 @@ var config = {
       description: 'Seeking means to do what you need to do.',
       color: 'DAC815'
     },
+  ],
+  smokeSignalTypes: [
+    {
+      code: 'offer',
+      title: 'Offer',
+      color: 'D38DE7'
+    },
+    {
+      code: 'ask',
+      title: 'Ask',
+      color: 'EF7962'
+    },
+    {
+      code: 'share',
+      title: 'Share',
+      color: '9EC6ED'
+    },
+    {
+      code: 'organize',
+      title: 'Organize',
+      color: 'DAC815'
+    },
   ]
 }
 

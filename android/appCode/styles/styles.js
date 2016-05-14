@@ -381,6 +381,12 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  parentLabelContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   imageContainer: {
     backgroundColor: 'gray',
     borderRadius: 15,
@@ -615,11 +621,11 @@ var styles = StyleSheet.create({
   },
   ssCategory: {
     color: '#ffffff',
+    marginLeft: 10,
     borderColor: '#f0f0f0',
     borderWidth: 1,
     width: 80,
     textAlign: 'center',
-    alignSelf: 'flex-end'
   },
   comment:  {
     borderBottomWidth: 1,
