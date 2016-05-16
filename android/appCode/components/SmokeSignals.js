@@ -43,13 +43,14 @@ var SmokeSignalsPage = React.createClass({
 
   },
 
-  refreshList: function() {
+  refreshList: function(message) {
       this.setState({
         forAll: SmokeStore.getSmokeSignals()[0],
         forMe: SmokeStore.getSmokeSignals()[1],
         forMeCount: 'For Me | ' + SmokeStore.getCount()[0],
         forAllCount: 'For All | ' + SmokeStore.getCount()[1],
-      })
+      });
+      ToastAndroid.show(message.message, ToastAndroid.SHORT);
   },
 
   getInitialState: function() {

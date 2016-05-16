@@ -16,7 +16,7 @@ var BuddhaSection = React.createClass({
 
       if(this.props.itemType === 'smokesignal'){
         onPressThanksParams = { action: 'thanks', userId: this.props.item._source.userId, smokeId: this.props.item._id}
-        onPressNoThanksParams = { action: 'nothanks', userId: this.props.item._source.userId}
+        onPressNoThanksParams = { action: 'nothanks', userId: this.props.item._source.userId, smokeId: this.props.item._id}
         buddhaStyle = styles.buddhaIcon
         item = this.props.item._source
       }
