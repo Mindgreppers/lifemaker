@@ -144,51 +144,13 @@ var ProfilePage = React.createClass({
             </View>
           </View>
           <Text style={styles.profileText}>{this.state.user.name}</Text>
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
           <Text style={styles.profileButtonText}>{this.state.user.thanksGiven.count} Thanks Given</Text>
-          </TouchableOpacity>
 
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
           <Text style={styles.profileButtonText}>{this.state.user.thanksReceived.count} Thanks Received</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
           <Text style={styles.profileButtonText}>{this.state.user.woods} Woods</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.thanksButton}>
-            <Icon
-              name='plus'
-              size={15}
-              color='#26a69a'
-              style={{width:15,height:15,marginTop:2,marginRight:5}}
-           />
           <Text style={styles.profileButtonText}>{this.state.user.karma} Karma</Text>
-          </TouchableOpacity>
 
-          <Text style={styles.profileText}>{this.state.user.interests.join(', ')}</Text>
-          <TouchableOpacity style={styles.thanksButton} onPress={this.showSmokeSignals}>
-          { this.state.liveCount === 1 && <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignal</Text> || <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignals</Text>}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.thanksButton} onPress={this.closeSmokeSignals}>
-            <Text style={styles.profileButtonText}>{this.state.closeCount} Closed SmokeSignals</Text>
-          </TouchableOpacity>
+          <Text style={styles.profileText}>Interests - {this.state.user.interests.join(', ')}</Text>
 
         </View>
         </ScrollView>

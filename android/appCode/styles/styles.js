@@ -374,6 +374,7 @@ var styles = StyleSheet.create({
   profileButtonText: {
     color: '#26a69a',
     marginBottom: 20,
+    textAlign: 'center'
   },
   parentContainer: {
     flex: 1,

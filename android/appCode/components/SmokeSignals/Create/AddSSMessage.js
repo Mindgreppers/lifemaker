@@ -69,7 +69,7 @@ var AddSSMessage = React.createClass({
           <View style={styles.headerBar}>
             <TouchableOpacity style={styles.closeButton} onPress={this.closeSSPage}>
               <Icon
-                name='close'
+                name='arrow-left-c'
                 size={20}
                 color='#26a69a'
                 style={{width:20,height:20,marginLeft:5}}
