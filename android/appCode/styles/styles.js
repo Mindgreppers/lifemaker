@@ -392,23 +392,19 @@ var styles = StyleSheet.create({
   },
   imageContainer: {
     backgroundColor: 'gray',
-    borderRadius: 15,
+    borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 30,
-    height: 30,
+    width: 50,
+    height: 50,
   },
   profileImageText: {
-    fontSize: 15,
+    fontSize: 25,
     color: '#ffffff'
   },
   commentContainer: {
     flex: 1,
-    borderRadius: 10,
-    borderStyle: 'dotted',
     marginLeft: 10,
-    borderWidth: 0.5,
-    borderColor: '#000'
   },
   editImage: {
     width: 100,

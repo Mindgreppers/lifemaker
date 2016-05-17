@@ -215,9 +215,7 @@ var ThreadPage = React.createClass({
       <View style={styles.comment} key={i}>
         <View style={styles.parentContainer}>
           <TouchableOpacity onPress={this.handleProfilePage.bind(this, comment.userId)}>
-            <View style={styles.imageContainer}>
-              <Text style={styles.profileImageText}>{comment.userId[0].toUpperCase()}</Text>
-            </View>
+            <Text>{comment.userId}</Text>
           </TouchableOpacity>
           <View style={styles.commentContainer}>
             <Text style={styles.description}>{comment.text}</Text>
