@@ -82,7 +82,15 @@ module.exports = function(params, res) {
             count: 0,
             givers: []
           },
+          nothanksReceived: {
+            count: 0,
+            givers: []
+          },
           thanksGiven: {
+            count: 0,
+            receivers: []
+          },
+          nothanksGiven: {
             count: 0,
             receivers: []
           }
