@@ -41,7 +41,7 @@ module.exports = function(params, socket, io) {
     .catch(function(err) {
       error('Error in indexing user', err)
         // c-smokesignal.error: {message: 'Error in creating user in database', code: 500, err: err}
-      io.to(params._id).emit('u-smokesignal.comment.error', {
+      socket.emit('u-smokesignal.comment.error', {
         message: 'Error in creating smokesignal in database',
         code: 500,
         err: err

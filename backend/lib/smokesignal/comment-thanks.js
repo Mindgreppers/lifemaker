@@ -23,7 +23,7 @@ module.exports = function(params, socket, io) {
       }
     })
     .then(function(res) {
-      io.to(params._id).emit('u-smokesignal.commentAction.done', {
+      socket.emit('u-smokesignal.commentAction.done', {
         code: 200,
         message: params.action + ' +' + params.count,
         params: params
@@ -31,7 +31,7 @@ module.exports = function(params, socket, io) {
     })
     .catch(function(err) {
       error('Error in indexing user', err)
-      io.to(params._id).emit('u-smokesignal.commentAction.error', {
+      socket.emit('u-smokesignal.commentAction.error', {
         message: 'Error in ' + params.action,
         code: 500,
         err: err,
