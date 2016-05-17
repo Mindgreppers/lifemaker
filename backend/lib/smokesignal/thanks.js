@@ -30,9 +30,8 @@ module.exports = function(params, socket, io) {
     }
   })
   .then(function(res) {
-    console.log(params._id)
-    /* BUG Instead of emitting to io, we should emit to some socket only */ 
-    io.to(params._id).emit('u-smokesignal.action.done', {
+    /* BUG Instead of emitting to io, we should emit to some socket only */
+    socket.emit('u-smokesignal.action.done', {
       code: 200,
       message: params.action + ' +' + params.count,
       params: params

@@ -36,7 +36,10 @@ module.exports = function (params, socket, io) {
 				})
 				.then(function() {
 
-					socket.emit('c-smokesignal.done', RESULT)
+					socket.emit('c-smokesignal.done', { result: {
+            _source : params,
+            _id: params._id
+          }})
 				})
 			}
 		})
@@ -68,12 +71,6 @@ module.exports = function (params, socket, io) {
       socket.emit('c-smokesignal.result', {
         message: 'Smokesignal Created',
         code: 201,
-      })
-      //Join all the existing sockets to this smoke signal
-      //Isn't this an overkill?
-      //TODO consider a better/optimal way of notifying interested parties
-      io.sockets.sockets.forEach(function(socket) {
-        socket.join(params._id)
       })
 
     })
