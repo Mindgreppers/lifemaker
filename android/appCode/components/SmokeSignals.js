@@ -232,7 +232,7 @@ var TabsView = React.createClass({
       <ListView
         style={{width:screenWidth}}
         onEndReached={this.getMoreSignals}
-        onEndReachedThreshold={100}
+        onEndReachedThreshold={1000}
         dataSource={ds.cloneWithRows(smokeSignals)}
         renderRow={this.props._renderSmokeSignals}
         pageSize={4}

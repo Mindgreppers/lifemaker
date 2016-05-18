@@ -31,19 +31,19 @@ var socket = require('../socket')
 var InterestPage = React.createClass({
 
   mixins: [
-    Reflux.ListenerMixin 
+    Reflux.ListenerMixin
   ],
 
    getInitialState: function(){
     return {
       interest: '',
-      interestsArray: ['hb','life-maker','42'],
+      interestsArray: ['hh16'],
       dataSource: ds.cloneWithRows([]),
     }
   },
-  
+
   componentDidMount: function() {
-    this.listenTo(UserStore, this.navigateToss) 
+    this.listenTo(UserStore, this.navigateToss)
 
     var that = this
     this.setState({
@@ -56,7 +56,7 @@ var InterestPage = React.createClass({
 
   },
   navigateToss: function() {
-      this.props.navigator.push({id: 1}) 
+      this.props.navigator.push({id: 1})
   },
 
   onSubmitInterest: function() {
@@ -66,16 +66,16 @@ var InterestPage = React.createClass({
     })
     this.setState({interest : ''})
   },
-  
+
   submitInterests: function() {
     var that = this
     var user = UserStore.getUserData()
     var updateUser = {
-      nick: user.nick, 
+      nick: user.nick,
       interests: this.state.interestsArray
     }
     socket.emit('u-user', updateUser)
-    
+
   },
   render: function() {
     return (
@@ -98,7 +98,7 @@ var InterestPage = React.createClass({
             style={styles.submitInterests}
             onPress={this.submitInterests}>
               <Text style={{color:'white'}}>SUBMIT</Text>
-          </TouchableOpacity>        
+          </TouchableOpacity>
         </View>
       </View>
     )
@@ -115,7 +115,7 @@ var InterestPage = React.createClass({
               size={15}
               color='#887700'
               style={styles.close}
-            />  
+            />
           </TouchableOpacity>
       </View>
     )
@@ -131,4 +131,3 @@ var InterestPage = React.createClass({
 })
 
 module.exports = InterestPage;
-
