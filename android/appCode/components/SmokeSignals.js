@@ -50,7 +50,10 @@ var SmokeSignalsPage = React.createClass({
         forMeCount: 'For Me | ' + SmokeStore.getCount()[0],
         forAllCount: 'For All | ' + SmokeStore.getCount()[1],
       });
-      ToastAndroid.show(message.message, ToastAndroid.SHORT);
+      if(message){
+        ToastAndroid.show(message.message, ToastAndroid.SHORT);
+      }
+
   },
 
   getInitialState: function() {
