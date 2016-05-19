@@ -18,9 +18,13 @@ var SmokeStore = Reflux.createStore({
     socket.emit('joinUser', {nick: UserStore.getUserData().nick})
 
     socket.on('u-smokesignal.action.done', function(result) {
-      console.log("Abhishek", result);
       this.updatessAction(result.params, result.message)
 
+    }.bind(this))
+
+
+    socket.on('woodKarma', function(data) {
+      this.trigger(data)
     }.bind(this))
 
     socket.on('u-smokesignal.commentAction.done', function(result){
@@ -165,7 +169,7 @@ var SmokeStore = Reflux.createStore({
     }
     ss._source[params.action] += 1
 
-    this.trigger({message: message})
+    this.trigger()
   },
 
   //get Smoke with id

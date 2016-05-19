@@ -78,8 +78,10 @@ var ThreadPage = React.createClass({
   },
 
   refreshList: function(message) {
-    console.log(message)
-    ToastAndroid.show(message.message, ToastAndroid.SHORT)
+    if(message) {
+      ToastAndroid.show(message.message, ToastAndroid.SHORT)
+    }
+    
     this.setState({smokeSignal: SmokeStore.getSmokeSignal(this.props.id)})
   },
 
