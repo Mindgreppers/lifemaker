@@ -66,7 +66,7 @@ module.exports = function (params, socket, io) {
       clients.forEach(function(socket){
         socket.join(res._id)
       });
-      emitToInterestedParties(params)
+      emitToInterestedParties(io, params)
 
       //Broadcast to all the connected clients
       io.emit('c-smokesignal.done', {
@@ -96,7 +96,7 @@ module.exports = function (params, socket, io) {
   //
 }
 
-function emitToInterestedParties(params) {
+function emitToInterestedParties(io, params) {
 
   es.search({
     index: 'users',
