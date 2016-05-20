@@ -1,28 +1,28 @@
 var config = {
   smokeSignalCategories: [
     {
-      code: 'dharma',
-      title: 'Dharma',
-      description: 'Identifying and performing your duties to the best of your ability.',
-      color: 'D38DE7'
-    },
-    {
-      code: 'kama',
-      title: 'Kama',
-      description: 'Fulfilling desires: material, physical or spiritual.',
-      color: 'EF7962'
-    },
-    {
       code: 'vidya',
       title: 'Vidya',
-      description: 'Pursuit of knowledge and truth.',
-      color: '9EC6ED'
+      description: 'Moksha is about self-realization, liberation and enlightenment in this life.\n\n#YOGA\n #MEDITATION',
+      color: 'DAC815'
+    },
+    {
+      code: 'dharma',
+      title: 'Dharma',
+      description: 'Dharma is about love and care for our beautiful natural environment.\n\n #CLEANUP\n #RECYCLING',
+      color: 'D38DE7'
     },
     {
       code: 'artha',
       title: 'Artha',
-      description: 'Seeking means to do what you need to do.',
-      color: 'DAC815'
+      description: 'Play with technology and learn new practical skills.\n\n#WORKSHOPS\n #CONFERENCES',
+      color: '9EC6ED'
+    },
+    {
+      code: 'kama',
+      title: 'Kama',
+      description: 'Kama is all about enjoyment, love and fulfillment of desires.\n\n #HANGOUTS\n #CAMPFIRE',
+      color: 'EF7962'
     },
   ],
   smokeSignalTypes: [
