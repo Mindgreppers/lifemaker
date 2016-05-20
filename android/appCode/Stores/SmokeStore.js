@@ -158,7 +158,7 @@ var SmokeStore = Reflux.createStore({
       return
     }
     comment[params.action] += 1
-    this.trigger({message: message})
+    this.trigger()
   },
 
   updatessAction: function(params, message) {

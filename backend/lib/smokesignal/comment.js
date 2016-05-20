@@ -29,10 +29,10 @@ module.exports = function(params, socket, io) {
       }
     })
     .then(function(res) {
-      socket.emit('u-smokesignal.done', {
+      io.to(params._id).emit('u-smokesignal.done', {
         _id: params._id,
         comment: pickComment,
-        message: 'comment Added',
+        message: "Comment added by " + params['userId'],
         code: 200
       })
       debug(res)

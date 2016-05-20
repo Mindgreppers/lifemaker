@@ -31,7 +31,7 @@ module.exports = function(params, socket, io) {
   })
   .then(function(res) {
     /* BUG Instead of emitting to io, we should emit to some socket only */
-    socket.emit('u-smokesignal.action.done', {
+    io.to(params._id).emit('u-smokesignal.action.done', {
       code: 200,
       message: params.action + ' +' + params.count,
       params: params
@@ -40,7 +40,7 @@ module.exports = function(params, socket, io) {
   .catch(function(err) {
     error('Error in ss action', err)
     console.log(err)
-    io.emit('u-smokesignal.' + params._id + '.action.error', {
+    socket.emit('u-smokesignal.' + params._id + '.action.error', {
       message: 'Error in ' + params.action,
       code: 500,
       err: err,

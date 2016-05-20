@@ -25,7 +25,10 @@ module.exports = function(params, socket, io) {
         }
       }
     }).then(function(resp) {
-
+      var smokesignals = resp.hits.hits
+      smokesignals.forEach(function(smokesignal){
+        socket.join(smokesignal._id)
+      })
       socket.emit('r-smokesignal.scroll.done', {
         message: resp.hits.hits,
         counts: resp.hits.total,

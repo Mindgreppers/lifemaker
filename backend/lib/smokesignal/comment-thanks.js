@@ -23,7 +23,7 @@ module.exports = function(params, socket, io) {
       }
     })
     .then(function(res) {
-      socket.emit('u-smokesignal.commentAction.done', {
+      io.to(params._id).emit('u-smokesignal.commentAction.done', {
         code: 200,
         message: params.action + ' +' + params.count,
         params: params
