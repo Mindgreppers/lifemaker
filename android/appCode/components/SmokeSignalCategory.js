@@ -7,11 +7,12 @@ var _ = require('lodash')
 var styles = require('../styles/styles.js')
 var smokeSignalCategories = require('../config').smokeSignalCategories
 
-
-
 var SmokeSignalCategory = React.createClass({
 
   getColor: function(title) {
+    if(title == 'Vidya'){
+      title = 'Moksha'
+    }
     var index = _.findIndex(smokeSignalCategories, { 'title': title});
     return smokeSignalCategories[index].color
   },

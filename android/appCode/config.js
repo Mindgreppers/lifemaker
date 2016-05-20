@@ -1,8 +1,8 @@
 var config = {
   smokeSignalCategories: [
     {
-      code: 'vidya',
-      title: 'Vidya',
+      code: 'moksha',
+      title: 'Moksha',
       description: 'Moksha is about self-realization, liberation and enlightenment in this life.\n\n#YOGA\n #MEDITATION',
       color: 'DAC815'
     },
