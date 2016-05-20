@@ -12,7 +12,7 @@ var UserStore = Reflux.createStore({
   init: function() {
     socket.on('woodKarma', function(data) {
       _.merge(this.data , data.result.user)
-      console.log(this.data)
+
       this.trigger()
     }.bind(this))
   },
@@ -23,10 +23,10 @@ var UserStore = Reflux.createStore({
   //Store userData in Store
   storeUserData : function(userData) {
     this.data = userData
-    console.log(this.data)
+
     socket.on('u-user.done', function(data) {
       _.merge(this.data , data.result.user)
-      console.log(this.data)
+
       this.trigger()
     }.bind(this))
     this.trigger()
@@ -34,22 +34,22 @@ var UserStore = Reflux.createStore({
 
   //get User data from store
   getUserData: function() {
-    return this.data 
+    return this.data
   },
 
   updateInterests: function(interests) {
-    this.data.interests = interests 
+    this.data.interests = interests
     this.trigger()
   },
 
   updateInfo: function(userData) {
     _.merge(this.data , userData)
     this.trigger()
-    console.log(this.data)  
+
   },
 
   getOtherUserProfile: function(userId) {
-    
+
       socket.emit('r-user', {nick: userId})
 
   },

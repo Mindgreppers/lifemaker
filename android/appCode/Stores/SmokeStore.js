@@ -48,9 +48,9 @@ var SmokeStore = Reflux.createStore({
 
       this.data.forAll = _.union(this.data.forAll, signalsIds)
 
-      console.log(this.data.forAll, signalsIds)
 
-      console.log(this.data.smokeSignals, scrollSignals)
+
+
       this.trigger()
 
     }.bind(this))
@@ -98,8 +98,8 @@ var SmokeStore = Reflux.createStore({
       this.data.smokeSignals[smokesignal.result._id] = smokesignal.result
       this.data.forAll.unshift(smokesignal.result._id)
       this.trigger()
-      console.log(this.data.forAll)
-      console.log(this.data.smokeSignals)
+
+
 
     }.bind(this))
 
@@ -168,7 +168,6 @@ var SmokeStore = Reflux.createStore({
       return
     }
     ss._source[params.action] += 1
-
     this.trigger()
   },
 

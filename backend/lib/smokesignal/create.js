@@ -47,6 +47,8 @@ module.exports = function (params, socket, io) {
 }
 
 
+
+
 	function createSmokeSignal (params, socket, io) {
   return es.index({
       index: 'smokesignals',
@@ -59,7 +61,13 @@ module.exports = function (params, socket, io) {
     })
     .then(function(res) {//TODO improve this broadbast mechanism
       //Emit to users based on interested match to show in their 'For Me' signals
+      var clients = findClientsSocket(io) ;
+      debug(clients)
+      clients.forEach(function(socket){
+        socket.join(res._id)
+      });
       emitToInterestedParties(params)
+
       //Broadcast to all the connected clients
       io.emit('c-smokesignal.done', {
         result: {
@@ -158,6 +166,25 @@ function updateWoods(params, user, io) {
 			code: '201'
 		})
 	})
+}
+
+// Hack to find all connected clients in an array
+function findClientsSocket(io, roomId, namespace) {
+    var res = [], ns = io.of(namespace = '/' );
+
+    if (ns) {
+        for (var id in ns.connected) {
+            if(roomId) {
+                var index = ns.connected[id].rooms.indexOf(roomId) ;
+                if(index !== -1) {
+                    res.push(ns.connected[id]);
+                }
+            } else {
+                res.push(ns.connected[id]);
+            }
+        }
+    }
+    return res;
 }
 
 
