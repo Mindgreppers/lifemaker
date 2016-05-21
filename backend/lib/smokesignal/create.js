@@ -4,7 +4,7 @@ var error = debug
 error.log = console.log.bind(console)
 //var socket = require('socket.io')(require('../../config.js').socket.port);
 var es = require('../es')
-const WOODS_FOR_SS = 5
+const WOODS_FOR_SS = 2
 
 module.exports = function (params, socket, io) {
 
