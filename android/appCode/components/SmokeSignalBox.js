@@ -17,8 +17,8 @@ var SmokeSignalBox = React.createClass({
     return (
       <View>
         <View style={styles.parentLabelContainer}>
-          <SmokeSignalType value={ Utility.capitalise(this.props.ssType) || 'Offer' } />
-          <SmokeSignalCategory category={ Utility.capitalise(this.props.category) || 'Dharma' } />
+          <SmokeSignalType value={this.props.ssType} />
+          <SmokeSignalCategory category={this.props.category} />
         </View>
         <TouchableOpacity onPress={this.props.onSubmit}>
           <Text style={styles.description}>{this.props.message}</Text>

@@ -7,6 +7,7 @@ window.navigator.userAgent = 'react-native'
 var moment = require('moment')
 var Reflux = require('reflux')
 var Icon = require('react-native-vector-icons/Ionicons');
+var Utility = require('../../../utility')
 
 var {
   AppRegistry,
@@ -41,7 +42,7 @@ var AddSSType = React.createClass({
   },
 
   _handleNext: function() {
-    this.props.navigator.push({ id: 13, ssType: this.getSSType(this.state.ssType) })
+    this.props.navigator.push({ id: 13, ssType: this.getSSType(this.state.ssType).id })
   },
 
   openDrawer: function(){
@@ -49,7 +50,7 @@ var AddSSType = React.createClass({
   },
 
   getSSType: function(index) {
-    return smokeSignalTypes[index].code;
+    return smokeSignalTypes[index];
   },
 
   closeSSPage: function() {
@@ -88,10 +89,10 @@ var AddSSType = React.createClass({
         <View style={styles.ssTypeContainer}>
           { smokeSignalTypes.map( (ssCategory, index) => {
             return (
-              <TouchableHighlight key={ssCategory.code} onPress={ () => this._onPressButton(index) }>
+              <TouchableHighlight key={ssCategory.id} onPress={ () => this._onPressButton(index) }>
                 <View style={[styles.ssType, {backgroundColor: ssCategory.color}, index === this.state.ssType && styles.highlight] }>
                   <Text style={styles.ssCategoryHeader}>
-                    {ssCategory.title}
+                    {Utility.capitalise(ssCategory.code)}
                   </Text>
                   <View>
                     <Text style={styles.ssCategoryText}>{ssCategory.description}</Text>

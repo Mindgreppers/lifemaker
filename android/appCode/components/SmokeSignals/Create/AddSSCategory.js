@@ -16,7 +16,6 @@ var {
   TouchableHighlight
 } = React
 
-var Utility = require('../../../utility')
 
 var smokeSignalCategories = require('../../../config').smokeSignalCategories
 
@@ -26,6 +25,7 @@ var UserStore = require('../../../Stores/UserStore')
 var SideBar = require('../../SideBar')
 var styles = require('../../../styles/styles')
 var ScreenHeight = Dimensions.get('window').height
+var Utility = require('../../../utility')
 
 var AddSSCategory = React.createClass({
 
@@ -43,7 +43,7 @@ var AddSSCategory = React.createClass({
   },
 
   getCategory: function(index) {
-    return smokeSignalCategories[index].code;
+    return smokeSignalCategories[index];
   },
 
   _onPressButton: function(val) {
@@ -59,7 +59,7 @@ var AddSSCategory = React.createClass({
       message: this.props.message,
       ssType: this.props.ssType,
       createdAt: +moment(),
-      category: this.getCategory(this.state.selectedValue),
+      category: this.getCategory(this.state.selectedValue).id,
       burningTill: +(moment().add(this.state.selectedValue, 'days')),
       active: true,
       thanks: 0,
@@ -93,7 +93,7 @@ var AddSSCategory = React.createClass({
                 style={{width:20,height:20,marginLeft:5}}
               />
             </TouchableOpacity>
-            <Text style={{marginRight:35}}>Category - {Utility.capitalise(this.getCategory(this.state.selectedValue))}</Text>
+
             <TouchableOpacity style={styles.createButton}  onPress={this._handleSubmit}>
               <Text style={{color: '#26a69a'}}>CREATE</Text>
             </TouchableOpacity>
@@ -103,10 +103,10 @@ var AddSSCategory = React.createClass({
         <View style={styles.ssTypeContainer}>
           { smokeSignalCategories.map( (ssCategory, index) => {
             return (
-              <TouchableHighlight key={ssCategory.code} onPress={ () => this._onPressButton(index) }>
+              <TouchableHighlight key={ssCategory.id} onPress={ () => this._onPressButton(index) }>
                 <View style={[styles.ssType, {backgroundColor: ssCategory.color}, index === this.state.selectedValue && styles.highlight] }>
                   <Text style={styles.ssCategoryHeader}>
-                    {ssCategory.title}
+                    {Utility.capitalise(ssCategory.code)}
                   </Text>
                   <View>
                     <Text style={styles.ssCategoryText}>{ssCategory.description}</Text>

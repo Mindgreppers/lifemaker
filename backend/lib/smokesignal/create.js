@@ -36,10 +36,10 @@ module.exports = function (params, socket, io) {
 				})
 				.then(function() {
 
-					socket.emit('c-smokesignal.done', { result: {
-            _source : params,
-            _id: params._id
-          }})
+					// socket.emit('c-smokesignal.done', { result: {
+          //   _source : params,
+          //   _id: params._id
+          // }})
 				})
 			}
 		})
