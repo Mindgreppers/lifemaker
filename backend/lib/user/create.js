@@ -60,12 +60,12 @@ module.exports = function(params, res) {
   })
   .then(function(response) {
 
-    if (response.hits.hits.length && response.hits.hits[0]._source.nick === params.nick) {
+    if (response && response.hits.hits.length && response.hits.hits[0]._source.nick === params.nick) {
 
         res.status(400).send('user exists!')
         debug('nick exists', params.nick, response)
 
-    } else if(response.hits.hits.length && response.hits.hits[0]._source.email === params.email) {
+    } else if(response && response.hits.hits.length && response.hits.hits[0]._source.email === params.email) {
 
       res.status(400).send('email exists!')
       debug('email exists', params.email. response)
