@@ -1,27 +1,27 @@
 var config = {
   smokeSignalCategories: [
     {
-      code: 'moksha',
+      code: '1',
       title: 'Moksha',
-      description: 'Moksha is about self-realization, liberation and enlightenment in this life.\n\n#YOGA\n #MEDITATION',
+      description: 'Self-discovery, wisdom, spiritual progress and health.\n\n#YOGA\n #RIVERBATH',
       color: 'DAC815'
     },
     {
-      code: 'dharma',
+      code: '2',
       title: 'Dharma',
-      description: 'Dharma is about love and care for our beautiful natural environment.\n\n #CLEANUP\n #RECYCLING',
+      description: 'Fulfilment of the responsibilities based on honest and unbiased assesment of truth from all angles.\n\n #CLEANUP\n #CONTRIBUTE',
       color: 'D38DE7'
     },
     {
-      code: 'artha',
+      code: '3',
       title: 'Artha',
-      description: 'Play with technology and learn new practical skills.\n\n#WORKSHOPS\n #CONFERENCES',
+      description: 'Resources, for example skills, tools, knowledge.\n\n#WORKSHOPS\n #CONFERENCES',
       color: '9EC6ED'
     },
     {
-      code: 'kama',
+      code: '4',
       title: 'Kama',
-      description: 'Kama is all about enjoyment, love and fulfillment of desires.\n\n #HANGOUTS\n #CAMPFIRE',
+      description: 'Love, fulfillment of desires, and enjoyment.\n\n #MUSIC\n #CAMPFIRE',
       color: 'EF7962'
     },
   ],
@@ -29,25 +29,25 @@ var config = {
     {
       code: 'offer',
       title: 'Offer',
-      description: 'Offer your services to the community eg. offer to contribute to open source project, or conduct a yoga class',
+      description: 'Offer your services or resources eg. contribute towards organization of HH, take a talk or conduct a yoga class',
       color: 'D38DE7'
     },
     {
       code: 'ask',
       title: 'Ask',
-      description: 'Ask for help from the community eg. look for someone to help with Hillhacks registration',
+      description: 'Ask for help from the community eg. look for help with the kitchen or has someone seen the TPLINK routers?',
       color: 'EF7962'
     },
     {
       code: 'share',
       title: 'Share',
-      description: 'Share a truth or learning eg. a wonderful article that you found on the internet',
+      description: 'Share an observation or learning eg. I discovered a new bathing spot by the river or someone\'s tent fell on the ground',
       color: '9EC6ED'
     },
     {
       code: 'organize',
-      title: 'Organize',
-      description: 'Organize movie screenings, demos or campfire. Remember Sholay :)',
+      title: 'Call-in',
+      description: 'Gather people eg. for talks, demos, tribevibe or a ritual by the river',
       color: 'DAC815'
     },
   ]
