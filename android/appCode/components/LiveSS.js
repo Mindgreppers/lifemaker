@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Icon = require('react-native-vector-icons/Ionicons');
+var _ = require('lodash')
 
 var {
   AppRegistry,
@@ -30,7 +31,7 @@ var SmokeSignalsList = React.createClass({
   
   getInitialState: function() {
     return {
-      dataSource: ds.cloneWithRows([]),
+      dataSource: [],
     }
   },
 
@@ -40,21 +41,37 @@ var SmokeSignalsList = React.createClass({
     socket.emit('r-userss', {nick: this.props.userId, active: true})
 
     socket.on('r-userss.done', function(result) {
+      console.log(result)
 
       if(that.isMounted()) {
 
         that.setState({
-          dataSource: ds.cloneWithRows(result.message)   
+          dataSource: result.message   
         }) 
 
       }
 
     })
 
+    socket.on('d-smokesignal.done', function(result) {
+      if(this.isMounted()) {
+
+        console.log(this.state.dataSource)
+        var filterList = _.remove(this.state.dataSource, function(item) { 
+          return result.result._id !== item._id
+        })
+
+        console.log(filterList)
+        this.setState({
+          dataSource: filterList
+        })
+      }
+    }.bind(this))
+
   },
 
   closeSignal: function(smokeId) {
-    socket.emit('u-smokesignal', {_id: smokeId, active: false})  
+    socket.emit('d-smokesignal', {_id: smokeId, active: false})  
   },
 
   openDrawer: function(){
@@ -76,7 +93,7 @@ var SmokeSignalsList = React.createClass({
           style = {styles.scrollView}
         >
           <ListView
-            dataSource={this.state.dataSource}
+            dataSource={ds.cloneWithRows(this.state.dataSource)}
             renderRow={this._renderSmokeSignals}
           />
         </ScrollView>

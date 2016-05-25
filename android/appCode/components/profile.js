@@ -151,7 +151,9 @@ var ProfilePage = React.createClass({
           <Text style={styles.profileButtonText}>{this.state.user.karma} Karma</Text>
 
           <Text style={styles.profileText}>Interests - {this.state.user.interests.join(', ')}</Text>
-
+          <TouchableOpacity onPress={this.showSmokeSignals}>
+            <Text style={styles.profileText}>Lives Signals</Text>
+          </TouchableOpacity>
         </View>
         </ScrollView>
          <CreateSmokeSignal navigator={this.props.navigator}/>

@@ -150,12 +150,6 @@ var OtherProfilePage = React.createClass({
           </TouchableOpacity>
 
           <Text style={styles.profileText}>{this.state.user.interests.join(', ')}</Text>
-          <TouchableOpacity style={styles.thanksButton} onPress={this.showSmokeSignals}>
-          { this.state.liveCount === 1 && <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignal</Text> || <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignals</Text>}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.thanksButton} onPress={this.closeSmokeSignals}>
-            <Text style={styles.profileButtonText}>{this.state.closeCount} Close SmokeSignals</Text>
-          </TouchableOpacity>
         </View>}
         </ScrollView>
          <CreateSmokeSignal navigator={this.props.navigator}/>
@@ -165,3 +159,11 @@ var OtherProfilePage = React.createClass({
   
 })
 module.exports = OtherProfilePage
+
+          /*<TouchableOpacity style={styles.thanksButton} onPress={this.showSmokeSignals}>
+          { this.state.liveCount === 1 && <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignal</Text> || <Text style={styles.profileButtonText}>{this.state.liveCount} Live SmokeSignals</Text>}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.thanksButton} onPress={this.closeSmokeSignals}>
+            <Text style={styles.profileButtonText}>{this.state.closeCount} Close SmokeSignals</Text>
+          </TouchableOpacity>*/
+          

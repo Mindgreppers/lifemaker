@@ -7,18 +7,15 @@ error.log = console.log.bind(console)
 var es = require('../es')
 
 module.exports = function(params, socket, io) {
-
+  debug(params)
   return es.search({
     index: 'smokesignals',
     type: 'smokesignal',
     body: {
       query: {
         bool: {
-          should: {
-              match_phrase: {  userId: params.nick}
-          },
           must: {
-            match_phrase: { active: params.active}
+              match_phrase: {userId: params.nick}
           }
         }
       }

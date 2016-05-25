@@ -38,7 +38,7 @@ var SmokeSignalsPage = React.createClass({
   mixins: [Reflux.ListenerMixin],
 
   componentDidMount: function() {
-
+    
     this.listenTo(SmokeStore, this.refreshList);
 
   },

@@ -27,6 +27,27 @@ var SmokeStore = Reflux.createStore({
       this.trigger(data)
     }.bind(this))
 
+    socket.on('d-smokesignal.done', function(result) {
+
+
+      _.remove(this.data.smokeSignals, function(smokesignal) { 
+          return result.result._id !== smokesignal._id
+      })
+      console.log(this.data.forAll.indexOf(result.result._id), this.data.forAll, result)
+      if(_.indexOf(this.data.forAll, result.result._id) >= 0 ) {
+
+        this.data.forAll.splice(result.result._id, 1)
+        this.data.forAllCount =  this.data.forAllCount - 1
+      }
+      if(_.indexOf(this.data.forMe, result.result._id) >= 0 ) {
+
+        this.data.forMe.splice(result.result._id, 1)
+        this.data.forMeCount =  this.data.forMeCount - 1
+      }
+
+      this.trigger()
+    }.bind(this))
+
     socket.on('u-smokesignal.commentAction.done', function(result){
 
       this.updateCommentAction(result.params, result.message)
