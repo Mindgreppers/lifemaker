@@ -1,5 +1,3 @@
 # Lifemaker
 
-
-## Getting started 
-https://facebook.github.io/react-native/docs/getting-started.html
+Read more about it on the [wiki] (http://github.com/lifemaker/wiki)
